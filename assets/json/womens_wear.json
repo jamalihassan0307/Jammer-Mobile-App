@@ -1,0 +1,130 @@
+[
+    {
+        "productId": 1,
+        "productImage": "assets/products/wedding_collection/wedding_collection_1.jpg",
+        "productTitle": "Saara Poly Silk Embellished, Woven Salwar Suit Material(Unstiched)",
+        "price": "549",
+        "oldPrice": "1893",
+        "offer": "70% off"
+    },
+    {
+        "productId": 2,
+        "productImage": "assets/products/wedding_collection/wedding_collection_2.jpg",
+        "productTitle": "Saara Poly Silk Embellished, Woven Salwar Suit Material",
+        "price": "549",
+        "oldPrice": "1893",
+        "offer": "70% off"
+    },
+    {
+        "productId": 3,
+        "productImage": "assets/products/wedding_collection/wedding_collection_3.jpg",
+        "productTitle": "Fashion Ritmo",
+        "price": "799",
+        "oldPrice": "2599",
+        "offer": "69% off"
+    },
+    {
+        "productId": 4,
+        "productImage": "assets/products/wedding_collection/wedding_collection_4.jpg",
+        "productTitle": "Divastri Poly Georgette Embroidered Salwar Suit Material",
+        "price": "1348",
+        "oldPrice": "5499",
+        "offer": "75% off"
+    },
+    {
+        "productId": 5,
+        "productImage": "assets/products/wedding_collection/wedding_collection_5.jpg",
+        "productTitle": "Ratnavati Cotton Silk Embroidered Salwar Suit Material",
+        "price": "1319",
+        "oldPrice": "5535",
+        "offer": "76% off"
+    },
+    {
+        "productId": 6,
+        "productImage": "assets/products/wedding_collection/wedding_collection_6.jpg",
+        "productTitle": "Ratnavati Cotton Silk Blend Floral Print Salwar Suit Material",
+        "price": "1349",
+        "oldPrice": "4998",
+        "offer": "73% off"
+    },
+    {
+        "productId": 7,
+        "productImage": "assets/products/wedding_collection/wedding_collection_7.jpg",
+        "productTitle": "Style Amaze Poly Georgette Embellished Salwar Suit Material",
+        "price": "1699",
+        "oldPrice": "6429",
+        "offer": "73% off"
+    },
+    {
+        "productId": 8,
+        "productImage": "assets/products/wedding_collection/wedding_collection_8.jpg",
+        "productTitle": "Julee Crepe Embroidered Salwar Suit Material",
+        "price": "849",
+        "oldPrice": "1999",
+        "offer": "57% off"
+    },
+    {
+        "productId": 9,
+        "productImage": "assets/products/wedding_collection/wedding_collection_9.jpg",
+        "productTitle": "Saara Crepe Printed Salwar Suit Material",
+        "price": "469",
+        "oldPrice": "1721",
+        "offer": "72% off"
+    },
+    {
+        "productId": 10,
+        "productImage": "assets/products/wedding_collection/wedding_collection_10.jpg",
+        "productTitle": "White One Piece for Women",
+        "price": "299",
+        "oldPrice": "1299",
+        "offer": "76% off"
+    },
+    {
+        "productId": 11,
+        "productImage": "assets/products/wedding_collection/wedding_collection_11.jpg",
+        "productTitle": "Orange One Piece for Women",
+        "price": "649",
+        "oldPrice": "1299",
+        "offer": "50% off"
+    },
+    {
+        "productId": 12,
+        "productImage": "assets/products/wedding_collection/wedding_collection_12.jpg",
+        "productTitle": "Black One Piece for Women",
+        "price": "330",
+        "oldPrice": "1199",
+        "offer": "72% off"
+    },
+    {
+        "productId": 13,
+        "productImage": "assets/products/wedding_collection/wedding_collection_13.jpg",
+        "productTitle": "Printed Women Round Neck Blue T-Shirt",
+        "price": "446",
+        "oldPrice": "499",
+        "offer": "10% off"
+    },
+    {
+        "productId": 14,
+        "productImage": "assets/products/wedding_collection/wedding_collection_14.jpg",
+        "productTitle": "Color Block Women Round Neck Multicolor T-Shirt",
+        "price": "299",
+        "oldPrice": "999",
+        "offer": "70% off"
+    },
+    {
+        "productId": 15,
+        "productImage": "assets/products/wedding_collection/wedding_collection_15.jpg",
+        "productTitle": "Full Sleeve Printed Men Jacket",
+        "price": "629",
+        "oldPrice": "1999",
+        "offer": "68% off"
+    },
+    {
+        "productId": 16,
+        "productImage": "assets/products/wedding_collection/wedding_collection_16.jpg",
+        "productTitle": "Full Sleeve Solid Men Jacket",
+        "price": "699",
+        "oldPrice": "1599",
+        "offer": "56% off"
+    }
+]

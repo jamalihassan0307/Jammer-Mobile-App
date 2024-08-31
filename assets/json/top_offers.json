@@ -1,0 +1,58 @@
+[
+    {
+        "offerid": 1,
+        "image": "assets/products/top_offers/top_offers_1.jpg",
+        "title": "Zivame, Metronaut & more",
+        "offer": "From ₹199",
+        "subtitle": "Lingerie, Western & Winter wear"
+    },
+    {
+        "offerid": 2,
+        "image": "assets/products/top_offers/top_offers_2.jpg",
+        "title": "Wedding & Party Collections",
+        "offer": "Starting ₹199",
+        "subtitle": "Handbags & Jewellery"
+    },
+    {
+        "offerid": 3,
+        "image": "assets/products/top_offers/top_offers_3.jpg",
+        "title": "Wedding & Party Collections",
+        "offer": "Starting ₹199",
+        "subtitle": "Handbags & Jewellery"
+    },
+    {
+        "offerid": 4,
+        "image": "assets/products/top_offers/top_offers_4.jpg",
+        "title": "Ethnic Wear",
+        "offer": "From ₹299 + 10% Off",
+        "subtitle": "Kurtas, Sarees & more"
+    },
+    {
+        "offerid": 5,
+        "image": "assets/products/top_offers/top_offers_5.jpg",
+        "title": "Books",
+        "offer": "Min 20% Off",
+        "subtitle": "Fiction, Non-Fiction & More"
+    },
+    {
+        "offerid": 6,
+        "image": "assets/products/top_offers/top_offers_6.jpg",
+        "title": "Arrow, Wildcraft ...",
+        "offer": "Min 55% Off",
+        "subtitle": "Jackets"
+    },
+    {
+        "offerid": 7,
+        "image": "assets/products/top_offers/top_offers_7.jpg",
+        "title": "Best Seller!",
+        "offer": "30-80% Off",
+        "subtitle": "Men's & Women's Watches"
+    },
+    {
+        "offerid": 8,
+        "image": "assets/products/top_offers/top_offers_8.jpg",
+        "title": "Designer Back Covers",
+        "offer": "Just ₹179",
+        "subtitle": "For All Top Models"
+    }
+]
