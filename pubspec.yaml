@@ -44,6 +44,9 @@ dependencies:
   page_transition: 
   flutter_launcher_icons: 
   carousel_slider: 
+  dio: 
+  get:
+  shared_preferences: 
 
 dev_dependencies:
   flutter_test:
