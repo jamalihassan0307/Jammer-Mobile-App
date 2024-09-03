@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jammer_mobile_app/AppTheme/my_behaviour.dart';
-import 'package:jammer_mobile_app/pages/spashscreen.dart';
+import 'package:jammer_mobile_app/view/pages/spashscreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

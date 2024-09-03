@@ -67,7 +67,7 @@ class NetworkApiServices extends BaseApiServices {
     }
   }
 
-  http.Response returndata(Map<String, dynamic> data) {
+  static http.Response returndata(Map<String, dynamic> data) {
     return http.Response(data.toString(), 200);
   }
 }

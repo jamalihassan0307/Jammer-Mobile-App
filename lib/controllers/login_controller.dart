@@ -2,6 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:jammer_mobile_app/data/const/static_variables.dart';
+import 'package:jammer_mobile_app/data/network/network_api_services.dart';
+import 'package:jammer_mobile_app/future.dart';
+import 'package:jammer_mobile_app/models/login_model.dart';
+import 'package:jammer_mobile_app/models/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:jammer_mobile_app/utils/static_variable.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,56 +26,30 @@ class LoginController extends GetxController {
 
   // Handles the login process
   Future<void> login() async {
-    final String email = emailController.text;
-    final String password = passwordController.text;
+    // final String email = emailController.text;
+    // final String password = passwordController.text;
 
-    if (email.isEmpty || password.isEmpty) {
-      Fluttertoast.showToast(
-        msg: 'Please enter both email and password',
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
-      return;
-    }
-
-    // try {
-    //   final response = await httpClient().post(
-    //     'Users/Login',
-    //     data: {
-    //       'email': email,
-    //       'password': password,
-    //     },
-    //   );
-
-    //   if (response.statusCode == 200) {
-    //     final data = response.data;
-    //     Fluttertoast.showToast(
-    //       msg: data['message'],
-    //       backgroundColor: Colors.green,
-    //       textColor: Colors.white,
-    //     );
-
-    //     // Save token to SharedPreferences
-    //     SharedPreferences prefs = await SharedPreferences.getInstance();
-    //     await prefs.setString('token', data['data']);
-    //     StaticVariables.token = data['data'];
-
-    //     // Navigate to home screen or desired page
-    //     Get.offAllNamed('/home'); // Replace with your home route
-    //   } else {
-    //     Fluttertoast.showToast(
-    //       msg: 'Login failed. Please try again.',
-    //       backgroundColor: Colors.red,
-    //       textColor: Colors.white,
-    //     );
-    //   }
-    // } on DioError catch (e) {
+    // if (email.isEmpty || password.isEmpty) {
     //   Fluttertoast.showToast(
-    //     msg: e.response?.data['message'] ?? 'An error occurred',
+    //     msg: 'Please enter both email and password',
     //     backgroundColor: Colors.red,
     //     textColor: Colors.white,
     //   );
+    //   return;
     // }
+    var login = Login();
+    var data = GetUserById();
+    LoginModel logindata = LoginModel.fromMap(login);
+
+    UserModel model = UserModel.fromMap(data);
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', logindata.token);
+    await prefs.setString('UserId', model.id);
+    StaticVariables.tokenid = logindata.token;
+    StaticVariables.userid = model.id;
+    StaticVariables.model = model;
+    print("usermodel${model}");
   }
 
   // Validation error messages

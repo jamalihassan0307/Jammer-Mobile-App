@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jammer_mobile_app/controllers/login_controller.dart';
-import 'package:jammer_mobile_app/pages/signup.dart';
-import 'package:jammer_mobile_app/pages/forgot_password.dart';
+import 'package:jammer_mobile_app/view//pages/signup.dart';
+import 'package:jammer_mobile_app/view//pages/forgot_password.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
