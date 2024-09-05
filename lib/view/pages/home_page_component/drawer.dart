@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jammer_mobile_app/controllers/home_controller.dart';
 import 'package:jammer_mobile_app/view/pages/cart.dart';
 import 'package:jammer_mobile_app/view/pages/faq_and_about_app/about_app.dart';
 import 'package:jammer_mobile_app/view/pages/faq_and_about_app/faq.dart';
@@ -272,203 +273,240 @@ class MainDrawer extends StatelessWidget {
             const Divider(
               color: Colors.grey,
             ),
-            InkWell(
-              child: Container(
-                padding:
-                    const EdgeInsets.only(top: 7.0, bottom: 7.0, left: 15.0),
-                child: Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.devices,
-                      color: Colors.grey[700],
-                      size: 20.0,
-                    ),
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    Text(
-                      'Electronics',
-                      style: TextStyle(
+            ...HomeController.to.category.map(
+              (item) => InkWell(
+                child: Container(
+                  padding:
+                      const EdgeInsets.only(top: 7.0, bottom: 7.0, left: 15.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.devices,
                         color: Colors.grey[700],
-                        fontSize: 15.0,
+                        size: 20.0,
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const TopOffers(title: 'Electronics & Appliances')),
-                );
-              },
-            ),
-            InkWell(
-              child: Container(
-                padding:
-                    const EdgeInsets.only(top: 7.0, bottom: 7.0, left: 15.0),
-                child: Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.wc,
-                      color: Colors.grey[700],
-                      size: 20.0,
-                    ),
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    Text(
-                      'Fashion',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 15.0,
+                      const SizedBox(
+                        width: 10.0,
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const TopOffers(title: 'Fashion')),
-                );
-              },
-            ),
-            InkWell(
-              child: Container(
-                padding:
-                    const EdgeInsets.only(top: 7.0, bottom: 7.0, left: 15.0),
-                child: Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.format_paint,
-                      color: Colors.grey[700],
-                      size: 20.0,
-                    ),
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    Text(
-                      'Home & Furniture',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 15.0,
+                      Text(
+                        item.name,
+                        style: TextStyle(
+                          color: Colors.grey[700],
+                          fontSize: 15.0,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const TopOffers(title: 'Electronics & Appliances')),
+                  );
+                },
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const TopOffers(title: 'Home & Furniture')),
-                );
-              },
             ),
-            InkWell(
-              child: Container(
-                padding:
-                    const EdgeInsets.only(top: 7.0, bottom: 7.0, left: 15.0),
-                child: Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.tv,
-                      color: Colors.grey[700],
-                      size: 20.0,
-                    ),
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    Text(
-                      'TVs & Appliances',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 15.0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const TopOffers(title: 'TVs & Appliances')),
-                );
-              },
-            ),
-            InkWell(
-              child: Container(
-                padding:
-                    const EdgeInsets.only(top: 7.0, bottom: 7.0, left: 15.0),
-                child: Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.stay_current_portrait,
-                      color: Colors.grey[700],
-                      size: 20.0,
-                    ),
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    Text(
-                      'Mobiles & Tablets',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 15.0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const TopOffers(title: 'Mobiles & Tablets')),
-                );
-              },
-            ),
-            InkWell(
-              child: Container(
-                padding:
-                    const EdgeInsets.only(top: 7.0, bottom: 7.0, left: 15.0),
-                child: Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.book,
-                      color: Colors.grey[700],
-                      size: 20.0,
-                    ),
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    Text(
-                      'Bauty, Books & More',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 15.0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const TopOffers(title: 'Beauty, Books & More')),
-                );
-              },
-            ),
+
+            // InkWell(
+            //   child: Container(
+            //     padding:
+            //         const EdgeInsets.only(top: 7.0, bottom: 7.0, left: 15.0),
+            //     child: Row(
+            //       children: <Widget>[
+            //         Icon(
+            //           Icons.devices,
+            //           color: Colors.grey[700],
+            //           size: 20.0,
+            //         ),
+            //         const SizedBox(
+            //           width: 10.0,
+            //         ),
+            //         Text(
+            //           'Electronics',
+            //           style: TextStyle(
+            //             color: Colors.grey[700],
+            //             fontSize: 15.0,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //           builder: (context) =>
+            //               const TopOffers(title: 'Electronics & Appliances')),
+            //     );
+            //   },
+            // ),
+            // InkWell(
+            //   child: Container(
+            //     padding:
+            //         const EdgeInsets.only(top: 7.0, bottom: 7.0, left: 15.0),
+            //     child: Row(
+            //       children: <Widget>[
+            //         Icon(
+            //           Icons.wc,
+            //           color: Colors.grey[700],
+            //           size: 20.0,
+            //         ),
+            //         const SizedBox(
+            //           width: 10.0,
+            //         ),
+            //         Text(
+            //           'Fashion',
+            //           style: TextStyle(
+            //             color: Colors.grey[700],
+            //             fontSize: 15.0,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //           builder: (context) => const TopOffers(title: 'Fashion')),
+            //     );
+            //   },
+            // ),
+            // InkWell(
+            //   child: Container(
+            //     padding:
+            //         const EdgeInsets.only(top: 7.0, bottom: 7.0, left: 15.0),
+            //     child: Row(
+            //       children: <Widget>[
+            //         Icon(
+            //           Icons.format_paint,
+            //           color: Colors.grey[700],
+            //           size: 20.0,
+            //         ),
+            //         const SizedBox(
+            //           width: 10.0,
+            //         ),
+            //         Text(
+            //           'Home & Furniture',
+            //           style: TextStyle(
+            //             color: Colors.grey[700],
+            //             fontSize: 15.0,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //           builder: (context) =>
+            //               const TopOffers(title: 'Home & Furniture')),
+            //     );
+            //   },
+            // ),
+            // InkWell(
+            //   child: Container(
+            //     padding:
+            //         const EdgeInsets.only(top: 7.0, bottom: 7.0, left: 15.0),
+            //     child: Row(
+            //       children: <Widget>[
+            //         Icon(
+            //           Icons.tv,
+            //           color: Colors.grey[700],
+            //           size: 20.0,
+            //         ),
+            //         const SizedBox(
+            //           width: 10.0,
+            //         ),
+            //         Text(
+            //           'TVs & Appliances',
+            //           style: TextStyle(
+            //             color: Colors.grey[700],
+            //             fontSize: 15.0,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //           builder: (context) =>
+            //               const TopOffers(title: 'TVs & Appliances')),
+            //     );
+            //   },
+            // ),
+            // InkWell(
+            //   child: Container(
+            //     padding:
+            //         const EdgeInsets.only(top: 7.0, bottom: 7.0, left: 15.0),
+            //     child: Row(
+            //       children: <Widget>[
+            //         Icon(
+            //           Icons.stay_current_portrait,
+            //           color: Colors.grey[700],
+            //           size: 20.0,
+            //         ),
+            //         const SizedBox(
+            //           width: 10.0,
+            //         ),
+            //         Text(
+            //           'Mobiles & Tablets',
+            //           style: TextStyle(
+            //             color: Colors.grey[700],
+            //             fontSize: 15.0,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //           builder: (context) =>
+            //               const TopOffers(title: 'Mobiles & Tablets')),
+            //     );
+            //   },
+            // ),
+            // InkWell(
+            //   child: Container(
+            //     padding:
+            //         const EdgeInsets.only(top: 7.0, bottom: 7.0, left: 15.0),
+            //     child: Row(
+            //       children: <Widget>[
+            //         Icon(
+            //           Icons.book,
+            //           color: Colors.grey[700],
+            //           size: 20.0,
+            //         ),
+            //         const SizedBox(
+            //           width: 10.0,
+            //         ),
+            //         Text(
+            //           'Bauty, Books & More',
+            //           style: TextStyle(
+            //             color: Colors.grey[700],
+            //             fontSize: 15.0,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //           builder: (context) =>
+            //               const TopOffers(title: 'Beauty, Books & More')),
+            //     );
+            //   },
+            // ),
+
             const Divider(
               color: Colors.grey,
             ),

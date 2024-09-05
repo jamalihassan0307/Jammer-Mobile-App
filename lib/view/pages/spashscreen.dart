@@ -1,10 +1,17 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, deprecated_member_use
 
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:jammer_mobile_app/data/const/static_variables.dart';
+import 'package:jammer_mobile_app/data/network/APIStore.dart';
+import 'package:jammer_mobile_app/models/user_model.dart';
+import 'package:jammer_mobile_app/view/pages/home.dart';
 import 'package:jammer_mobile_app/view/pages/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,13 +24,68 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    moveToPage();
+    // Timer(
+    //     const Duration(seconds: 5),
+    //     () => Navigator.push(
+    //           context,
+    //           MaterialPageRoute(builder: (context) => const Login()),
+    //         ));
+  }
 
-    Timer(
-        const Duration(seconds: 5),
-        () => Navigator.push(
+  moveToPage() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? value = sharedPreferences.getString("token");
+    String? usedid = sharedPreferences.getString("UserId");
+    if (value != null) {
+      StaticVariables.tokenid = value;
+      StaticVariables.userid = usedid;
+      try {
+        print("///////////////////login");
+        final response1 = await httpClient().get(StaticVariables.getUserById);
+
+        if (response1.statusCode == 200) {
+          // final data = response1.data;
+          Fluttertoast.showToast(
+            msg: "Login Successfully",
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+          );
+
+          UserModel model = UserModel.fromMap(response1.data);
+
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('UserId', model.id);
+          StaticVariables.userid = model.id;
+          StaticVariables.model = model;
+          print("usermodel${model}");
+          Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const Login()),
-            ));
+              MaterialPageRoute(
+                builder: (context) => Home(),
+              ));
+        } else {
+          Fluttertoast.showToast(
+            msg: 'User data Not Found',
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+          );
+        }
+      } on DioError catch (e) {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const Login()));
+        Fluttertoast.showToast(
+          msg: e.message.toString(),
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
+      }
+    } else {
+      Future.delayed(const Duration(milliseconds: 2500), () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const Login()));
+      });
+    }
   }
 
   @override

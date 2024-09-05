@@ -2,8 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'package:jammer_mobile_app/data/app_exceptions.dart';
+import 'package:jammer_mobile_app/data/network/APIStore.dart';
 import 'package:jammer_mobile_app/data/network/base_api_services.dart';
 
 class NetworkApiServices extends BaseApiServices {
@@ -16,7 +17,7 @@ class NetworkApiServices extends BaseApiServices {
     dynamic responseJson;
     try {
       final response =
-          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 10));
+          await httpClient().get(url).timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
     } on SocketException {
       throw InternetException('');
@@ -36,8 +37,8 @@ class NetworkApiServices extends BaseApiServices {
 
     dynamic responseJson;
     try {
-      final response = await http
-          .post(Uri.parse(url), body: data)
+      final response = await httpClient()
+          .post(url, data: data)
           .timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
     } on SocketException {
@@ -51,13 +52,13 @@ class NetworkApiServices extends BaseApiServices {
     return responseJson;
   }
 
-  dynamic returnResponse(http.Response response) {
+  dynamic returnResponse(dio.Response response) {
     switch (response.statusCode) {
       case 200:
-        dynamic responseJson = jsonDecode(response.body);
+        dynamic responseJson = jsonDecode(response.data);
         return responseJson;
       case 400:
-        dynamic responseJson = jsonDecode(response.body);
+        dynamic responseJson = jsonDecode(response.data);
         return responseJson;
 
       default:
@@ -65,9 +66,5 @@ class NetworkApiServices extends BaseApiServices {
             'Error accoured while communicating with server ' +
                 response.statusCode.toString());
     }
-  }
-
-  static http.Response returndata(Map<String, dynamic> data) {
-    return http.Response(data.toString(), 200);
   }
 }

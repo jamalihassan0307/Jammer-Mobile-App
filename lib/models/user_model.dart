@@ -6,14 +6,14 @@ class UserModel {
   String fullName;
   String email;
   int roleId;
-  String passwordHash;
+  String password;
   String image;
   UserModel({
     required this.id,
     required this.fullName,
     required this.email,
     required this.roleId,
-    required this.passwordHash,
+    required this.password,
     required this.image,
   });
 
@@ -22,7 +22,7 @@ class UserModel {
     String? fullName,
     String? email,
     int? roleId,
-    String? passwordHash,
+    String? password,
     String? image,
   }) {
     return UserModel(
@@ -30,7 +30,7 @@ class UserModel {
       fullName: fullName ?? this.fullName,
       email: email ?? this.email,
       roleId: roleId ?? this.roleId,
-      passwordHash: passwordHash ?? this.passwordHash,
+      password: password ?? this.password,
       image: image ?? this.image,
     );
   }
@@ -41,7 +41,7 @@ class UserModel {
       'fullName': fullName,
       'email': email,
       'roleId': roleId,
-      'passwordHash': passwordHash,
+      'password': password,
       'image': image,
     };
   }
@@ -52,7 +52,7 @@ class UserModel {
       fullName: map['fullName'] as String,
       email: map['email'] as String,
       roleId: map['roleId'] as int,
-      passwordHash: map['passwordHash'] as String,
+      password: map['passwordHash'] as String,
       image: map['image'] as String,
     );
   }
@@ -64,7 +64,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, fullName: $fullName, email: $email, roleId: $roleId, passwordHash: $passwordHash, image: $image)';
+    return 'UserModel(id: $id, fullName: $fullName, email: $email, roleId: $roleId, password: $password, image: $image)';
   }
 
   @override
@@ -75,7 +75,7 @@ class UserModel {
         other.fullName == fullName &&
         other.email == email &&
         other.roleId == roleId &&
-        other.passwordHash == passwordHash &&
+        other.password == password &&
         other.image == image;
   }
 
@@ -85,7 +85,7 @@ class UserModel {
         fullName.hashCode ^
         email.hashCode ^
         roleId.hashCode ^
-        passwordHash.hashCode ^
+        password.hashCode ^
         image.hashCode;
   }
 }

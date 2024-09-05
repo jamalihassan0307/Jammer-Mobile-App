@@ -1,74 +1,87 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:jammer_mobile_app/controllers/home_controller.dart';
+import 'package:jammer_mobile_app/data/const/static_variables.dart';
+import 'package:jammer_mobile_app/models/get_category_model.dart';
 
 // My Own Imports
 import 'package:jammer_mobile_app/view/pages/category/top_offers.dart';
 
+// ignore: must_be_immutable
 class CategoryGrid extends StatelessWidget {
-  final categoryList = [
-    {'title': 'Top Offers', 'image': 'assets/category/top_offers.jpg'},
-    {
-      'title': 'Mobiles & Tablets',
-      'image': 'assets/category/mobile_tablet.jpg'
-    },
-    {'title': 'Fashion', 'image': 'assets/category/fashion.jpg'},
-    {
-      'title': 'Electronics & Accessories',
-      'image': 'assets/category/electronics.jpg'
-    },
-    {
-      'title': 'Home & Furniture',
-      'image': 'assets/category/home_forniture.jpg'
-    },
-    {'title': 'TV & Appliances', 'image': 'assets/category/tv_appliances.jpg'},
-    {'title': 'Beauty & Personal Care', 'image': 'assets/category/beauty.jpg'},
-    {
-      'title': 'Monthly Essentials',
-      'image': 'assets/category/monthly_essentials.jpg'
-    }
-  ];
-
   CategoryGrid({super.key});
 
+  var height, width;
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
 
-    InkWell getStructuredGridCell(category) {
-      final item = category;
-      return InkWell(
-        child: Image(
-          image: AssetImage(item['image']),
-          fit: BoxFit.fitHeight,
+    return GetBuilder<HomeController>(builder: (obj) {
+      return Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
         ),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => TopOffers(title: '${item['title']}')),
-          );
-        },
+        padding: EdgeInsets.all(5.0),
+        alignment: Alignment.center,
+        width: width - 20.0,
+        height: height * 0.25,
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 20,
+            crossAxisCount: 2,
+            childAspectRatio: ((width) / 350),
+          ),
+          scrollDirection: Axis.horizontal,
+          primary: false,
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(0),
+          itemCount: obj.category.length,
+          itemBuilder: (BuildContext context, int index) {
+            final item = index == 0
+                ? GetCategoryModel(id: 1, name: "")
+                : obj.category[index - 1];
+            return InkWell(
+              child: Column(
+                children: [
+                  index == 0
+                      ? Image(
+                          image: AssetImage("assets/category/top_offers.jpg"),
+                          fit: BoxFit.fitHeight,
+                        )
+                      : Container(
+                          height: height * 0.07,
+                          child: Image.network(
+                            StaticVariables.baseurl + item.image!,
+                            fit: BoxFit.fitHeight,
+                          ),
+                        ),
+                  SizedBox(
+                    height: height * 0.04,
+                    child: Text(
+                      index == 0 ? "Top Offers" : item.name,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12.0,
+                        overflow: TextOverflow.ellipsis,
+                        fontFamily: 'Alatsi',
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => TopOffers(title: '${item.name}')),
+                );
+              },
+            );
+          },
+        ),
       );
-    }
-
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
-      padding: const EdgeInsets.all(5.0),
-      alignment: Alignment.center,
-      width: width - 20.0,
-      child: GridView.count(
-        primary: false,
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(0),
-        crossAxisSpacing: 0,
-        mainAxisSpacing: 15,
-        crossAxisCount: 4,
-        childAspectRatio: ((width) / 500),
-        children: List.generate(categoryList.length, (index) {
-          return getStructuredGridCell(categoryList[index]);
-        }),
-      ),
-    );
+    });
   }
 }
