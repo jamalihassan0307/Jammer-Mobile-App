@@ -16,7 +16,7 @@ import 'package:jammer_mobile_app/view/pages/home_page_component/best_offer_grid
 import 'package:jammer_mobile_app/view/pages/home_page_component/top_seller_grid.dart';
 import 'package:jammer_mobile_app/view/pages/home_page_component/best_deal.dart';
 import 'package:jammer_mobile_app/view/pages/home_page_component/featured_brands.dart';
-import 'package:jammer_mobile_app/view/pages/home_page_component/block_buster_deal.dart';
+import 'package:jammer_mobile_app/view/pages/home_page_component/CouponsDeals.dart';
 import 'package:jammer_mobile_app/view/pages/home_page_component/best_of_fashion.dart';
 import 'package:jammer_mobile_app/view/pages/home_page_component/womens_collection.dart';
 import 'package:jammer_mobile_app/view/pages/notifications.dart';
@@ -263,40 +263,38 @@ class _HomeState extends State<Home> {
                     ),
 
                     // Block Buster Deals Start Here
-                    const BlockBusterDeals(),
+                    CouponsDeals(),
                     // Block Buster Deals End Here
 
-                    const SizedBox(
-                      height: 6.0,
-                    ),
+                    // const SizedBox(
+                    //   height: 6.0,
+                    // ),
 
-                    const Divider(
-                      height: 1.0,
-                    ),
+                    // const Divider(
+                    //   height: 1.0,
+                    // ),
 
-                    const SizedBox(
-                      height: 0.0,
-                    ),
+                    // const SizedBox(
+                    //   height: 0.0,
+                    // ),
 
                     //Best of Fashion Start Here
-                    const BestOfFashion(),
+                    // const BestOfFashion(),
                     //Best of Fashion End Here
 
-                    const SizedBox(
-                      height: 6.0,
-                    ),
+                    // const SizedBox(
+                    //   height: 6.0,
+                    // ),
 
-                    const Divider(
-                      height: 1.0,
-                    ),
+                    // const Divider(
+                    //   height: 1.0,
+                    // ),
 
-                    const SizedBox(
-                      height: 0.0,
-                    ),
+                    // const SizedBox(
+                    //   height: 0.0,
+                    // ),
 
-                    // Womens Collection Start Here
-                    const WomensCollection(),
-                    // Womens Collection End Here
+                    // const WomensCollection(),
 
                     const SizedBox(height: 20.0),
                   ],

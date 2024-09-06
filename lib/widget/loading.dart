@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:jammer_mobile_app/data/const/static_variables.dart';
 
 class ProgressLoading extends StatelessWidget {
   const ProgressLoading({super.key});
@@ -13,4 +14,8 @@ class ProgressLoading extends StatelessWidget {
       ),
     );
   }
+}
+
+GetImage(String image) {
+  return "${StaticVariables.baseurl + image}";
 }

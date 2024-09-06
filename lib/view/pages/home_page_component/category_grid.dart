@@ -40,7 +40,7 @@ class CategoryGrid extends StatelessWidget {
           itemCount: obj.category.length,
           itemBuilder: (BuildContext context, int index) {
             final item = index == 0
-                ? GetCategoryModel(id: 1, name: "")
+                ? GetCategoryModel(id: 0, name: "")
                 : obj.category[index - 1];
             return InkWell(
               child: Column(
@@ -72,10 +72,17 @@ class CategoryGrid extends StatelessWidget {
                 ],
               ),
               onTap: () {
+                final item = index == 0
+                    ? GetCategoryModel(id: 0, name: "")
+                    : obj.category[index - 1];
+                print("item.id.toString()${item.id.toString()}");
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => TopOffers(title: '${item.name}')),
+                      builder: (context) => TopOffers(
+                            title: '${item.name}',
+                            id: item.id.toString(),
+                          )),
                 );
               },
             );

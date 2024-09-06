@@ -13,16 +13,16 @@ import 'package:jammer_mobile_app/view/pages/cart.dart';
 import 'package:jammer_mobile_app/view/pages/wishlist.dart';
 import 'package:page_transition/page_transition.dart';
 
-class WomensWear extends StatefulWidget {
+class ProductViewPageFuilter extends StatefulWidget {
   final PassData? data;
 
-  const WomensWear({Key? key, this.data}) : super(key: key);
+  const ProductViewPageFuilter({Key? key, this.data}) : super(key: key);
 
   @override
-  _WomensWearState createState() => _WomensWearState();
+  _ProductViewPageFuilterState createState() => _ProductViewPageFuilterState();
 }
 
-class _WomensWearState extends State<WomensWear> {
+class _ProductViewPageFuilterState extends State<ProductViewPageFuilter> {
   bool progress = true;
 
   @override

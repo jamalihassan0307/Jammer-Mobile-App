@@ -8,6 +8,7 @@ import 'package:jammer_mobile_app/view/pages/product/rating_row.dart';
 import 'package:jammer_mobile_app/view/pages/product/product_size.dart';
 import 'package:jammer_mobile_app/view/pages/product/get_similar_products.dart';
 import 'package:jammer_mobile_app/widget/carousel_pro/lib/carousel_pro.dart';
+import 'package:jammer_mobile_app/widget/loading.dart';
 
 class ProductDetails extends StatefulWidget {
   final data;
@@ -41,11 +42,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                   height: (height / 2.0),
                   child: Carousel(
                     images: [
-                      AssetImage(widget.data.imagePath),
-                      AssetImage(widget.data.imagePath),
-                      AssetImage(widget.data.imagePath),
-                      AssetImage(widget.data.imagePath),
-                      AssetImage(widget.data.imagePath)
+                      NetworkImage(GetImage(widget.data.imagePath)),
+                      NetworkImage(GetImage(widget.data.imagePath)),
+                      NetworkImage(GetImage(widget.data.imagePath)),
+                      NetworkImage(GetImage(widget.data.imagePath)),
+                      NetworkImage(GetImage(widget.data.imagePath)),
+                      NetworkImage(GetImage(widget.data.imagePath))
                     ],
                     dotSize: 5.0,
                     dotSpacing: 15.0,

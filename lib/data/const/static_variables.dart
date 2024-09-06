@@ -4,15 +4,17 @@ class StaticVariables {
   static UserModel? model;
   static String? userid;
   static String? tokenid;
-  static String baseurl = "http://192.168.1.100:3300";
+  static String baseurl = "http://192.168.100.100:3300";
 
-  static String url = "http://192.168.1.100:3300/api/";
+  static String url = "http://192.168.100.100:3300/api/";
   ///////////////////////////////urls/////////////////////
   static String login = "Users/Login";
   static String getUserById = "Users/GetUserById";
 
   ////////////////////Category/////////////
   static String getAllCategories = "Category/GetAllCategories";
+  ////////////////////Product/////////////
+  static String filterProductsByCategory = "Product/FilterProductsByCategory/";
   ////////////////////Coupon/////////////
   static String getRandomCouponProducts = "Coupon/GetRandomCouponProducts";
   static String GetCouponsWithProducts = "Coupon/GetCouponsWithProducts";

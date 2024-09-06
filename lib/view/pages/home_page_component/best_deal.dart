@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jammer_mobile_app/controllers/home_controller.dart';
 import 'package:jammer_mobile_app/data/const/static_variables.dart';
+import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
 import 'package:jammer_mobile_app/models/RandamProduct.dart';
+import 'package:jammer_mobile_app/view/pages/product/product.dart';
 
 class BestDealGrid extends StatefulWidget {
   BestDealGrid({super.key});
@@ -154,12 +156,21 @@ class _BestDealGridState extends State<BestDealGrid> {
                   ),
                 ),
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => WomensWear(
-                  // data: PassData(offers.offerTitle, offers.offerId))),
-                  // );
+                  PassDataToProduct product = PassDataToProduct(
+                      model.productName,
+                      model.productId,
+                      model.imagePaths[0],
+                      model.discountedPrice.toString(),
+                      model.price.toString(),
+                      model.discountType == "FLAT"
+                          ? "OFF ${model.discount}"
+                          : "OFF ${model.discount} %");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ProductPage(productData: product)),
+                  );
                 },
               );
             },

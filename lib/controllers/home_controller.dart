@@ -14,8 +14,7 @@ class HomeController extends GetxController {
   ///////loading ///////
 
   void init() {
-    loading = true;
-    update();
+    updateloading(true);
     getCategory();
     getRandomCouponProducts();
     GetCouponsWithProductsdata();
@@ -61,6 +60,7 @@ class HomeController extends GetxController {
   List<GetCouponsWithProducts> couponproductlist = [];
   Future<void> GetCouponsWithProductsdata() async {
     try {
+      print("get data");
       final response1 =
           await httpClient().get(StaticVariables.GetCouponsWithProducts);
       if (response1.statusCode == 200) {

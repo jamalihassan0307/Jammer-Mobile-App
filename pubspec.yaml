@@ -103,6 +103,7 @@ flutter:
     - assets/payment_icon/
     - assets/user_profile/
     - assets/json/
+    - assets/
 
   fonts:
     - family: Francois One

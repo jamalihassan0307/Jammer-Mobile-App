@@ -32,7 +32,7 @@ class GetCouponsWithProducts {
     return GetCouponsWithProducts(
       coupon: Coupon.fromMap(map['coupon'] as Map<String, dynamic>),
       products: List<Products>.from(
-        (map['products'] as List<int>).map<Products>(
+        (map['products'] as List<dynamic>).map<Products>(
           (x) => Products.fromMap(x as Map<String, dynamic>),
         ),
       ),
@@ -145,14 +145,14 @@ class Products {
   int productId;
   String productName;
   String description;
-  int price;
+  double price;
   int stockQuantity;
   String couponCode;
-  int discount;
+  double discount;
   String discountType;
   String expirationDate;
-  int discountedPrice;
-  List<String> imagePaths;
+  double discountedPrice;
+  List<dynamic> imagePaths;
   Products({
     required this.productId,
     required this.productName,
@@ -171,14 +171,14 @@ class Products {
     int? productId,
     String? productName,
     String? description,
-    int? price,
+    double? price,
     int? stockQuantity,
     String? couponCode,
-    int? discount,
+    double? discount,
     String? discountType,
     String? expirationDate,
-    int? discountedPrice,
-    List<String>? imagePaths,
+    double? discountedPrice,
+    List<dynamic>? imagePaths,
   }) {
     return Products(
       productId: productId ?? this.productId,
@@ -216,14 +216,14 @@ class Products {
       productId: map['productId'] as int,
       productName: map['productName'] as String,
       description: map['description'] as String,
-      price: map['price'] as int,
+      price: map['price'] as double,
       stockQuantity: map['stockQuantity'] as int,
       couponCode: map['couponCode'] as String,
-      discount: map['discount'] as int,
+      discount: map['discount'] as double,
       discountType: map['discountType'] as String,
       expirationDate: map['expirationDate'] as String,
-      discountedPrice: map['discountedPrice'] as int,
-      imagePaths: List<String>.from((map['imagePaths'] as List<String>)),
+      discountedPrice: map['discountedPrice'] as double,
+      imagePaths: List<dynamic>.from((map['imagePaths'] as List<dynamic>)),
     );
   }
 

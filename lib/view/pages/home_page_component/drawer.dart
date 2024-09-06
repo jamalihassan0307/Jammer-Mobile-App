@@ -299,11 +299,14 @@ class MainDrawer extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
+                  print("DATAATATATATA${item}");
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            const TopOffers(title: 'Electronics & Appliances')),
+                        builder: (context) => TopOffers(
+                              title: '${item.name}',
+                              id: item.id.toString(),
+                            )),
                   );
                 },
               ),
