@@ -12,9 +12,9 @@ import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
 import 'package:page_transition/page_transition.dart';
 
 class ProductPage extends StatefulWidget {
-  final PassDataToProduct? productData;
+  final PassDataToProduct productData;
 
-  const ProductPage({Key? key, this.productData}) : super(key: key);
+  const ProductPage({Key? key, required this.productData});
 
   @override
   _ProductPageState createState() => _ProductPageState();
@@ -29,7 +29,7 @@ class _ProductPageState extends State<ProductPage> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.productData!.title),
+        title: Text(widget.productData.title),
         titleSpacing: 0.0,
         backgroundColor: Theme.of(context).primaryColor,
         actions: <Widget>[

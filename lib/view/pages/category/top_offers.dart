@@ -8,9 +8,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:jammer_mobile_app/controllers/TopOffers_controller.dart';
 import 'package:jammer_mobile_app/controllers/home_controller.dart';
+import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
 import 'package:jammer_mobile_app/models/GetCouponsWithProducts%20.dart';
 import 'package:jammer_mobile_app/models/ProductsByCategory%20.dart';
 import 'package:jammer_mobile_app/models/RandamProduct.dart';
+import 'package:jammer_mobile_app/view/pages/product/product.dart';
 
 // My Own Imports
 import 'package:jammer_mobile_app/widget/loading.dart';
@@ -159,12 +161,18 @@ class _OffersGridViewState extends State<OffersGridView> {
         ),
       ),
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //       builder: (context) => ProductViewPageFuilter(
-        //           data: PassData(offers.offerTitle, offers.offerId))),
-        // );
+        PassDataToProduct product = PassDataToProduct(
+            offers.name,
+            int.tryParse(offers.id) ?? 0,
+            offers.imagePath,
+            offers.price.toString(),
+            "0",
+            "");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ProductPage(productData: product)),
+        );
       },
     );
   }
@@ -259,12 +267,20 @@ class _TopOffersGridViewState extends State<TopOffersGridView> {
         ),
       ),
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //       builder: (context) => ProductViewPageFuilter(
-        //           data: PassData(offers.offerTitle, offers.offerId))),
-        // );
+        PassDataToProduct product = PassDataToProduct(
+            offers.productName,
+            offers.productId,
+            offers.imagePaths,
+            offers.discountedPrice.toString(),
+            offers.price.toString(),
+            offers.discountType == "FLAT"
+                ? "OFF ${offers.discount}"
+                : "OFF ${offers.discount} %");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ProductPage(productData: product)),
+        );
       },
     );
   }

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
 
 // My Own Imports
 import 'package:jammer_mobile_app/view/pages/product/rating_row.dart';
@@ -11,9 +12,9 @@ import 'package:jammer_mobile_app/widget/carousel_pro/lib/carousel_pro.dart';
 import 'package:jammer_mobile_app/widget/loading.dart';
 
 class ProductDetails extends StatefulWidget {
-  final data;
+  final PassDataToProduct data;
 
-  const ProductDetails({Key? key, this.data}) : super(key: key);
+  const ProductDetails({Key? key, required this.data}) : super(key: key);
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
@@ -25,6 +26,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
+    print("asdafdfsf${widget.data.imagePath}");
     double height = MediaQuery.of(context).size.height;
     return ListView(
       shrinkWrap: true,
@@ -42,12 +44,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                   height: (height / 2.0),
                   child: Carousel(
                     images: [
-                      NetworkImage(GetImage(widget.data.imagePath)),
-                      NetworkImage(GetImage(widget.data.imagePath)),
-                      NetworkImage(GetImage(widget.data.imagePath)),
-                      NetworkImage(GetImage(widget.data.imagePath)),
-                      NetworkImage(GetImage(widget.data.imagePath)),
-                      NetworkImage(GetImage(widget.data.imagePath))
+                      ...widget.data.imagePath
+                          .map((item) => NetworkImage(GetImage(item))),
                     ],
                     dotSize: 5.0,
                     dotSpacing: 15.0,

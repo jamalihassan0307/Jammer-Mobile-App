@@ -87,7 +87,7 @@ class _ProductsGridViewState extends State<ProductsGridView> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Image(
-                      image: AssetImage(products.productImage),
+                      image: AssetImage(products.productImage[0]),
                       fit: BoxFit.fitHeight,
                     ),
                   ),
@@ -182,7 +182,7 @@ class _ProductsGridViewState extends State<ProductsGridView> {
 
 class Products {
   int productId;
-  String productImage;
+  List<String> productImage;
   String productTitle;
   String productPrice;
   String productOldPrice;

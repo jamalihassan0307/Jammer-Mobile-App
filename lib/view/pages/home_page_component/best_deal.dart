@@ -159,7 +159,7 @@ class _BestDealGridState extends State<BestDealGrid> {
                   PassDataToProduct product = PassDataToProduct(
                       model.productName,
                       model.productId,
-                      model.imagePaths[0],
+                      model.imagePaths,
                       model.discountedPrice.toString(),
                       model.price.toString(),
                       model.discountType == "FLAT"

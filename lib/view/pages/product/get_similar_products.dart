@@ -119,22 +119,22 @@ class _GetSimilarProductsState extends State<GetSimilarProducts> {
                             ),
                           ),
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ProductPage(
-                                          productData: PassDataToProduct(
-                                              snapshot
-                                                  .data![index].productTitle,
-                                              snapshot.data![index].productId,
-                                              snapshot
-                                                  .data![index].productImage,
-                                              snapshot
-                                                  .data![index].productPrice,
-                                              snapshot
-                                                  .data![index].productOldPrice,
-                                              snapshot.data![index].offerText),
-                                        )));
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => ProductPage(
+                            //               productData: PassDataToProduct(
+                            //                   snapshot
+                            //                       .data![index].productTitle,
+                            //                   snapshot.data![index].productId,
+                            //                   snapshot
+                            //                       .data![index].productImage,
+                            //                   snapshot
+                            //                       .data![index].productPrice,
+                            //                   snapshot
+                            //                       .data![index].productOldPrice,
+                            //                   snapshot.data![index].offerText),
+                            //             )));
                           },
                         ),
                       );
@@ -239,18 +239,18 @@ class _SimilarProductsGridViewState extends State<SimilarProductsGridView> {
           ),
         ),
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ProductPage(
-                        productData: PassDataToProduct(
-                            products.productTitle,
-                            products.productId,
-                            products.productImage,
-                            products.productPrice,
-                            products.productOldPrice,
-                            products.offerText),
-                      )));
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => ProductPage(
+          //               productData: PassDataToProduct(
+          //                   products.productTitle,
+          //                   products.productId,
+          //                   products.productImage,
+          //                   products.productPrice,
+          //                   products.productOldPrice,
+          //                   products.offerText),
+          //             )));
         },
       ),
     );

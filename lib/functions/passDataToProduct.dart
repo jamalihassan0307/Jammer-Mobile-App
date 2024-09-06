@@ -3,7 +3,7 @@
 class PassDataToProduct {
   final String title;
   final int productId;
-  final String imagePath;
+  final List<String> imagePath;
   final String price;
   final String oldPrice;
   final String offer;

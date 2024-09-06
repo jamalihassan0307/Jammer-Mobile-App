@@ -39,36 +39,39 @@ class _CouponsDealsState extends State<CouponsDeals> {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
 
-    return SizedBox(
-      height: height * 2,
-      width: width,
-      child: GetBuilder<HomeController>(builder: (obj) {
-        return ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: obj.couponproductlist.length,
-          itemBuilder: (BuildContext context, int index) {
-            GetCouponsWithProducts model = obj.couponproductlist[index];
-            return SizedBox(
-              width: double.infinity,
-              // height: height * 0.6,
-              child: Column(
-                children: <Widget>[
-                  TopImage(
-                    id: model.coupon.id.toString(),
-                    image: getSequentialImage(index),
-                    title: model.coupon.code,
+    return GetBuilder<HomeController>(builder: (obj) {
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: obj.couponproductlist.length,
+              itemBuilder: (BuildContext context, int index) {
+                GetCouponsWithProducts model = obj.couponproductlist[index];
+                return SizedBox(
+                  width: double.infinity,
+                  // height: height * 0.6,
+                  child: Column(
+                    children: <Widget>[
+                      TopImage(
+                        id: model.coupon.id.toString(),
+                        image: getSequentialImage(index),
+                        title: model.coupon.code,
+                      ),
+                      OfferGrid(
+                        coupon: model,
+                        index: index,
+                      ),
+                    ],
                   ),
-                  OfferGrid(
-                    coupon: model,
-                    index: index,
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      }),
-    );
+                );
+              },
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
 
@@ -187,7 +190,7 @@ class OfferGrid extends StatelessWidget {
                       crossAxisSpacing: 0,
                       mainAxisSpacing: 0,
                       crossAxisCount: 2,
-                      childAspectRatio: ((width) / 500),
+                      childAspectRatio: ((width) / 550),
                     ),
                     itemCount: coupon.products.length,
                     primary: false,
@@ -224,18 +227,27 @@ class OfferGrid extends StatelessWidget {
                                       ),
                               ),
                               Container(
-                                alignment: Alignment.center,
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
                                       data.productName,
                                       style: const TextStyle(fontSize: 12.0),
                                     ),
-                                    Text(
-                                      data.description,
-                                      style: const TextStyle(
-                                          color: Color(0xFF67A86B),
-                                          fontSize: 16.0),
+                                    SizedBox(
+                                      height: height * 0.06,
+                                      // color: Colors.pink,
+                                      child: Text(
+                                        data.description,
+                                        style: TextStyle(
+
+                                            // overflow: TextOverflow.fade,
+                                            color: Color(0xFF67A86B),
+                                            fontSize: 15.0),
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                      ),
                                     ),
                                   ],
                                 ),
