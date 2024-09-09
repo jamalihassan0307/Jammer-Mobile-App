@@ -25,6 +25,7 @@ Dio httpFormDataClient() {
 }
 
 Map<String, String> getAuthHeader() {
+  // print("Tokken${StaticVariables.tokenid}");
   return {
     "Authorization": "Bearer ${StaticVariables.tokenid}",
   };

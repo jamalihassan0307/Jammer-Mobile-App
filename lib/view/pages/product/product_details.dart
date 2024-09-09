@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:jammer_mobile_app/controllers/card_controller.dart';
+import 'package:jammer_mobile_app/controllers/wishlist_controller.dart';
 import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
 
 // My Own Imports
@@ -25,6 +28,12 @@ class _ProductDetailsState extends State<ProductDetails> {
   Color color = Colors.grey;
 
   @override
+  void initState() {
+    Get.put(CartController());
+    CartController.to.getreview(widget.data.productId.toString());
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     print("asdafdfsf${widget.data.imagePath}");
     double height = MediaQuery.of(context).size.height;
@@ -32,7 +41,6 @@ class _ProductDetailsState extends State<ProductDetails> {
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       children: <Widget>[
-        // Slider and Add to Wishlist Code Starts Here
         Stack(
           children: <Widget>[
             Container(
@@ -62,36 +70,36 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
             ),
-            Positioned(
-              top: 20.0,
-              right: 20.0,
-              child: FloatingActionButton(
-                backgroundColor: Colors.white,
-                elevation: 3.0,
-                onPressed: () {
-                  setState(() {
-                    if (!favourite) {
-                      favourite = true;
+            GetBuilder<WishListController>(builder: (obj) {
+              return Positioned(
+                top: 20.0,
+                right: 20.0,
+                child: FloatingActionButton(
+                  backgroundColor: Colors.white,
+                  elevation: 3.0,
+                  onPressed: () {
+                    obj.AddWishList(widget.data);
+                    if (!obj.wishList.any((element) =>
+                        element.productId == widget.data.productId)) {
                       color = Colors.red;
-
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text("Added to Wishlist")));
                     } else {
-                      favourite = false;
                       color = Colors.grey;
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text("Remove from Wishlist")));
                     }
-                  });
-                },
-                child: Icon(
-                  (!favourite)
-                      ? FontAwesomeIcons.heart
-                      : FontAwesomeIcons.solidHeart,
-                  color: color,
+                  },
+                  child: Icon(
+                    (!obj.wishList.any((element) =>
+                            element.productId == widget.data.productId))
+                        ? FontAwesomeIcons.heart
+                        : FontAwesomeIcons.solidHeart,
+                    color: color,
+                  ),
                 ),
-              ),
-            ),
+              );
+            }),
           ],
         ),
         // Slider and Add to Wishlist Code Ends Here
@@ -172,7 +180,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               // Price & Offer Row Ends Here
 
               // Rating Row Starts Here
-              const RatingRow(),
+              RatingRow(id: widget.data.productId.toString()),
               // Rating Row Ends Here
             ],
           ),
@@ -285,8 +293,8 @@ class _ProductDetailsState extends State<ProductDetails> {
               const SizedBox(
                 height: 8.0,
               ),
-              const Text(
-                'Slip into this trendy and attractive dress from Rudraaksha and look stylish effortlessly. Made to accentuate any body type, it will give you that extra oomph and make you stand out wherever you are. Keep the accessories minimal for that added elegant look, just your favourite heels and dangling earrings, and of course, don\'t forget your pretty smile!',
+              Text(
+                "${widget.data.dis}",
                 style: TextStyle(fontSize: 14.0, height: 1.45),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 5,
@@ -313,7 +321,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                 ),
                 onTap: () {
-                  _productDescriptionModalBottomSheet(context);
+                  _productDescriptionModalBottomSheet(context, widget.data.dis);
                 },
               ),
               const Divider(
@@ -325,31 +333,31 @@ class _ProductDetailsState extends State<ProductDetails> {
         // Product Description Ends Here
 
         // Similar Product Starts Here
-        Container(
-          padding: const EdgeInsets.all(10.0),
-          margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-          color: Colors.white,
-          child: const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'Similar Products',
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              GetSimilarProducts(),
-            ],
-          ),
-        ),
-        // Similar Product Ends Here
+        // Container(
+        //   padding: const EdgeInsets.all(10.0),
+        //   margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+        //   color: Colors.white,
+        //   child: const Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: <Widget>[
+        //       Text(
+        //         'Similar Products',
+        //         style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+        //       ),
+        //       SizedBox(
+        //         height: 8.0,
+        //       ),
+        //       GetSimilarProducts(),
+        //     ],
+        //   ),
+        // ),
+        // // Similar Product Ends Here
       ],
     );
   }
 
   // Bottom Sheet for Product Description Starts Here
-  void _productDescriptionModalBottomSheet(context) {
+  void _productDescriptionModalBottomSheet(context, String dis) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
@@ -357,7 +365,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             children: <Widget>[
               Container(
                 margin: const EdgeInsets.all(8.0),
-                child: const Column(
+                child: Column(
                   children: <Widget>[
                     Text(
                       'Product Description',
@@ -374,7 +382,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       height: 8.0,
                     ),
                     Text(
-                      'Slip into this trendy and attractive dress from Rudraaksha and look stylish effortlessly. Made to accentuate any body type, it will give you that extra oomph and make you stand out wherever you are. Keep the accessories minimal for that added elegant look, just your favourite heels and dangling earrings, and of course, don\'t forget your pretty smile!',
+                      "${dis.toString()}",
                       style: TextStyle(fontSize: 14.0, height: 1.45),
                       // overflow: TextOverflow.ellipsis,
                       // maxLines: 5,

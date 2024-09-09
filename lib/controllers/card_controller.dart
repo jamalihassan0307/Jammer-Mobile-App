@@ -5,19 +5,16 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:jammer_mobile_app/data/const/static_variables.dart';
 import 'package:jammer_mobile_app/data/network/APIStore.dart';
-import 'package:jammer_mobile_app/models/GetCouponsWithProducts%20.dart';
-import 'package:jammer_mobile_app/models/RandamProduct.dart';
-import 'package:jammer_mobile_app/models/get_category_model.dart';
+import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
+import 'package:jammer_mobile_app/models/CartModel.dart';
+import 'package:jammer_mobile_app/models/review_model.dart';
 
-class HomeController extends GetxController {
-  static HomeController get to => Get.find();
-  ///////loading ///////
+class CartController extends GetxController {
+  static CartController get to => Get.find();
 
   void init() {
     updateloading(true);
-    getCategory();
-    getRandomCouponProducts();
-    GetCouponsWithProductsdata();
+    getcart();
     updateloading(false);
     update();
   }
@@ -28,21 +25,23 @@ class HomeController extends GetxController {
     update();
   }
 
-  List<GetCategoryModel> category = [];
-  Future<void> getCategory() async {
+  double cartTotal = 0;
+  removecart(int index, int id) {
+    cardlist.removeAt(index);
+    getTotal();
+    removeAPisCart(id);
+    update();
+  }
+
+  Future<void> removeAPisCart(int id) async {
     try {
-      final response1 =
-          await httpClient().get(StaticVariables.getAllCategories);
+      final response1 = await httpClient()
+          .delete(StaticVariables.deleteCartItem + id.toString());
       if (response1.statusCode == 200) {
-        List res = response1.data["data"];
-        res.forEach((element) {
-          category.add(GetCategoryModel.fromMap(element));
-        });
-        update();
-        if (kDebugMode) print("category${category}");
+        if (kDebugMode) print("delete successfully");
       } else {
         Fluttertoast.showToast(
-          msg: 'User data Not Found',
+          msg: 'Cart Not Found',
           backgroundColor: Colors.red,
           textColor: Colors.white,
         );
@@ -57,78 +56,104 @@ class HomeController extends GetxController {
     }
   }
 
-  List<GetCouponsWithProducts> couponproductlist = [];
-  Future<void> GetCouponsWithProductsdata() async {
-    try {
-      print("get data");
-      final response1 =
-          await httpClient().get(StaticVariables.getCouponsWithProducts);
-      if (response1.statusCode == 200) {
-        List res = response1.data["data"];
-        res.forEach((element) {
-          couponproductlist.add(GetCouponsWithProducts.fromMap(element));
-        });
-
-        if (kDebugMode) print("couponproductlist${category}");
-      } else {
-        Fluttertoast.showToast(
-          msg: 'User data Not Found',
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        );
-      }
-      // ignore: deprecated_member_use
-    } on DioError catch (e) {
-      Fluttertoast.showToast(
-        msg: e.message.toString(),
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
-    }
+  int numberofcart = 0;
+  getTotal() {
+    double total = 0;
+    cartTotal = 0;
+    cardlist.forEach((element) {
+      total += double.tryParse(element.price) ?? 0;
+    });
+    cartTotal = total;
+    numberofcart = cardlist.length;
+    update();
   }
 
-  List<RandamProduct> randomCouponProductslist = [];
-  Future<void> getRandomCouponProducts() async {
+  List<CartModel> cardlist = [];
+  Future<void> getcart() async {
     try {
-      final response1 =
-          await httpClient().get(StaticVariables.getRandomCouponProducts);
-      if (response1.statusCode == 200) {
-        List res = response1.data["data"];
-        res.forEach((element) {
-          randomCouponProductslist.add(RandamProduct.fromMap(element));
-        });
-
-        if (kDebugMode)
-          print("randomCouponProductslist${randomCouponProductslist}");
-      } else {
-        Fluttertoast.showToast(
-          msg: 'User data Not Found',
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        );
-      }
-      // ignore: deprecated_member_use
-    } on DioError catch (e) {
-      Fluttertoast.showToast(
-        msg: e.message.toString(),
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
-    }
-  }
-
-  List<RandamProduct> cartlist = [];
-  Future<void> getUserCart() async {
-    try {
+      cardlist = [];
       final response1 = await httpClient().get(StaticVariables.getUserCart);
       if (response1.statusCode == 200) {
         List res = response1.data["data"];
         res.forEach((element) {
-          randomCouponProductslist.add(RandamProduct.fromMap(element));
+          cardlist.add(CartModel.fromMap(element));
         });
+        if (kDebugMode) print("cardlist${cardlist.length}");
+      } else {
+        Fluttertoast.showToast(
+          msg: 'User data Not Found',
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
+      }
+      getTotal();
+      // ignore: deprecated_member_use
+    } on DioError catch (e) {
+      Fluttertoast.showToast(
+        msg: e.message.toString(),
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+    }
+  }
 
-        if (kDebugMode)
-          print("randomCouponProductslist${randomCouponProductslist}");
+  double averageRating = 0.0;
+  double total = 0.0;
+  String value = "";
+  getRating() {
+    total = 0.0;
+    averageRating = 0.0;
+    for (int i = 0; i < reviewlist.length; i++) {
+      double index = double.tryParse(reviewlist[i].points.toString()) ?? 0.0;
+      averageRating = averageRating + index;
+    }
+    total = averageRating;
+    averageRating = (averageRating / reviewlist.length);
+
+    value = averageRating.toStringAsFixed(1);
+    update();
+  }
+
+  List<ReviewModel> reviewlist = [];
+  Future<void> getreview(String id) async {
+    try {
+      reviewlist.clear();
+      final response1 =
+          await httpClient().get(StaticVariables.getReviewsId + id);
+      if (response1.statusCode == 200) {
+        List res = response1.data["data"];
+        res.forEach((element) {
+          reviewlist.add(ReviewModel.fromJson(element));
+        });
+        getRating();
+        update();
+        if (kDebugMode) print("reviewlist${reviewlist.length}");
+      } else {
+        Fluttertoast.showToast(
+          msg: 'User data Not Found',
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
+      }
+      // ignore: deprecated_member_use
+    } on DioError catch (e) {
+      Fluttertoast.showToast(
+        msg: e.message.toString(),
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+    }
+  }
+
+  Future<void> Addcart(PassDataToProduct p) async {
+    try {
+      Map<String, dynamic> data = {"productId": p.productId, "quantity": 1};
+      final response1 =
+          await httpClient().post(StaticVariables.addToCart, data: data);
+      if (response1.statusCode == 200) {
+        if (kDebugMode) print("Add SuccessFully");
+        update();
+        getcart();
       } else {
         Fluttertoast.showToast(
           msg: 'User data Not Found',

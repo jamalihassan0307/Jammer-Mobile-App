@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'dart:convert';
 // import 'dart:async' show Future, Timer;
@@ -9,7 +10,6 @@ import 'package:get/get.dart';
 import 'package:jammer_mobile_app/controllers/TopOffers_controller.dart';
 import 'package:jammer_mobile_app/controllers/home_controller.dart';
 import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
-import 'package:jammer_mobile_app/models/GetCouponsWithProducts%20.dart';
 import 'package:jammer_mobile_app/models/ProductsByCategory%20.dart';
 import 'package:jammer_mobile_app/models/RandamProduct.dart';
 import 'package:jammer_mobile_app/view/pages/product/product.dart';
@@ -20,8 +20,10 @@ import 'package:jammer_mobile_app/widget/loading.dart';
 class TopOffers extends StatefulWidget {
   final String? title;
   final String? id;
+  final bool? coupon;
 
-  const TopOffers({Key? key, this.title, this.id}) : super(key: key);
+  const TopOffers({Key? key, this.title, this.id, this.coupon})
+      : super(key: key);
 
   @override
   _TopOffersState createState() => _TopOffersState();
@@ -34,7 +36,8 @@ class _TopOffersState extends State<TopOffers> {
     Get.put(TopOfferController());
     if (widget.id == "0") {
     } else {
-      TopOfferController.to.getproduct(widget.id!);
+      TopOfferController.to
+          .getproduct(widget.id!, widget.coupon == true ? true : false);
     }
     // Timer(const Duration(seconds: 3), () {
     //   setState(() {
@@ -165,6 +168,7 @@ class _OffersGridViewState extends State<OffersGridView> {
             offers.name,
             int.tryParse(offers.id) ?? 0,
             offers.imagePath,
+            offers.description,
             offers.price.toString(),
             "0",
             "");
@@ -273,6 +277,7 @@ class _TopOffersGridViewState extends State<TopOffersGridView> {
             offers.imagePaths,
             offers.discountedPrice.toString(),
             offers.price.toString(),
+            offers.description.toString(),
             offers.discountType == "FLAT"
                 ? "OFF ${offers.discount}"
                 : "OFF ${offers.discount} %");

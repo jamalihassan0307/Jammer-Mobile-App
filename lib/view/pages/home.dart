@@ -4,7 +4,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jammer_mobile_app/controllers/card_controller.dart';
 import 'package:jammer_mobile_app/controllers/home_controller.dart';
+import 'package:jammer_mobile_app/controllers/wishlist_controller.dart';
 import 'package:jammer_mobile_app/widget/carousel_pro/lib/carousel_pro.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,13 +14,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 // My Own Import
 import 'package:jammer_mobile_app/view/pages/home_page_component/drawer.dart';
 import 'package:jammer_mobile_app/view/pages/home_page_component/category_grid.dart';
-import 'package:jammer_mobile_app/view/pages/home_page_component/best_offer_grid.dart';
-import 'package:jammer_mobile_app/view/pages/home_page_component/top_seller_grid.dart';
+// import 'package:jammer_mobile_app/view/pages/home_page_component/best_offer_grid.dart';
+// import 'package:jammer_mobile_app/view/pages/home_page_component/top_seller_grid.dart';
 import 'package:jammer_mobile_app/view/pages/home_page_component/best_deal.dart';
 import 'package:jammer_mobile_app/view/pages/home_page_component/featured_brands.dart';
 import 'package:jammer_mobile_app/view/pages/home_page_component/CouponsDeals.dart';
-import 'package:jammer_mobile_app/view/pages/home_page_component/best_of_fashion.dart';
-import 'package:jammer_mobile_app/view/pages/home_page_component/womens_collection.dart';
+// import 'package:jammer_mobile_app/view/pages/home_page_component/best_of_fashion.dart';
+// import 'package:jammer_mobile_app/view/pages/home_page_component/womens_collection.dart';
 import 'package:jammer_mobile_app/view/pages/notifications.dart';
 import 'package:jammer_mobile_app/view/pages/category/top_offers.dart';
 import 'package:jammer_mobile_app/view/pages/cart.dart';
@@ -39,7 +41,11 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     Get.put(HomeController());
+    Get.put(CartController());
+    Get.put(WishListController());
     HomeController.to.init();
+    CartController.to.init();
+    WishListController.to.init();
     super.initState();
   }
 
@@ -86,25 +92,27 @@ class _HomeState extends State<Home> {
                       );
                     },
                   ),
-                  IconButton(
-                    icon: badges.Badge(
-                      badgeContent: const Text('3'),
-                      badgeStyle: badges.BadgeStyle(
-                        badgeColor: Theme.of(context).primaryColorLight,
+                  GetBuilder<CartController>(builder: (obj) {
+                    return IconButton(
+                      icon: badges.Badge(
+                        badgeContent: Text(obj.numberofcart.toString()),
+                        badgeStyle: badges.BadgeStyle(
+                          badgeColor: Theme.of(context).primaryColorLight,
+                        ),
+                        child: const Icon(
+                          Icons.shopping_cart,
+                          color: Colors.white,
+                        ),
                       ),
-                      child: const Icon(
-                        Icons.shopping_cart,
-                        color: Colors.white,
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              child: const CartPage()));
-                    },
-                  ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                child: const CartPage()));
+                      },
+                    );
+                  }),
                 ],
               ),
 

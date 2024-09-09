@@ -11,7 +11,6 @@ import 'package:jammer_mobile_app/models/GetCouponsWithProducts%20.dart';
 
 // My Own Imports
 import 'package:jammer_mobile_app/view/pages/category/top_offers.dart';
-import 'package:jammer_mobile_app/view/pages/category/top_offers_pages/product_view_page.dart';
 import 'package:jammer_mobile_app/view/pages/product/product.dart';
 
 class CouponsDeals extends StatefulWidget {
@@ -53,11 +52,11 @@ class _CouponsDealsState extends State<CouponsDeals> {
                   width: double.infinity,
                   // height: height * 0.6,
                   child: Column(
-                    children: <Widget>[
+                    children: [
                       TopImage(
                         id: model.coupon.id.toString(),
                         image: getSequentialImage(index),
-                        title: model.coupon.code,
+                        title: model.coupon.code.toString(),
                       ),
                       OfferGrid(
                         coupon: model,
@@ -135,7 +134,11 @@ class TopImage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => TopOffers(title: id)),
+                          builder: (context) => TopOffers(
+                                title: title,
+                                id: id,
+                                coupon: true,
+                              )),
                     );
                   },
                 ),
@@ -259,9 +262,10 @@ class OfferGrid extends StatelessWidget {
                           PassDataToProduct model = PassDataToProduct(
                               data.productName,
                               data.productId,
-                              data.imagePaths[0],
+                              data.imagePaths,
                               data.discountedPrice.toString(),
                               data.price.toString(),
+                              data.description.toString(),
                               data.discountType == "FLAT"
                                   ? "OFF ${data.discount}"
                                   : "OFF ${data.discount} %");

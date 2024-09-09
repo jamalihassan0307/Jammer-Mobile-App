@@ -162,6 +162,7 @@ class _BestDealGridState extends State<BestDealGrid> {
                       model.imagePaths,
                       model.discountedPrice.toString(),
                       model.price.toString(),
+                      model.description.toString(),
                       model.discountType == "FLAT"
                           ? "OFF ${model.discount}"
                           : "OFF ${model.discount} %");

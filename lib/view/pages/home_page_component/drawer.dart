@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jammer_mobile_app/controllers/home_controller.dart';
+import 'package:jammer_mobile_app/models/get_category_model.dart';
 import 'package:jammer_mobile_app/view/pages/cart.dart';
 import 'package:jammer_mobile_app/view/pages/faq_and_about_app/about_app.dart';
 import 'package:jammer_mobile_app/view/pages/faq_and_about_app/faq.dart';
@@ -106,11 +107,15 @@ class MainDrawer extends StatelessWidget {
                 ),
               ),
               onTap: () {
+                final item = GetCategoryModel(id: 0, name: "");
+                print("item.id.toString()${item.id.toString()}");
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          const TopOffers(title: 'Top Offers')),
+                      builder: (context) => TopOffers(
+                            title: '${item.name}',
+                            id: item.id.toString(),
+                          )),
                 );
               },
             ),

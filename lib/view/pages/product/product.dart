@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:get/get.dart';
+import 'package:jammer_mobile_app/controllers/card_controller.dart';
 
 // My Own Imports
 import 'package:jammer_mobile_app/view/pages/product/product_details.dart';
@@ -27,96 +29,96 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.productData.title),
-        titleSpacing: 0.0,
-        backgroundColor: Theme.of(context).primaryColor,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.favorite,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  PageTransition(
-                      type: PageTransitionType.rightToLeft,
-                      child: const WishlistPage()));
-            },
-          ),
-          IconButton(
-            icon: badges.Badge(
-              badgeContent: Text('$cartItem'),
-              badgeStyle: badges.BadgeStyle(
-                badgeColor: Theme.of(context).primaryColorLight,
-              ),
-              child: const Icon(
-                Icons.shopping_cart,
+    return GetBuilder<CartController>(builder: (obj) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.productData.title),
+          titleSpacing: 0.0,
+          backgroundColor: Theme.of(context).primaryColor,
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.favorite,
                 color: Colors.white,
               ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: const WishlistPage()));
+              },
             ),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  PageTransition(
-                      type: PageTransitionType.rightToLeft,
-                      child: const CartPage()));
-            },
-          ),
-        ],
-      ),
-      backgroundColor: const Color(0xFFF1F3F6),
-      body: ProductDetails(data: widget.productData),
-      bottomNavigationBar: Material(
-        elevation: 5.0,
-        child: Container(
-          color: Colors.white,
-          width: width,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    cartItem++;
-                  });
-                },
-                child: Container(
-                  width: width / 2,
-                  height: 50.0,
-                  color: Theme.of(context).primaryColorLight,
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Add To Cart',
-                    style: TextStyle(color: Colors.black, fontSize: 15.0),
-                  ),
+            IconButton(
+              icon: badges.Badge(
+                badgeContent: Text('${obj.numberofcart.toString()}'),
+                badgeStyle: badges.BadgeStyle(
+                  badgeColor: Theme.of(context).primaryColorLight,
+                ),
+                child: const Icon(
+                  Icons.shopping_cart,
+                  color: Colors.white,
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.rightToLeft,
-                          child: const Delivery()));
-                },
-                child: Container(
-                  width: width / 2,
-                  height: 50.0,
-                  color: Theme.of(context).primaryColor,
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Buy Now',
-                    style: TextStyle(color: Colors.white, fontSize: 15.0),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: const CartPage()));
+              },
+            ),
+          ],
+        ),
+        backgroundColor: const Color(0xFFF1F3F6),
+        body: ProductDetails(data: widget.productData),
+        bottomNavigationBar: Material(
+          elevation: 5.0,
+          child: Container(
+            color: Colors.white,
+            width: width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                InkWell(
+                  onTap: () {
+                    obj.Addcart(widget.productData);
+                  },
+                  child: Container(
+                    width: width / 2,
+                    height: 50.0,
+                    color: Theme.of(context).primaryColorLight,
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'Add To Cart',
+                      style: TextStyle(color: Colors.black, fontSize: 15.0),
+                    ),
                   ),
                 ),
-              ),
-            ],
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            type: PageTransitionType.rightToLeft,
+                            child: const Delivery()));
+                  },
+                  child: Container(
+                    width: width / 2,
+                    height: 50.0,
+                    color: Theme.of(context).primaryColor,
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'Buy Now',
+                      style: TextStyle(color: Colors.white, fontSize: 15.0),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

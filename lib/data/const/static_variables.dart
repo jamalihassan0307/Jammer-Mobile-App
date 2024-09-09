@@ -13,10 +13,28 @@ class StaticVariables {
 
   ////////////////////Category/////////////
   static String getAllCategories = "Category/GetAllCategories";
+
+  ////////////////////Cart/////////////
+  static String addToCart = "Cart/AddToCart";
+  static String getUserCart = "Cart/GetUserCart";
+  static String getCartById = "Cart/GetCartById/";
+  static String deleteCartItem = "Cart/DeleteCartItem/";
+  static String updateCartItem = "Cart/UpdateCartItem/";
+  ////////////////////WishList/////////////
+  static String addWishList = "WishList/AddWishList";
+  static String getUserWishList = "WishList/GetUserWishList";
+  static String getWishListById = "Cart/GetWishListById/";
+  static String deleteWishListItem = "Cart/DeleteWishListItem/";
+  static String updateWishListItem = "Cart/UpdateWishListItem/";
   ////////////////////Product/////////////
+
   static String filterProductsByCategory = "Product/FilterProductsByCategory/";
+  ////////////////////Review/////////////
+
+  static String getReviewsId = "Review/GetReviews/";
   ////////////////////Coupon/////////////
   static String getRandomCouponProducts = "Coupon/GetRandomCouponProducts";
-  static String GetCouponsWithProducts = "Coupon/GetCouponsWithProducts";
+  static String getCouponsWithProducts = "Coupon/GetCouponsWithProducts";
+  static String getProductsByCouponid = "Coupon/GetProductsByCoupon/";
   // static String getRandomCouponProducts = "Coupon/GetRandomCouponProducts";
 }
