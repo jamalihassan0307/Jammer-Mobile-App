@@ -1,12 +1,18 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:jammer_mobile_app/controllers/order_controller.dart';
+import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
 
 // My Own Imports
 import 'package:jammer_mobile_app/view/pages/home.dart';
 
 class PaymentPage extends StatefulWidget {
-  const PaymentPage({super.key});
+  final PassDataToProduct productData;
+  final int coupon;
+
+  const PaymentPage(
+      {Key? key, required this.productData, required this.coupon});
 
   @override
   _PaymentPageState createState() => _PaymentPageState();
@@ -172,6 +178,8 @@ class _PaymentPageState extends State<PaymentPage> {
                   borderRadius: BorderRadius.circular(30.0),
                   child: InkWell(
                     onTap: () {
+                      OrderController.to
+                          .createOrder(widget.productData, widget.coupon);
                       _showDialog();
                     },
                     child: Container(

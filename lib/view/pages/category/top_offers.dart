@@ -21,8 +21,9 @@ class TopOffers extends StatefulWidget {
   final String? title;
   final String? id;
   final bool? coupon;
+  final int? couponid;
 
-  const TopOffers({Key? key, this.title, this.id, this.coupon})
+  const TopOffers({Key? key, this.title, this.id, this.coupon, this.couponid})
       : super(key: key);
 
   @override
@@ -84,12 +85,15 @@ class _TopOffersState extends State<TopOffers> {
                           margin: const EdgeInsets.only(top: 10.0),
                           child: TopOffersGridView(
                               offers:
-                                  HomeController.to.randomCouponProductslist),
+                                  HomeController.to.randomCouponProductslist,
+                              couponid: widget.couponid!),
                         ),
                       if (widget.id != "0")
                         Container(
                           margin: const EdgeInsets.only(top: 10.0),
-                          child: OffersGridView(offers: obj.couponproductlist),
+                          child: OffersGridView(
+                              offers: obj.couponproductlist,
+                              couponid: widget.couponid!),
                         ),
                     ],
                   ));
@@ -100,8 +104,10 @@ class _TopOffersState extends State<TopOffers> {
 
 class OffersGridView extends StatefulWidget {
   final List<ProductsByCategory>? offers;
+  final int couponid;
 
-  const OffersGridView({Key? key, this.offers}) : super(key: key);
+  const OffersGridView({Key? key, this.offers, required this.couponid})
+      : super(key: key);
 
   @override
   _OffersGridViewState createState() => _OffersGridViewState();
@@ -175,7 +181,10 @@ class _OffersGridViewState extends State<OffersGridView> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ProductPage(productData: product)),
+              builder: (context) => ProductPage(
+                    productData: product,
+                    coupon: widget.couponid,
+                  )),
         );
       },
     );
@@ -200,8 +209,10 @@ class _OffersGridViewState extends State<OffersGridView> {
 
 class TopOffersGridView extends StatefulWidget {
   final List<RandamProduct>? offers;
+  final int couponid;
 
-  const TopOffersGridView({Key? key, this.offers}) : super(key: key);
+  const TopOffersGridView({Key? key, this.offers, required this.couponid})
+      : super(key: key);
 
   @override
   _TopOffersGridViewState createState() => _TopOffersGridViewState();
@@ -284,7 +295,10 @@ class _TopOffersGridViewState extends State<TopOffersGridView> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ProductPage(productData: product)),
+              builder: (context) => ProductPage(
+                    productData: product,
+                    coupon: widget.couponid,
+                  )),
         );
       },
     );

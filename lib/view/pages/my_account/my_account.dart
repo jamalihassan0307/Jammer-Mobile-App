@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:jammer_mobile_app/data/const/static_variables.dart';
 import 'package:jammer_mobile_app/view/pages/faq_and_about_app/about_app.dart';
 import 'package:jammer_mobile_app/view/pages/faq_and_about_app/faq.dart';
 
@@ -10,6 +11,7 @@ import 'package:jammer_mobile_app/view/pages/login.dart';
 import 'package:jammer_mobile_app/view/pages/my_account/account_setting.dart';
 import 'package:jammer_mobile_app/view/pages/my_orders.dart';
 import 'package:jammer_mobile_app/view/pages/notifications.dart';
+import 'package:jammer_mobile_app/widget/loading.dart';
 import 'package:page_transition/page_transition.dart';
 
 class MyAccount extends StatefulWidget {
@@ -57,19 +59,16 @@ class _MyAccountState extends State<MyAccount> {
                           borderRadius: BorderRadius.circular(55.0),
                           border: Border.all(color: Colors.white, width: 5.0),
                         ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(50.0),
-                          child: const Image(
-                            image: AssetImage('assets/user_profile/user_3.jpg'),
-                            height: 100.0,
-                            width: 100.0,
-                          ),
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: NetworkImage(
+                              GetImage(StaticVariables.model!.image)),
                         ),
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(top: 8.0),
                         child: Text(
-                          'Allison Perry',
+                          StaticVariables.model!.fullName,
                           style: TextStyle(
                               fontSize: 20.0, fontWeight: FontWeight.bold),
                         ),
@@ -90,7 +89,7 @@ class _MyAccountState extends State<MyAccount> {
                 ),
               ],
             ),
-          ),
+          ),        
           InkWell(
             onTap: () {
               Navigator.push(

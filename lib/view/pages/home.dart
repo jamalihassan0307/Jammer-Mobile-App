@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jammer_mobile_app/controllers/card_controller.dart';
 import 'package:jammer_mobile_app/controllers/home_controller.dart';
+import 'package:jammer_mobile_app/controllers/order_controller.dart';
 import 'package:jammer_mobile_app/controllers/wishlist_controller.dart';
 import 'package:jammer_mobile_app/widget/carousel_pro/lib/carousel_pro.dart';
 import 'package:badges/badges.dart' as badges;
@@ -42,14 +43,17 @@ class _HomeState extends State<Home> {
   void initState() {
     Get.put(HomeController());
     Get.put(CartController());
+    Get.put(OrderController());
     Get.put(WishListController());
     HomeController.to.init();
     CartController.to.init();
+    OrderController.to.init();
     WishListController.to.init();
     super.initState();
   }
 
   Widget build(BuildContext context) {
+    // OrderController.to.init();
     return GetBuilder<HomeController>(builder: (obj) {
       return obj.loading
           ? ProgressLoading()

@@ -54,6 +54,7 @@ class _CouponsDealsState extends State<CouponsDeals> {
                   child: Column(
                     children: [
                       TopImage(
+                        couponid: model.coupon.id,
                         id: model.coupon.id.toString(),
                         image: getSequentialImage(index),
                         title: model.coupon.code.toString(),
@@ -76,10 +77,15 @@ class _CouponsDealsState extends State<CouponsDeals> {
 
 class TopImage extends StatelessWidget {
   TopImage(
-      {super.key, required this.image, required this.title, required this.id});
+      {super.key,
+      required this.image,
+      required this.title,
+      required this.id,
+      required this.couponid});
   String image;
   String title;
   String id;
+  int couponid;
 
   var height, width;
   @override
@@ -137,6 +143,7 @@ class TopImage extends StatelessWidget {
                           builder: (context) => TopOffers(
                                 title: title,
                                 id: id,
+                                couponid: couponid,
                                 coupon: true,
                               )),
                     );
@@ -272,8 +279,10 @@ class OfferGrid extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    ProductPage(productData: model)),
+                                builder: (context) => ProductPage(
+                                      productData: model,
+                                      coupon: coupon.coupon.id,
+                                    )),
                           );
                         },
                       );

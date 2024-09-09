@@ -16,7 +16,10 @@ import 'package:page_transition/page_transition.dart';
 class ProductPage extends StatefulWidget {
   final PassDataToProduct productData;
 
-  const ProductPage({Key? key, required this.productData});
+  final int coupon;
+
+  const ProductPage(
+      {Key? key, required this.productData, required this.coupon});
 
   @override
   _ProductPageState createState() => _ProductPageState();
@@ -101,7 +104,10 @@ class _ProductPageState extends State<ProductPage> {
                         context,
                         PageTransition(
                             type: PageTransitionType.rightToLeft,
-                            child: const Delivery()));
+                            child: Delivery(
+                              productData: widget.productData,
+                              coupon: widget.coupon,
+                            )));
                   },
                   child: Container(
                     width: width / 2,

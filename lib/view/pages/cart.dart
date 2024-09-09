@@ -96,13 +96,13 @@ class _CartPageState extends State<CartPage> {
                 ),
                 InkWell(
                   onTap: () {
-                    (obj.cartTotal == 0)
-                        ? showAlertDialog()
-                        : Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.rightToLeft,
-                                child: const Delivery()));
+                    // (obj.cartTotal == 0)
+                    //     ? showAlertDialog()
+                    //     : Navigator.push(
+                    //         context,
+                    //         PageTransition(
+                    //             type: PageTransitionType.rightToLeft,
+                    //             child: const Delivery()));
                   },
                   child: Container(
                     width: ((widthFull) / 2),

@@ -37,4 +37,10 @@ class StaticVariables {
   static String getCouponsWithProducts = "Coupon/GetCouponsWithProducts";
   static String getProductsByCouponid = "Coupon/GetProductsByCoupon/";
   // static String getRandomCouponProducts = "Coupon/GetRandomCouponProducts";
+  ////////////////////Oder/////////////
+
+  static String createOrder = "Order/CreateOrder";
+  static String getOrderById = "Order/GetOrderById/";
+  static String updateOrderStatus = "Order/UpdateOrderStatus/";
+  static String getOrdersByUserId = "Order/GetOrdersByUserId/";
 }
