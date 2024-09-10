@@ -311,6 +311,7 @@ class MainDrawer extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => TopOffers(
                               title: '${item.name}',
+                              couponid: item.id,
                               id: item.id.toString(),
                             )),
                   );

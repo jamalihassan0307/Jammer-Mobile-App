@@ -63,7 +63,8 @@ class WishListController extends GetxController {
     wishList.forEach((element) {
       total += double.tryParse(element.price) ?? 0;
     });
-    wishListTotal = total;
+    wishListTotal = double.parse(total.toStringAsFixed(2));
+    ;
     numberofWishList = wishList.length;
     update();
   }

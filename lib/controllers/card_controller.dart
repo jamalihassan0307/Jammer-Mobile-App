@@ -64,7 +64,8 @@ class CartController extends GetxController {
     cardlist.forEach((element) {
       total += double.tryParse(element.price) ?? 0;
     });
-    cartTotal = total;
+    cartTotal = cartTotal = double.parse(total.toStringAsFixed(2));
+    ;
     numberofcart = cardlist.length;
     update();
   }
