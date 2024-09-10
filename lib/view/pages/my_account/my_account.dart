@@ -89,7 +89,7 @@ class _MyAccountState extends State<MyAccount> {
                 ),
               ],
             ),
-          ),        
+          ),
           InkWell(
             onTap: () {
               Navigator.push(

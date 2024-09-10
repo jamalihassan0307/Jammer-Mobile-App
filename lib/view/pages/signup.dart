@@ -66,17 +66,7 @@ class _SignupState extends State<Signup> {
               margin: const EdgeInsets.only(right: 50.0, left: 50.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  // Container(
-                  //   width: 100.0,
-                  //   height: 100.0,
-                  //   decoration: const BoxDecoration(
-                  //     image: DecorationImage(
-                  //       image: AssetImage('assets/GoKart.png'),
-                  //       fit: BoxFit.cover,
-                  //     ),
-                  //   ),
-                  // ),
+                children: [
                   obj.image != null
                       ? Container(
                           height: height * 0.17,
@@ -336,7 +326,6 @@ class _SignupState extends State<Signup> {
                             ],
                           ),
                         ),
-
                   const SizedBox(height: 10.0),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
