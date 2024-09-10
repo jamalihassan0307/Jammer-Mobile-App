@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
-import 'package:jammer_mobile_app/view/pages/product/product.dart';
+// import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
+// import 'package:jammer_mobile_app/view/pages/product/product.dart';
 
 class GetSimilarProducts extends StatefulWidget {
   const GetSimilarProducts({super.key});

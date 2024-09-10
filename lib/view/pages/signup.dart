@@ -1,8 +1,8 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:jammer_mobile_app/controllers/login_controller.dart';
 import 'package:jammer_mobile_app/view/pages/login.dart';
-import 'package:jammer_mobile_app/view/pages/home.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -13,225 +13,482 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   // Initially password is obscure
-  bool _obscureText = true;
-  bool _obscureText1 = true;
 
-  // Toggles the password show status
-  void _viewPassword() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
-
-  void _viewPassword1() {
-    setState(() {
-      _obscureText1 = !_obscureText1;
-    });
-  }
-
+  var height, width;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.only(top: 70.0, right: 30.0, left: 30.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                InkWell(
-                  child: const Text(
-                    "Login",
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+
+    return GetBuilder<LoginController>(builder: (obj) {
+      return Scaffold(
+        body: ListView(
+          children: <Widget>[
+            Container(
+              padding:
+                  const EdgeInsets.only(top: 70.0, right: 30.0, left: 30.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  InkWell(
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Alatsi',
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Login()),
+                      );
+                    },
+                  ),
+                  const Text(
+                    'Sign Up',
+                    textAlign: TextAlign.end,
                     style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 25.0,
+                      color: Colors.black,
+                      fontSize: 40.0,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Alatsi',
                     ),
                   ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Login()),
-                    );
-                  },
-                ),
-                const Text(
-                  'Sign Up',
-                  textAlign: TextAlign.end,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 40.0,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Alatsi',
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 40.0),
-          Container(
-            alignment: Alignment.center,
-            margin: const EdgeInsets.only(right: 50.0, left: 50.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  width: 100.0,
-                  height: 100.0,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/GoKart.png'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Email Address',
-                        contentPadding:
-                            EdgeInsets.only(top: 12.0, bottom: 12.0),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    const TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Username',
-                        contentPadding:
-                            EdgeInsets.only(top: 12.0, bottom: 12.0),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Password',
-                        suffixIcon: IconButton(
-                          icon: const Icon(Icons.remove_red_eye),
-                          onPressed: _viewPassword,
-                        ),
-                        contentPadding:
-                            const EdgeInsets.only(top: 12.0, bottom: 12.0),
-                      ),
-                      obscureText: _obscureText,
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Repeat Password',
-                        suffixIcon: IconButton(
-                          icon: const Icon(Icons.remove_red_eye),
-                          onPressed: _viewPassword1,
-                        ),
-                        contentPadding:
-                            const EdgeInsets.only(top: 12.0, bottom: 12.0),
-                      ),
-                      obscureText: _obscureText1,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 50.0,
-                ),
-                InkWell(
-                  child: SizedBox(
-                    height: 45.0,
-                    child: Material(
-                      borderRadius: BorderRadius.circular(20.0),
-                      shadowColor: Colors.grey[300],
-                      color: Colors.white,
-                      borderOnForeground: false,
-                      elevation: 5.0,
-                      child: GestureDetector(
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.check,
-                                color: Theme.of(context).primaryColor,
+            const SizedBox(height: 40.0),
+            Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.only(right: 50.0, left: 50.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  // Container(
+                  //   width: 100.0,
+                  //   height: 100.0,
+                  //   decoration: const BoxDecoration(
+                  //     image: DecorationImage(
+                  //       image: AssetImage('assets/GoKart.png'),
+                  //       fit: BoxFit.cover,
+                  //     ),
+                  //   ),
+                  // ),
+                  obj.image != null
+                      ? Container(
+                          height: height * 0.17,
+                          width: width * 0.36,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: FileImage(obj.image!)),
+                            color: Colors.grey,
+                            shape: BoxShape.circle,
+                          ),
+                        )
+                      : SizedBox(
+                          width: width * 0.3,
+                          child: Stack(
+                            children: [
+                              Container(
+                                height: height * 0.17,
+                                width: width * 0.36,
+                                decoration: BoxDecoration(
+                                  color: Colors.blueGrey,
+                                  shape: BoxShape.circle,
+                                ),
                               ),
-                              const SizedBox(
-                                width: 7.0,
-                              ),
-                              Text(
-                                "SIGN UP",
-                                style: TextStyle(
-                                  fontFamily: 'Alatsi',
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold,
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: InkWell(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          context: context,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          builder: (context) {
+                                            return SizedBox(
+                                              height: height * 0.2,
+                                              width: width,
+                                              child: Column(
+                                                children: [
+                                                  SizedBox(
+                                                    height: height * 0.06,
+                                                    width: width,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: width * 0.04,
+                                                          top: height * 0.015),
+                                                      child: Text(
+                                                        'Edit Profile Photo',
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                width * 0.045,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: Colors.blue),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: height * 0.12,
+                                                    width: width,
+                                                    child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          SizedBox(
+                                                            height:
+                                                                height * 0.12,
+                                                            width: width * 0.2,
+                                                            child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceEvenly,
+                                                                children: [
+                                                                  InkWell(
+                                                                    onTap: () {
+                                                                      setState(
+                                                                          () {
+                                                                        obj.cameraImagePick();
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                      });
+                                                                    },
+                                                                    child:
+                                                                        Container(
+                                                                      height: height *
+                                                                          0.065,
+                                                                      width: width *
+                                                                          0.13,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        shape: BoxShape
+                                                                            .circle,
+                                                                        border:
+                                                                            Border.all(
+                                                                          color:
+                                                                              Colors.blue,
+                                                                          width:
+                                                                              1,
+                                                                        ),
+                                                                      ),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .camera_alt,
+                                                                        size: width *
+                                                                            0.055,
+                                                                        color: Colors
+                                                                            .blue,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Text(
+                                                                    "Camera",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w500,
+                                                                        color: Colors
+                                                                            .blue),
+                                                                  )
+                                                                ]),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                height * 0.12,
+                                                            width: width * 0.2,
+                                                            child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceEvenly,
+                                                                children: [
+                                                                  InkWell(
+                                                                    onTap: () {
+                                                                      obj.galleryImagePick();
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      obj.update();
+                                                                    },
+                                                                    child:
+                                                                        Container(
+                                                                      height: height *
+                                                                          0.065,
+                                                                      width: width *
+                                                                          0.13,
+                                                                      decoration: BoxDecoration(
+                                                                          shape: BoxShape.circle,
+                                                                          border: Border.all(
+                                                                            color:
+                                                                                Colors.blue,
+                                                                            width:
+                                                                                1,
+                                                                          )),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .photo_album,
+                                                                        size: width *
+                                                                            0.055,
+                                                                        color: Colors
+                                                                            .blue,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Text(
+                                                                    "Gallery",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w500,
+                                                                        color: Colors
+                                                                            .blue),
+                                                                  )
+                                                                ]),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                height * 0.12,
+                                                            width: width * 0.2,
+                                                            child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceEvenly,
+                                                                children: [
+                                                                  InkWell(
+                                                                    onTap: () {
+                                                                      obj.image =
+                                                                          null;
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      obj.update();
+                                                                    },
+                                                                    child:
+                                                                        Container(
+                                                                      height: height *
+                                                                          0.065,
+                                                                      width: width *
+                                                                          0.13,
+                                                                      decoration: BoxDecoration(
+                                                                          shape: BoxShape.circle,
+                                                                          border: Border.all(
+                                                                            color:
+                                                                                Colors.blue,
+                                                                            width:
+                                                                                1,
+                                                                          )),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .delete,
+                                                                        size: width *
+                                                                            0.055,
+                                                                        color: Colors
+                                                                            .blue,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Text(
+                                                                    "Delete",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w500,
+                                                                        color: Colors
+                                                                            .blue),
+                                                                  )
+                                                                ]),
+                                                          ),
+                                                        ]),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          });
+                                    },
+                                    child: Container(
+                                      height: height * 0.06,
+                                      width: width * 0.12,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.blue,
+                                      ),
+                                      child: Icon(
+                                        Icons.camera_alt_outlined,
+                                        size: width * 0.06,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Home()),
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: 15.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Already have an account?',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 15.0,
-                        fontFamily: 'Alatsi',
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 5.0,
-                    ),
-                    InkWell(
-                      child: Text(
-                        'Login',
-                        style: TextStyle(
-                          color: Colors.grey[700],
-                          fontSize: 18.0,
-                          fontFamily: 'Alatsi',
-                          fontWeight: FontWeight.bold,
+
+                  const SizedBox(height: 10.0),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      TextField(
+                        controller: obj.emailc,
+                        decoration: const InputDecoration(
+                          hintText: 'Email Address',
+                          contentPadding:
+                              EdgeInsets.only(top: 12.0, bottom: 12.0),
                         ),
                       ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Login()),
-                        );
-                      },
+                      const SizedBox(height: 10.0),
+                      TextField(
+                        controller: obj.user,
+                        decoration: const InputDecoration(
+                          hintText: 'Username',
+                          contentPadding:
+                              EdgeInsets.only(top: 12.0, bottom: 12.0),
+                        ),
+                      ),
+                      const SizedBox(height: 10.0),
+                      TextField(
+                        controller: obj.passwordc,
+                        decoration: InputDecoration(
+                          hintText: 'Password',
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.remove_red_eye),
+                            onPressed: obj.viewPassword2,
+                          ),
+                          contentPadding:
+                              const EdgeInsets.only(top: 12.0, bottom: 12.0),
+                        ),
+                        obscureText: obj.obscureText2,
+                      ),
+                      const SizedBox(height: 10.0),
+                      TextField(
+                        controller: obj.repassword,
+                        decoration: InputDecoration(
+                          hintText: 'Repeat Password',
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.remove_red_eye),
+                            onPressed: obj.viewPassword3,
+                          ),
+                          contentPadding:
+                              const EdgeInsets.only(top: 12.0, bottom: 12.0),
+                        ),
+                        obscureText: obj.obscureText3,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 50.0),
+                  InkWell(
+                    child: SizedBox(
+                      height: 45.0,
+                      child: Material(
+                        borderRadius: BorderRadius.circular(20.0),
+                        shadowColor: Colors.grey[300],
+                        color: Colors.white,
+                        borderOnForeground: false,
+                        elevation: 5.0,
+                        child: GestureDetector(
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.check,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                const SizedBox(width: 7.0),
+                                Text(
+                                  "SIGN UP",
+                                  style: TextStyle(
+                                    fontFamily: 'Alatsi',
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15.0,
-                ),
-              ],
+                    onTap: () {
+                      // Perform validation checks
+                      if (obj.emailc.text.isEmpty ||
+                          obj.user.text.isEmpty ||
+                          obj.passwordc.text.isEmpty ||
+                          obj.repassword.text.isEmpty) {
+                        Fluttertoast.showToast(
+                          msg: 'All fields are required',
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                        );
+                        return;
+                      }
+                      if (obj.passwordc.text != obj.repassword.text) {
+                        Fluttertoast.showToast(
+                          msg: 'Passwords do not match',
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                        );
+                        return;
+                      }
+                      // Proceed with signup
+                      obj.signup(context);
+                    },
+                  ),
+                  const SizedBox(height: 15.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Already have an account?',
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 15.0,
+                          fontFamily: 'Alatsi',
+                        ),
+                      ),
+                      const SizedBox(width: 5.0),
+                      InkWell(
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                            color: Colors.grey[700],
+                            fontSize: 18.0,
+                            fontFamily: 'Alatsi',
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Login(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 15.0),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 }

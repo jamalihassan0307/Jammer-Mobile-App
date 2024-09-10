@@ -47,6 +47,7 @@ class WishListController extends GetxController {
       }
       // ignore: deprecated_member_use
     } on DioError catch (e) {
+      print("Errrror${e}");
       Fluttertoast.showToast(
         msg: e.message.toString(),
         backgroundColor: Colors.red,
@@ -88,6 +89,7 @@ class WishListController extends GetxController {
       getTotal();
       // ignore: deprecated_member_use
     } on DioError catch (e) {
+      print("Errrror${e}");
       Fluttertoast.showToast(
         msg: e.message.toString(),
         backgroundColor: Colors.red,
@@ -114,6 +116,7 @@ class WishListController extends GetxController {
       }
       // ignore: deprecated_member_use
     } on DioError catch (e) {
+      print("Errrror${e}");
       Fluttertoast.showToast(
         msg: e.message.toString(),
         backgroundColor: Colors.red,

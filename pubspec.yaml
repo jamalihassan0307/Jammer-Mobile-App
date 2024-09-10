@@ -47,6 +47,8 @@ dependencies:
   dio: 
   get:
   shared_preferences: 
+  image_picker: 
+  path: 
 
 dev_dependencies:
   flutter_test:

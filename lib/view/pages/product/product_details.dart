@@ -10,7 +10,7 @@ import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
 // My Own Imports
 import 'package:jammer_mobile_app/view/pages/product/rating_row.dart';
 import 'package:jammer_mobile_app/view/pages/product/product_size.dart';
-import 'package:jammer_mobile_app/view/pages/product/get_similar_products.dart';
+// import 'package:jammer_mobile_app/view/pages/product/get_similar_products.dart';
 import 'package:jammer_mobile_app/widget/carousel_pro/lib/carousel_pro.dart';
 import 'package:jammer_mobile_app/widget/loading.dart';
 

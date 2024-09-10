@@ -1,15 +1,20 @@
 // import 'package:dio/dio.dart';
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:jammer_mobile_app/data/const/static_variables.dart';
 import 'package:jammer_mobile_app/data/network/APIStore.dart';
 import 'package:jammer_mobile_app/models/login_model.dart';
 import 'package:jammer_mobile_app/models/user_model.dart';
 import 'package:jammer_mobile_app/view/pages/home.dart';
+import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:jammer_mobile_app/utils/static_variable.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
@@ -104,6 +109,150 @@ class LoginController extends GetxController {
         );
       }
     } on DioError catch (e) {
+      print("Errrror${e}");
+      Fluttertoast.showToast(
+        msg: e.response.toString(),
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+    }
+  }
+
+  //////////////////////////signup///////////////
+  bool obscureText2 = true;
+  bool obscureText3 = true;
+
+  // Toggles the password show status
+  void viewPassword2() {
+    obscureText2 = !obscureText2;
+    update();
+  }
+
+  void viewPassword3() {
+    obscureText3 = !obscureText3;
+    update();
+  }
+
+  TextEditingController emailc = TextEditingController();
+  TextEditingController user = TextEditingController();
+  TextEditingController passwordc = TextEditingController();
+  TextEditingController repassword = TextEditingController();
+  String imageurl = "";
+
+  final picker = ImagePicker();
+  File? image;
+  Future<void> galleryImagePick() async {
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      print("pic");
+      image = File(pickedImage.path);
+      imageurl = pickedImage.path;
+      update();
+    } else {
+      print("error");
+    }
+  }
+
+  Future<void> cameraImagePick() async {
+    final pickedImage = await picker.pickImage(source: ImageSource.camera);
+    if (pickedImage != null) {
+      print("pic");
+      image = File(pickedImage.path);
+      imageurl = pickedImage.path;
+      update();
+    } else {
+      print("error");
+    }
+  }
+
+  Future<void> signup(context) async {
+    final String email = emailController.text;
+    final String password = passwordController.text;
+
+    if (email.isEmpty || password.isEmpty) {
+      Fluttertoast.showToast(
+        msg: 'Please enter both email and password',
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+      return;
+    }
+    try {
+      Map<String, dynamic> data = {
+        "FullName ": user.text,
+        "Email ": emailc.text,
+        "Password ": passwordc.text,
+        "RoleId": 2,
+        "Image": imageurl.isNotEmpty && imageurl != ""
+            ? await dio.MultipartFile.fromFile(
+                image!.path,
+                filename: basename(image!.path),
+              )
+            : null
+      };
+      final response =
+          await httpFormDataClient().post(StaticVariables.signup, data: data);
+
+      if (response.statusCode == 200) {
+        // final data = response.data;
+        // Fluttertoast.showToast(
+        //   msg: data['message'],
+        //   backgroundColor: Colors.green,
+        //   textColor: Colors.white,
+        // );
+
+        LoginModel logindata = LoginModel.fromMap(response.data);
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', logindata.token);
+        StaticVariables.tokenid = logindata.token;
+        try {
+          print("///////////////////login");
+          final response1 = await httpClient().get(StaticVariables.getUserById);
+
+          if (response1.statusCode == 200) {
+            // final data = response1.data;
+            Fluttertoast.showToast(
+              msg: "Login Successfully",
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+            );
+
+            UserModel model = UserModel.fromMap(response1.data);
+
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            await prefs.setString('UserId', model.id);
+            StaticVariables.userid = model.id;
+            StaticVariables.model = model;
+            print("usermodel${model}");
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Home(),
+                ));
+          } else {
+            Fluttertoast.showToast(
+              msg: 'User data Not Found',
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+            );
+          }
+        } on DioError catch (e) {
+          Fluttertoast.showToast(
+            msg: e.message.toString(),
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+          );
+        }
+      } else {
+        Fluttertoast.showToast(
+          msg: 'Login failed. Please try again.',
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
+      }
+    } on DioError catch (e) {
+      print("Errrror${e}");
       Fluttertoast.showToast(
         msg: e.response.toString(),
         backgroundColor: Colors.red,

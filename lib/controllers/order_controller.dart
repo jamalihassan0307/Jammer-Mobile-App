@@ -7,7 +7,7 @@ import 'package:jammer_mobile_app/controllers/card_controller.dart';
 import 'package:jammer_mobile_app/data/const/static_variables.dart';
 import 'package:jammer_mobile_app/data/network/APIStore.dart';
 import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
-import 'package:jammer_mobile_app/models/CartModel.dart';
+// import 'package:jammer_mobile_app/models/CartModel.dart';
 import 'package:jammer_mobile_app/models/get_order_model.dart';
 
 class OrderController extends GetxController {
@@ -46,6 +46,7 @@ class OrderController extends GetxController {
       }
       // ignore: deprecated_member_use
     } on DioError catch (e) {
+      print("Errrror${e}");
       Fluttertoast.showToast(
         msg: e.message.toString(),
         backgroundColor: Colors.red,
@@ -125,6 +126,7 @@ class OrderController extends GetxController {
         );
       }
     } on DioError catch (e) {
+      print("Errrror${e}");
       Fluttertoast.showToast(
         msg: e.message.toString(),
         backgroundColor: Colors.red,
