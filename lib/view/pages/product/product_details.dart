@@ -26,18 +26,16 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  bool favourite = false;
-  Color color = Colors.grey;
-
   @override
   void initState() {
     Get.put(CartController());
+
     CartController.to.getreview(widget.data.productId.toString());
     super.initState();
   }
 
   Widget build(BuildContext context) {
-    print("asdafdfsf${widget.data.imagePath}");
+    print("asdafdfsf${widget.coupon}");
     double height = MediaQuery.of(context).size.height;
     return ListView(
       shrinkWrap: true,
@@ -73,6 +71,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
             ),
             GetBuilder<WishListController>(builder: (obj) {
+              obj.updatecolor(widget.data.productId);
               return Positioned(
                 top: 20.0,
                 right: 20.0,
@@ -80,14 +79,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                   backgroundColor: Colors.white,
                   elevation: 3.0,
                   onPressed: () {
-                    obj.AddWishList(widget.data, widget.coupon);
                     if (!obj.wishList.any((element) =>
                         element.productId == widget.data.productId)) {
-                      color = Colors.red;
+                      obj.color = Colors.red;
+                      obj.AddWishList(widget.data, widget.coupon);
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text("Added to Wishlist")));
                     } else {
-                      color = Colors.grey;
+                      obj.color = Colors.grey;
+                      obj.removeWishList(obj.wishList
+                          .where((element) =>
+                              element.productId == widget.data.productId)
+                          .firstOrNull!
+                          .id);
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text("Remove from Wishlist")));
                     }
@@ -97,7 +101,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             element.productId == widget.data.productId))
                         ? FontAwesomeIcons.heart
                         : FontAwesomeIcons.solidHeart,
-                    color: color,
+                    color: obj.color,
                   ),
                 ),
               );

@@ -8,6 +8,7 @@ import 'package:jammer_mobile_app/controllers/cart_controller.dart';
 import 'package:jammer_mobile_app/controllers/home_controller.dart';
 import 'package:jammer_mobile_app/controllers/order_controller.dart';
 import 'package:jammer_mobile_app/controllers/wishlist_controller.dart';
+import 'package:jammer_mobile_app/models/banner_model.dart';
 import 'package:jammer_mobile_app/widget/carousel_pro/lib/carousel_pro.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:fluttertoast/fluttertoast.dart';
@@ -137,25 +138,22 @@ class _HomeState extends State<Home> {
                   physics: const BouncingScrollPhysics(),
                   children: <Widget>[
                     // Slider Code Start Here
-                    SizedBox(
-                      height: 170.0,
-                      child: Carousel(
-                        images: const [
-                          AssetImage('assets/slider/s1.jpg'),
-                          AssetImage('assets/slider/s2.jpg'),
-                          AssetImage('assets/slider/s3.jpg'),
-                          AssetImage('assets/slider/s4.jpg'),
-                          AssetImage('assets/slider/s5.jpg')
-                        ],
-                        dotSize: 4.0,
-                        dotSpacing: 15.0,
-                        dotColor: Colors.lightGreenAccent,
-                        indicatorBgPadding: 5.0,
-                        dotBgColor: Colors.purple.withOpacity(0.0),
-                        boxFit: BoxFit.fill,
-                        animationCurve: Curves.fastOutSlowIn,
+                    if (obj.bannerList.isNotEmpty)
+                      SizedBox(
+                        height: 170.0,
+                        child: Carousel(
+                          images: obj.bannerList
+                              .map((e) => NetworkImage(GetImage(e.image!)))
+                              .toList(),
+                          dotSize: 4.0,
+                          dotSpacing: 15.0,
+                          dotColor: Colors.lightGreenAccent,
+                          indicatorBgPadding: 5.0,
+                          dotBgColor: Colors.purple.withOpacity(0.0),
+                          boxFit: BoxFit.fill,
+                          animationCurve: Curves.fastOutSlowIn,
+                        ),
                       ),
-                    ),
 
                     // Slider Code End Here
 

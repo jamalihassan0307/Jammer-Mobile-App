@@ -80,7 +80,7 @@ class _WishlistPageState extends State<WishlistPage> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            obj.removeWishList(index, item.id);
+                            obj.removeWishList(item.id);
 
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
@@ -207,7 +207,7 @@ class _WishlistPageState extends State<WishlistPage> {
                                             ),
                                           ),
                                           onTap: () {
-                                            obj.removeWishList(index, item.id);
+                                            obj.removeWishList(item.id);
 
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(const SnackBar(

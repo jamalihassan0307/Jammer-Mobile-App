@@ -7,6 +7,7 @@ import 'package:jammer_mobile_app/data/const/static_variables.dart';
 import 'package:jammer_mobile_app/data/network/APIStore.dart';
 import 'package:jammer_mobile_app/models/GetCouponsWithProducts%20.dart';
 import 'package:jammer_mobile_app/models/RandamProduct.dart';
+import 'package:jammer_mobile_app/models/banner_model.dart';
 import 'package:jammer_mobile_app/models/get_category_model.dart';
 
 class HomeController extends GetxController {
@@ -18,6 +19,7 @@ class HomeController extends GetxController {
     getCategory();
     getRandomCouponProducts();
     GetCouponsWithProductsdata();
+    GetBanner();
     updateloading(false);
     update();
   }
@@ -77,6 +79,36 @@ class HomeController extends GetxController {
           backgroundColor: Colors.red,
           textColor: Colors.white,
         );
+      }
+      // ignore: deprecated_member_use
+    } on DioError catch (e) {
+      print("Errrror${e}");
+      Fluttertoast.showToast(
+        msg: e.message.toString(),
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+    }
+  }
+
+  List<BannerModel> bannerList = [];
+  Future<void> GetBanner() async {
+    try {
+      print("get data");
+      final response1 = await httpClient().get(StaticVariables.getAllBanners);
+      if (response1.statusCode == 200) {
+        List res = response1.data["data"];
+        res.forEach((element) {
+          bannerList.add(BannerModel.fromJson(element));
+        });
+
+        if (kDebugMode) print("banner${bannerList}");
+      } else {
+        // Fluttertoast.showToast(
+        //   msg: 'User data Not Found',
+        //   backgroundColor: Colors.red,
+        //   textColor: Colors.white,
+        // );
       }
       // ignore: deprecated_member_use
     } on DioError catch (e) {

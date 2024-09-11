@@ -9,7 +9,7 @@ class RandamProduct {
   String description;
   double price;
   int stockQuantity;
-  int couponid;
+  int? couponid;
   double discount;
   String discountType;
   String expirationDate;
@@ -21,7 +21,7 @@ class RandamProduct {
     required this.description,
     required this.price,
     required this.stockQuantity,
-    required this.couponid,
+    this.couponid,
     required this.discount,
     required this.discountType,
     required this.expirationDate,
@@ -35,7 +35,7 @@ class RandamProduct {
     String? description,
     double? price,
     int? stockQuantity,
-    int? couponCode,
+    int? couponid,
     double? discount,
     String? discountType,
     String? expirationDate,
@@ -48,7 +48,7 @@ class RandamProduct {
       description: description ?? this.description,
       price: price ?? this.price,
       stockQuantity: stockQuantity ?? this.stockQuantity,
-      couponid: couponCode ?? this.couponid,
+      couponid: couponid ?? this.couponid,
       discount: discount ?? this.discount,
       discountType: discountType ?? this.discountType,
       expirationDate: expirationDate ?? this.expirationDate,
@@ -64,7 +64,7 @@ class RandamProduct {
       'description': description,
       'price': price,
       'stockQuantity': stockQuantity,
-      'couponCode': couponid,
+      'couponid': couponid,
       'discount': discount,
       'discountType': discountType,
       'expirationDate': expirationDate,
@@ -80,7 +80,7 @@ class RandamProduct {
       description: map['description'] as String,
       price: map['price'] as double,
       stockQuantity: map['stockQuantity'] as int,
-      couponid: map['couponid'] as int,
+      couponid: map['couponid'] != null ? map['couponid'] as int : null,
       discount: map['discount'] as double,
       discountType: map['discountType'] as String,
       expirationDate: map['expirationDate'] as String,
@@ -96,7 +96,7 @@ class RandamProduct {
 
   @override
   String toString() {
-    return 'RandamProduct(productId: $productId, productName: $productName, description: $description, price: $price, stockQuantity: $stockQuantity, couponCode: $couponid, discount: $discount, discountType: $discountType, expirationDate: $expirationDate, discountedPrice: $discountedPrice, imagePaths: $imagePaths)';
+    return 'RandamProduct(productId: $productId, productName: $productName, description: $description, price: $price, stockQuantity: $stockQuantity, couponid: $couponid, discount: $discount, discountType: $discountType, expirationDate: $expirationDate, discountedPrice: $discountedPrice, imagePaths: $imagePaths)';
   }
 
   @override

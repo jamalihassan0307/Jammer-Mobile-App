@@ -25,15 +25,18 @@ class WishListController extends GetxController {
   }
 
   double wishListTotal = 0;
-  removeWishList(int index, int id) {
-    wishList.removeAt(index);
+  removeWishList(int id) {
+    wishList.removeWhere((element) => element.id == id);
     getTotal();
+    updatecolor(id);
     removeAPisWishList(id);
     update();
   }
 
   Future<void> removeAPisWishList(int id) async {
     try {
+      if (kDebugMode) print("remove");
+      print("REMOVEEEE ${id}");
       final response1 = await httpClient()
           .delete(StaticVariables.deleteWishListItem + id.toString());
       if (response1.statusCode == 200) {
@@ -69,6 +72,22 @@ class WishListController extends GetxController {
     update();
   }
 
+  bool favourite = false;
+  Color color = Colors.grey;
+  updatefavourite(bool load) {
+    favourite = load;
+    update();
+  }
+
+  updatecolor(int id) {
+    if (wishList.any((element) => element.productId == id)) {
+      color = Colors.red;
+    } else {
+      color = Colors.grey;
+    }
+    update();
+  }
+
   List<CartModel> wishList = [];
   Future<void> getWishList() async {
     try {
@@ -101,6 +120,7 @@ class WishListController extends GetxController {
 
   Future<void> AddWishList(PassDataToProduct p, int coupon) async {
     try {
+      if (kDebugMode) print("addddd");
       Map<String, dynamic> data = {
         "productId": p.productId,
         "quantity": 1,

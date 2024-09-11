@@ -9,6 +9,7 @@ class CartModel {
   String productName;
   String price;
   int quantity;
+  int couponId;
   String createdAt;
   List<String>? productImages;
   CartModel({
@@ -17,6 +18,7 @@ class CartModel {
     required this.productName,
     required this.price,
     required this.quantity,
+    required this.couponId,
     required this.createdAt,
     this.productImages,
   });
@@ -27,6 +29,7 @@ class CartModel {
     String? productName,
     String? price,
     int? quantity,
+    int? couponId,
     String? createdAt,
     List<String>? productImages,
   }) {
@@ -36,6 +39,7 @@ class CartModel {
       productName: productName ?? this.productName,
       price: price ?? this.price,
       quantity: quantity ?? this.quantity,
+      couponId: couponId ?? this.couponId,
       createdAt: createdAt ?? this.createdAt,
       productImages: productImages ?? this.productImages,
     );
@@ -48,6 +52,7 @@ class CartModel {
       'productName': productName,
       'price': price,
       'quantity': quantity,
+      'couponId': couponId,
       'createdAt': createdAt,
       'productImages': productImages,
     };
@@ -60,6 +65,7 @@ class CartModel {
       productName: map['productName'] as String,
       price: map['price'] as String,
       quantity: map['quantity'] as int,
+      couponId: map['couponId'] as int,
       createdAt: map['createdAt'] as String,
       productImages: map['productImages'] != null
           ? List<String>.from((map['productImages'] as List<dynamic>))
@@ -74,7 +80,7 @@ class CartModel {
 
   @override
   String toString() {
-    return 'CardModel(id: $id, productId: $productId, productName: $productName, price: $price, quantity: $quantity, createdAt: $createdAt, productImages: $productImages)';
+    return 'CartModel(id: $id, productId: $productId, productName: $productName, price: $price, quantity: $quantity, couponId: $couponId, createdAt: $createdAt, productImages: $productImages)';
   }
 
   @override
@@ -86,6 +92,7 @@ class CartModel {
         other.productName == productName &&
         other.price == price &&
         other.quantity == quantity &&
+        other.couponId == couponId &&
         other.createdAt == createdAt &&
         listEquals(other.productImages, productImages);
   }
@@ -97,6 +104,7 @@ class CartModel {
         productName.hashCode ^
         price.hashCode ^
         quantity.hashCode ^
+        couponId.hashCode ^
         createdAt.hashCode ^
         productImages.hashCode;
   }

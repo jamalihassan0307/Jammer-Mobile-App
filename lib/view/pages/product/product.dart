@@ -85,7 +85,7 @@ class _ProductPageState extends State<ProductPage> {
               children: <Widget>[
                 InkWell(
                   onTap: () {
-                    obj.Addcart(widget.productData);
+                    obj.Addcart(widget.productData, widget.coupon);
                   },
                   child: Container(
                     width: width / 2,

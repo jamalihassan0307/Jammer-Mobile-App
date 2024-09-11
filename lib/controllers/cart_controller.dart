@@ -149,9 +149,13 @@ class CartController extends GetxController {
     }
   }
 
-  Future<void> Addcart(PassDataToProduct p) async {
+  Future<void> Addcart(PassDataToProduct p, int coupon) async {
     try {
-      Map<String, dynamic> data = {"productId": p.productId, "quantity": 1};
+      Map<String, dynamic> data = {
+        "productId": p.productId,
+        "quantity": 1,
+        "couponId": coupon == 0 ? null : coupon
+      };
       final response1 =
           await httpClient().post(StaticVariables.addToCart, data: data);
       if (response1.statusCode == 200) {
