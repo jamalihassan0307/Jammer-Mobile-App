@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:jammer_mobile_app/controllers/card_controller.dart';
+import 'package:jammer_mobile_app/controllers/cart_controller.dart';
 import 'package:jammer_mobile_app/data/const/static_variables.dart';
 import 'package:jammer_mobile_app/data/network/APIStore.dart';
 import 'package:jammer_mobile_app/functions/passDataToProduct.dart';

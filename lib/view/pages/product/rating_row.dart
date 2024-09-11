@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:jammer_mobile_app/controllers/card_controller.dart';
+import 'package:jammer_mobile_app/controllers/cart_controller.dart';
 
 // My Own Import
 import 'package:jammer_mobile_app/view/pages/product/all_rating.dart';

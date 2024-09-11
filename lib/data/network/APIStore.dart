@@ -24,6 +24,13 @@ Dio httpFormDataClient() {
   return Dio(options);
 }
 
+Dio httpSignup() {
+  final options = BaseOptions(baseUrl: StaticVariables.url, headers: {
+    "Content-Type": "multipart/form-data",
+  });
+  return Dio(options);
+}
+
 Map<String, String> getAuthHeader() {
   // print("Tokken${StaticVariables.tokenid}");
   return {

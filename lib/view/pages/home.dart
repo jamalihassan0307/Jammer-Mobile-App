@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jammer_mobile_app/controllers/card_controller.dart';
+import 'package:jammer_mobile_app/controllers/cart_controller.dart';
 import 'package:jammer_mobile_app/controllers/home_controller.dart';
 import 'package:jammer_mobile_app/controllers/order_controller.dart';
 import 'package:jammer_mobile_app/controllers/wishlist_controller.dart';

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:get/get.dart';
-import 'package:jammer_mobile_app/controllers/card_controller.dart';
+import 'package:jammer_mobile_app/controllers/cart_controller.dart';
 
 // My Own Imports
 import 'package:jammer_mobile_app/view/pages/product/product_details.dart';
@@ -74,7 +74,7 @@ class _ProductPageState extends State<ProductPage> {
           ],
         ),
         backgroundColor: const Color(0xFFF1F3F6),
-        body: ProductDetails(data: widget.productData),
+        body: ProductDetails(data: widget.productData, coupon: widget.coupon),
         bottomNavigationBar: Material(
           elevation: 5.0,
           child: Container(

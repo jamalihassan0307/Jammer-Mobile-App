@@ -76,35 +76,21 @@ flutter:
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
-  # the material Icons class.
+  # the material Icons calass.
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/fb-black.png
     - assets/fb.png
-    - assets/git.png
     - assets/google_plus.png
-    - assets/twitter.png
     - assets/GoKart.png
     - assets/slider/
     - assets/category/
     - assets/promotion/
-    - assets/best_offer/
-    - assets/top_seller/
     - assets/best_deal/
     - assets/featured_brands/
     - assets/top_design/
-    - assets/block_bustor_deal/
-    - assets/best_of_fashion/
-    - assets/womens_collection/
-    - assets/notifications/
-    - assets/products/
-    - assets/products/top_offers/
-    - assets/products/wedding_collection/
     - assets/payment_icon/
-    - assets/user_profile/
-    - assets/json/
     - assets/
 
   fonts:

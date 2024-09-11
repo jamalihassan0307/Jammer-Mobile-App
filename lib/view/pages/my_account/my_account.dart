@@ -7,7 +7,7 @@ import 'package:jammer_mobile_app/view/pages/faq_and_about_app/about_app.dart';
 import 'package:jammer_mobile_app/view/pages/faq_and_about_app/faq.dart';
 
 // My Own Imports
-import 'package:jammer_mobile_app/view/pages/login.dart';
+// import 'package:jammer_mobile_app/view/pages/login.dart';
 import 'package:jammer_mobile_app/view/pages/my_account/account_setting.dart';
 import 'package:jammer_mobile_app/view/pages/my_orders.dart';
 import 'package:jammer_mobile_app/view/pages/notifications.dart';
@@ -267,8 +267,7 @@ class _MyAccountState extends State<MyAccount> {
           ),
           InkWell(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Login()));
+              StaticVariables.logout(context);
             },
             child: Container(
               padding: const EdgeInsets.all(16.0),

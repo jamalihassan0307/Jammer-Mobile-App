@@ -166,33 +166,50 @@ class LoginController extends GetxController {
   }
 
   Future<void> signup(context) async {
-    final String email = emailController.text;
-    final String password = passwordController.text;
+    final String email = emailc.text;
+    final String password = passwordc.text;
+    final String repass = repassword.text;
 
     if (email.isEmpty || password.isEmpty) {
       Fluttertoast.showToast(
         msg: 'Please enter both email and password',
-        backgroundColor: Colors.red,
+        backgroundColor: const Color.fromRGBO(244, 67, 54, 1),
+        textColor: Colors.white,
+      );
+      return;
+    } else if (password.isEmpty || repass.isEmpty) {
+      Fluttertoast.showToast(
+        msg: 'Please enter both Password Correct',
+        backgroundColor: const Color.fromRGBO(244, 67, 54, 1),
+        textColor: Colors.white,
+      );
+      return;
+    } else if (imageurl.isEmpty) {
+      Fluttertoast.showToast(
+        msg: 'Please Select Image!',
+        backgroundColor: const Color.fromRGBO(244, 67, 54, 1),
         textColor: Colors.white,
       );
       return;
     }
     try {
-      Map<String, dynamic> data = {
-        "FullName ": user.text,
-        "Email ": emailc.text,
-        "Password ": passwordc.text,
+      dio.FormData data = dio.FormData.fromMap({
+        "FullName": user.text,
+        "Email": emailc.text,
+        "Password": passwordc.text,
         "RoleId": 2,
-        "Image": imageurl.isNotEmpty && imageurl != ""
+        "Image": imageurl.isNotEmpty
             ? await dio.MultipartFile.fromFile(
                 image!.path,
                 filename: basename(image!.path),
               )
             : null
-      };
+      });
+      print("datadata${data}");
       final response =
-          await httpFormDataClient().post(StaticVariables.signup, data: data);
+          await httpSignup().post(StaticVariables.signup, data: data);
 
+      print(response.data);
       if (response.statusCode == 200) {
         // final data = response.data;
         // Fluttertoast.showToast(
@@ -238,6 +255,7 @@ class LoginController extends GetxController {
             );
           }
         } on DioError catch (e) {
+          print("Errrror${e.message}");
           Fluttertoast.showToast(
             msg: e.message.toString(),
             backgroundColor: Colors.red,
@@ -252,9 +270,9 @@ class LoginController extends GetxController {
         );
       }
     } on DioError catch (e) {
-      print("Errrror${e}");
+      print("Errrror${e.message}");
       Fluttertoast.showToast(
-        msg: e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );

@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:jammer_mobile_app/models/user_model.dart';
+import 'package:jammer_mobile_app/view/pages/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StaticVariables {
   static UserModel? model;
@@ -44,4 +47,15 @@ class StaticVariables {
   static String getOrderById = "Order/GetOrderById/";
   static String updateOrderStatus = "Order/UpdateOrderStatus/";
   static String getOrdersByUserId = "Order/GetOrdersByUserId/";
+  static logout(BuildContext context) async {
+    try {
+      SharedPreferences a = await SharedPreferences.getInstance();
+      a.getKeys();
+      a.clear();
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) => const Login()), (r) => true);
+    } catch (e) {
+      print("heloo ${e.toString()}.");
+    }
+  }
 }

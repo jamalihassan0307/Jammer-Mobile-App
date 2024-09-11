@@ -100,6 +100,11 @@ class _LoginState extends State<Login> {
                             controller: obj.emailController,
                             decoration: InputDecoration(
                               hintText: 'Email Address',
+                              hintStyle: TextStyle(
+                                fontFamily: 'Alatsi',
+                                color: Colors.black,
+                                fontSize: 16.0,
+                              ),
                               errorText: obj.emailError,
                               contentPadding: const EdgeInsets.only(
                                   top: 12.0, bottom: 12.0),
@@ -115,6 +120,11 @@ class _LoginState extends State<Login> {
                             controller: obj.passwordController,
                             decoration: InputDecoration(
                               hintText: 'Password',
+                              hintStyle: TextStyle(
+                                fontFamily: 'Alatsi',
+                                color: Colors.black,
+                                fontSize: 16.0,
+                              ),
                               errorText: obj.passwordError,
                               suffixIcon: IconButton(
                                 icon: Icon(

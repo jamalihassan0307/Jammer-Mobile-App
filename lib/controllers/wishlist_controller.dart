@@ -99,9 +99,13 @@ class WishListController extends GetxController {
     }
   }
 
-  Future<void> AddWishList(PassDataToProduct p) async {
+  Future<void> AddWishList(PassDataToProduct p, int coupon) async {
     try {
-      Map<String, dynamic> data = {"productId": p.productId, "quantity": 1};
+      Map<String, dynamic> data = {
+        "productId": p.productId,
+        "quantity": 1,
+        "couponId": coupon == 0 ? null : coupon
+      };
       final response1 =
           await httpClient().post(StaticVariables.addWishList, data: data);
       if (response1.statusCode == 200) {

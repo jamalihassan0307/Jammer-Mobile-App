@@ -29,7 +29,7 @@ class LoginModel {
   factory LoginModel.fromMap(Map<String, dynamic> map) {
     return LoginModel(
       message: map['message'] as String,
-      token: map['data'] as String,
+      token: map['token'] ?? map['data'] as String,
     );
   }
 

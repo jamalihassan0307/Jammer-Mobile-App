@@ -171,7 +171,7 @@ class _BestDealGridState extends State<BestDealGrid> {
                     MaterialPageRoute(
                         builder: (context) => ProductPage(
                               productData: product,
-                              coupon: int.tryParse(model.couponCode) ?? 0,
+                              coupon: model.couponid,
                             )),
                   );
                 },

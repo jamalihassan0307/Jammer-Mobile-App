@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:jammer_mobile_app/controllers/card_controller.dart';
+import 'package:jammer_mobile_app/controllers/cart_controller.dart';
 import 'package:jammer_mobile_app/controllers/wishlist_controller.dart';
 import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
 
@@ -16,8 +16,10 @@ import 'package:jammer_mobile_app/widget/loading.dart';
 
 class ProductDetails extends StatefulWidget {
   final PassDataToProduct data;
+  final int coupon;
 
-  const ProductDetails({Key? key, required this.data}) : super(key: key);
+  const ProductDetails({Key? key, required this.data, required this.coupon})
+      : super(key: key);
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
@@ -78,7 +80,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   backgroundColor: Colors.white,
                   elevation: 3.0,
                   onPressed: () {
-                    obj.AddWishList(widget.data);
+                    obj.AddWishList(widget.data, widget.coupon);
                     if (!obj.wishList.any((element) =>
                         element.productId == widget.data.productId)) {
                       color = Colors.red;

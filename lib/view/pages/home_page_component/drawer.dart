@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jammer_mobile_app/controllers/home_controller.dart';
+import 'package:jammer_mobile_app/data/const/static_variables.dart';
 import 'package:jammer_mobile_app/models/get_category_model.dart';
 import 'package:jammer_mobile_app/view/pages/cart.dart';
 import 'package:jammer_mobile_app/view/pages/faq_and_about_app/about_app.dart';
@@ -55,10 +56,7 @@ class MainDrawer extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Login()),
-                  );
+                  StaticVariables.logout(context);
                 },
               ),
             ],

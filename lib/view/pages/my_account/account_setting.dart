@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:jammer_mobile_app/data/const/static_variables.dart';
 import 'package:jammer_mobile_app/view/pages/login.dart';
 
 class AccountSetting extends StatefulWidget {
@@ -92,8 +93,7 @@ class _AccountSettingState extends State<AccountSetting> {
           ),
           InkWell(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Login()));
+              StaticVariables.logout(context);
             },
             child: Container(
               margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
