@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:get/get.dart';
 import 'package:jammer_mobile_app/controllers/cart_controller.dart';
+import 'package:jammer_mobile_app/models/CartModel.dart';
 
 // My Own Imports
 import 'package:jammer_mobile_app/view/pages/product/product_details.dart';
@@ -100,13 +101,21 @@ class _ProductPageState extends State<ProductPage> {
                 ),
                 InkWell(
                   onTap: () {
+                    CartModel productData = CartModel(
+                        id: widget.productData.productId,
+                        productId: widget.productData.productId,
+                        productName: widget.productData.title,
+                        price: widget.productData.price,
+                        quantity: 1,
+                        couponId: 0,
+                        createdAt: widget.productData.title);
                     Navigator.push(
                         context,
                         PageTransition(
                             type: PageTransitionType.rightToLeft,
                             child: Delivery(
-                              productData: widget.productData,
-                              coupon: widget.coupon,
+                              type: 0,
+                              productData: [productData],
                             )));
                   },
                   child: Container(

@@ -5,6 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:jammer_mobile_app/data/const/static_variables.dart';
 import 'package:jammer_mobile_app/data/network/APIStore.dart';
+import 'package:jammer_mobile_app/data/network/base_api_services.dart';
+import 'package:jammer_mobile_app/data/network/network_api_services.dart';
 import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
 import 'package:jammer_mobile_app/models/CartModel.dart';
 import 'package:jammer_mobile_app/models/review_model.dart';
@@ -48,9 +50,9 @@ class CartController extends GetxController {
       }
       // ignore: deprecated_member_use
     } on DioError catch (e) {
-      print("Errrror${e}");
+      print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.message.toString(),
+        msg: e.response.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -74,26 +76,21 @@ class CartController extends GetxController {
   Future<void> getcart() async {
     try {
       cardlist = [];
-      final response1 = await httpClient().get(StaticVariables.getUserCart);
-      if (response1.statusCode == 200) {
-        List res = response1.data["data"];
-        res.forEach((element) {
-          cardlist.add(CartModel.fromMap(element));
-        });
-        if (kDebugMode) print("cardlist${cardlist.length}");
-      } else {
-        Fluttertoast.showToast(
-          msg: 'User data Not Found',
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        );
-      }
+      NetworkApiServices network = NetworkApiServices();
+      final response1 = await network.getApi(StaticVariables.getUserCart);
+
+      List res = response1["data"];
+      res.forEach((element) {
+        cardlist.add(CartModel.fromMap(element));
+      });
+      if (kDebugMode) print("cardlist${cardlist.length}");
+
       getTotal();
       // ignore: deprecated_member_use
     } on DioError catch (e) {
-      print("Errrror${e}");
+      print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.message.toString(),
+        msg: e.response.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -140,9 +137,9 @@ class CartController extends GetxController {
       }
       // ignore: deprecated_member_use
     } on DioError catch (e) {
-      print("Errrror${e}");
+      print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.message.toString(),
+        msg: e.response.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -151,29 +148,35 @@ class CartController extends GetxController {
 
   Future<void> Addcart(PassDataToProduct p, int coupon) async {
     try {
+      // print("lrgr;rwijiwow${coupon}");
       Map<String, dynamic> data = {
         "productId": p.productId,
         "quantity": 1,
-        "couponId": coupon == 0 ? null : coupon
+        "couponId": coupon == 0 ? 0 : coupon
       };
       final response1 =
           await httpClient().post(StaticVariables.addToCart, data: data);
       if (response1.statusCode == 200) {
         if (kDebugMode) print("Add SuccessFully");
+        Fluttertoast.showToast(
+          msg: 'Add SuccessFully',
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
         update();
         getcart();
       } else {
         Fluttertoast.showToast(
-          msg: 'User data Not Found',
+          msg: 'Error to Add Card',
           backgroundColor: Colors.red,
           textColor: Colors.white,
         );
       }
       // ignore: deprecated_member_use
     } on DioError catch (e) {
-      print("Errrror${e}");
+      print("Errrror${e.response}");
       Fluttertoast.showToast(
-        msg: e.message.toString(),
+        msg: e.response.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );

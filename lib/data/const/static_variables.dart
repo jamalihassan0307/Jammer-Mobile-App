@@ -7,9 +7,9 @@ class StaticVariables {
   static UserModel? model;
   static String? userid;
   static String? tokenid;
-  static String baseurl = "http://192.168.1.200:3300";
+  static String baseurl = "http://192.168.100.100:3300";
 
-  static String url = "http://192.168.1.200:3300/api/";
+  static String url = "http://192.168.100.100:3300/api/";
   ///////////////////////////////urls/////////////////////
   static String login = "Users/Login";
   static String signup = "Users/Signup";
@@ -27,12 +27,14 @@ class StaticVariables {
   static String getCartById = "Cart/GetCartById/";
   static String deleteCartItem = "Cart/DeleteCartItem/";
   static String updateCartItem = "Cart/UpdateCartItem/";
+  static String deleteAllUserCart = "Cart/DeleteAllUserCart";
   ////////////////////WishList/////////////
   static String addWishList = "WishList/AddWishList";
   static String getUserWishList = "WishList/GetUserWishList";
   static String getWishListById = "WishList/GetWishListById/";
   static String deleteWishListItem = "WishList/DeleteWishListItem/";
   static String updateWishListItem = "WishList/UpdateWishListItem/";
+  static String deleteAllUserWishList = "WishList/DeleteAllUserWishList";
   ////////////////////Product/////////////
 
   static String filterProductsByCategory = "Product/FilterProductsByCategory/";

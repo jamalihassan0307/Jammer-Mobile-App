@@ -27,7 +27,7 @@ class HomeController extends GetxController {
   bool loading = false;
   updateloading(bool load) {
     loading = load;
-    update();
+    // update();
   }
 
   List<GetCategoryModel> category = [];
@@ -51,9 +51,9 @@ class HomeController extends GetxController {
       }
       // ignore: deprecated_member_use
     } on DioError catch (e) {
-      print("Errrror${e}");
+      print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.message.toString(),
+        msg: e.response.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -71,7 +71,7 @@ class HomeController extends GetxController {
         res.forEach((element) {
           couponproductlist.add(GetCouponsWithProducts.fromMap(element));
         });
-
+        update();
         if (kDebugMode) print("couponproductlist${category}");
       } else {
         Fluttertoast.showToast(
@@ -82,9 +82,9 @@ class HomeController extends GetxController {
       }
       // ignore: deprecated_member_use
     } on DioError catch (e) {
-      print("Errrror${e}");
+      print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.message.toString(),
+        msg: e.response.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -112,9 +112,9 @@ class HomeController extends GetxController {
       }
       // ignore: deprecated_member_use
     } on DioError catch (e) {
-      print("Errrror${e}");
+      print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.message.toString(),
+        msg: e.response.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -143,9 +143,9 @@ class HomeController extends GetxController {
       }
       // ignore: deprecated_member_use
     } on DioError catch (e) {
-      print("Errrror${e}");
+      print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.message.toString(),
+        msg: e.response.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -173,9 +173,9 @@ class HomeController extends GetxController {
       }
       // ignore: deprecated_member_use
     } on DioError catch (e) {
-      print("Errrror${e}");
+      print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.message.toString(),
+        msg: e.response.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );

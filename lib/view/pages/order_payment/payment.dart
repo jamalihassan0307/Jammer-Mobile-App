@@ -2,17 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:jammer_mobile_app/controllers/order_controller.dart';
-import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
+// import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
+import 'package:jammer_mobile_app/models/CartModel.dart';
 
 // My Own Imports
 import 'package:jammer_mobile_app/view/pages/home.dart';
 
 class PaymentPage extends StatefulWidget {
-  final PassDataToProduct productData;
-  final int coupon;
+  final List<CartModel> productData;
 
-  const PaymentPage(
-      {Key? key, required this.productData, required this.coupon});
+  final int type;
+
+  const PaymentPage({Key? key, required this.productData, required this.type});
 
   @override
   _PaymentPageState createState() => _PaymentPageState();
@@ -179,7 +180,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   child: InkWell(
                     onTap: () {
                       OrderController.to
-                          .createOrder(widget.productData, widget.coupon);
+                          .createOrder(widget.productData, widget.type);
                       _showDialog();
                     },
                     child: Container(
@@ -210,6 +211,14 @@ class _PaymentPageState extends State<PaymentPage> {
 
   // user defined function for Logout Dialogue
   void _showDialog() {
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Home(),
+          ),
+          (e) => true);
+    });
     // flutter defined function
     showDialog(
       context: context,

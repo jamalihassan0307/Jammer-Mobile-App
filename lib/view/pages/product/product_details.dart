@@ -29,7 +29,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   void initState() {
     Get.put(CartController());
-
+    WishListController.to.updatecolor(widget.data.productId);
     CartController.to.getreview(widget.data.productId.toString());
     super.initState();
   }
@@ -71,7 +71,6 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
             ),
             GetBuilder<WishListController>(builder: (obj) {
-              obj.updatecolor(widget.data.productId);
               return Positioned(
                 top: 20.0,
                 right: 20.0,

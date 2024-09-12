@@ -9,7 +9,9 @@ import 'package:jammer_mobile_app/models/CartModel.dart';
 
 // My Own Imports
 import 'package:jammer_mobile_app/view/pages/home.dart';
+import 'package:jammer_mobile_app/view/pages/order_payment/delivery_address.dart';
 import 'package:jammer_mobile_app/widget/loading.dart';
+import 'package:page_transition/page_transition.dart';
 
 class WishlistPage extends StatefulWidget {
   const WishlistPage({super.key});
@@ -19,11 +21,11 @@ class WishlistPage extends StatefulWidget {
 }
 
 class _WishlistPageState extends State<WishlistPage> {
-  var height, width;
   @override
   Widget build(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
+    double width = MediaQuery.of(context).size.width * 0.7;
+    double widthFull = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
     return GetBuilder<WishListController>(builder: (obj) {
       return Scaffold(
@@ -31,6 +33,66 @@ class _WishlistPageState extends State<WishlistPage> {
           title: const Text('My Wishlist'),
           titleSpacing: 0.0,
           backgroundColor: Theme.of(context).primaryColor,
+        ),
+        bottomNavigationBar: Material(
+          elevation: 5.0,
+          child: Container(
+            color: Colors.white,
+            width: widthFull,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Container(
+                  width: ((widthFull) / 2),
+                  height: 50.0,
+                  alignment: Alignment.center,
+                  child: RichText(
+                    text: TextSpan(
+                      text: 'Total: ',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0,
+                          color: Colors.black),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: ' ₹${obj.wishListTotal}',
+                            style: const TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue)),
+                      ],
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    (obj.wishListTotal == 0)
+                        ? showAlertDialog()
+                        : Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                child: Delivery(
+                                  productData: obj.wishList,
+                                  type: 2,
+                                )));
+                  },
+                  child: Container(
+                    width: ((widthFull) / 2),
+                    height: 50.0,
+                    color: (obj.wishListTotal == 0)
+                        ? Colors.grey
+                        : Theme.of(context).primaryColor,
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'Pay Now',
+                      style: TextStyle(color: Colors.white, fontSize: 15.0),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
         body: (obj.numberofWishList == 0)
             ? Center(
@@ -228,5 +290,35 @@ class _WishlistPageState extends State<WishlistPage> {
               ),
       );
     });
+  }
+
+  void showAlertDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            "Alert",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: const Text("No Item in Cart"),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                "Close",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

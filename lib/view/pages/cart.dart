@@ -9,8 +9,10 @@ import 'package:jammer_mobile_app/models/CartModel.dart';
 
 // My Own Imports
 import 'package:jammer_mobile_app/view/pages/home.dart';
+import 'package:jammer_mobile_app/view/pages/order_payment/delivery_address.dart';
 // import 'package:jammer_mobile_app/view/pages/order_payment/delivery_address.dart';
 import 'package:jammer_mobile_app/widget/loading.dart';
+import 'package:page_transition/page_transition.dart';
 // import 'package:page_transition/page_transition.dart';
 
 class CartPage extends StatefulWidget {
@@ -96,13 +98,16 @@ class _CartPageState extends State<CartPage> {
                 ),
                 InkWell(
                   onTap: () {
-                    // (obj.cartTotal == 0)
-                    //     ? showAlertDialog()
-                    //     : Navigator.push(
-                    //         context,
-                    //         PageTransition(
-                    //             type: PageTransitionType.rightToLeft,
-                    //             child: const Delivery()));
+                    (obj.cartTotal == 0)
+                        ? showAlertDialog()
+                        : Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                child: Delivery(
+                                  productData: obj.cardlist,
+                                  type: 1,
+                                )));
                   },
                   child: Container(
                     width: ((widthFull) / 2),

@@ -96,7 +96,7 @@ class LoginController extends GetxController {
           }
         } on DioError catch (e) {
           Fluttertoast.showToast(
-            msg: e.message.toString(),
+            msg: e.response.toString(),
             backgroundColor: Colors.red,
             textColor: Colors.white,
           );
@@ -109,7 +109,7 @@ class LoginController extends GetxController {
         );
       }
     } on DioError catch (e) {
-      print("Errrror${e}");
+      print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
         msg: e.response.toString(),
         backgroundColor: Colors.red,
@@ -257,7 +257,7 @@ class LoginController extends GetxController {
         } on DioError catch (e) {
           print("Errrror${e.message}");
           Fluttertoast.showToast(
-            msg: e.message.toString(),
+            msg: e.response.toString(),
             backgroundColor: Colors.red,
             textColor: Colors.white,
           );
@@ -272,7 +272,7 @@ class LoginController extends GetxController {
     } on DioError catch (e) {
       print("Errrror${e.message}");
       Fluttertoast.showToast(
-        msg: e.message.toString(),
+        msg: e.response.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );

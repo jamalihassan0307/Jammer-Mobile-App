@@ -1,18 +1,19 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
+// import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
+import 'package:jammer_mobile_app/models/CartModel.dart';
 
 // My Own Imports
 import 'package:jammer_mobile_app/view/pages/order_payment/payment.dart';
 import 'package:page_transition/page_transition.dart';
 
 class Delivery extends StatefulWidget {
-  final PassDataToProduct productData;
+  final List<CartModel> productData;
 
-  final int coupon;
+  final int type;
 
-  const Delivery({Key? key, required this.productData, required this.coupon});
+  const Delivery({Key? key, required this.productData, required this.type});
 
   @override
   _DeliveryState createState() => _DeliveryState();
@@ -118,8 +119,8 @@ class _DeliveryState extends State<Delivery> {
                           PageTransition(
                               type: PageTransitionType.rightToLeft,
                               child: PaymentPage(
+                                type: widget.type,
                                 productData: widget.productData,
-                                coupon: widget.coupon,
                               )));
                     },
                     child: Container(

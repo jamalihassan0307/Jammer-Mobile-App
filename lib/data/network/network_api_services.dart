@@ -55,10 +55,10 @@ class NetworkApiServices extends BaseApiServices {
   dynamic returnResponse(dio.Response response) {
     switch (response.statusCode) {
       case 200:
-        dynamic responseJson = jsonDecode(response.data);
+        dynamic responseJson = response.data;
         return responseJson;
       case 400:
-        dynamic responseJson = jsonDecode(response.data);
+        dynamic responseJson = response.data;
         return responseJson;
 
       default:
