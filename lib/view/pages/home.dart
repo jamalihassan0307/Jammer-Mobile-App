@@ -46,10 +46,13 @@ class _HomeState extends State<Home> {
     Get.put(CartController());
     Get.put(OrderController());
     Get.put(WishListController());
-    HomeController.to.init();
-    CartController.to.init();
-    OrderController.to.init();
-    WishListController.to.init();
+    if (HomeController.to.category.isEmpty) {
+      HomeController.to.init();
+      CartController.to.init();
+      OrderController.to.init();
+      WishListController.to.init();
+    }
+
     super.initState();
   }
 

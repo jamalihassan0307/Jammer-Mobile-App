@@ -119,48 +119,48 @@ class OrderController extends GetxController {
       );
     }
   }
-}
 
-Future<void> clearCart() async {
-  try {
-    NetworkApiServices network = NetworkApiServices();
-    final response1 =
-        await network.deleteApi(StaticVariables.deleteAllUserCart);
-    if (kDebugMode) print("Cart cleared successfully!y${response1.data}");
-    Fluttertoast.showToast(
-      msg: 'Cart cleared successfully!',
-      backgroundColor: Colors.green,
-      textColor: Colors.white,
-    );
-    await CartController.to.getcart();
-  } on DioError catch (e) {
-    print("Errrror${e.response.toString() + e.message.toString()}");
-    Fluttertoast.showToast(
-      msg: e.response.toString(),
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-    );
+  Future<void> clearCart() async {
+    try {
+      NetworkApiServices network = NetworkApiServices();
+      final response1 =
+          await network.deleteApi(StaticVariables.deleteAllUserCart);
+      if (kDebugMode) print("Cart cleared successfully!y${response1.data}");
+      Fluttertoast.showToast(
+        msg: 'Cart cleared successfully!',
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+      );
+      await CartController.to.getcart();
+    } on DioError catch (e) {
+      print("Errrror${e.response.toString() + e.message.toString()}");
+      Fluttertoast.showToast(
+        msg: e.response.toString(),
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+    }
   }
-}
 
-Future<void> clearWishList() async {
-  try {
-    NetworkApiServices network = NetworkApiServices();
-    final response1 =
-        await network.deleteApi(StaticVariables.deleteAllUserWishList);
-    if (kDebugMode) print("delete successfully${response1.data}");
-    Fluttertoast.showToast(
-      msg: 'Cart cleared successfully!',
-      backgroundColor: Colors.green,
-      textColor: Colors.white,
-    );
-    await CartController.to.getcart();
-  } on DioError catch (e) {
-    print("Errrror${e.response.toString() + e.message.toString()}");
-    Fluttertoast.showToast(
-      msg: e.response.toString(),
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-    );
+  Future<void> clearWishList() async {
+    try {
+      NetworkApiServices network = NetworkApiServices();
+      final response1 =
+          await network.deleteApi(StaticVariables.deleteAllUserWishList);
+      if (kDebugMode) print("delete successfully${response1.data}");
+      Fluttertoast.showToast(
+        msg: 'Cart cleared successfully!',
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+      );
+      await CartController.to.getcart();
+    } on DioError catch (e) {
+      print("Errrror${e.response.toString() + e.message.toString()}");
+      Fluttertoast.showToast(
+        msg: e.response.toString(),
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+    }
   }
 }
