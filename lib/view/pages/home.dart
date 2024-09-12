@@ -8,7 +8,7 @@ import 'package:jammer_mobile_app/controllers/cart_controller.dart';
 import 'package:jammer_mobile_app/controllers/home_controller.dart';
 import 'package:jammer_mobile_app/controllers/order_controller.dart';
 import 'package:jammer_mobile_app/controllers/wishlist_controller.dart';
-import 'package:jammer_mobile_app/models/banner_model.dart';
+// import 'package:jammer_mobile_app/models/banner_model.dart';
 import 'package:jammer_mobile_app/widget/carousel_pro/lib/carousel_pro.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:fluttertoast/fluttertoast.dart';

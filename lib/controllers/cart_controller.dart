@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:jammer_mobile_app/data/const/static_variables.dart';
-import 'package:jammer_mobile_app/data/network/APIStore.dart';
-import 'package:jammer_mobile_app/data/network/base_api_services.dart';
+// import 'package:jammer_mobile_app/data/network/APIStore.dart';
+// import 'package:jammer_mobile_app/data/network/base_api_services.dart';
 import 'package:jammer_mobile_app/data/network/network_api_services.dart';
 import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
 import 'package:jammer_mobile_app/models/CartModel.dart';
@@ -37,17 +37,12 @@ class CartController extends GetxController {
 
   Future<void> removeAPisCart(int id) async {
     try {
-      final response1 = await httpClient()
-          .delete(StaticVariables.deleteCartItem + id.toString());
-      if (response1.statusCode == 200) {
-        if (kDebugMode) print("delete successfully");
-      } else {
-        Fluttertoast.showToast(
-          msg: 'Cart Not Found',
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        );
-      }
+      NetworkApiServices network = NetworkApiServices();
+      final response1 = await network
+          .deleteApi(StaticVariables.deleteCartItem + id.toString());
+
+      if (kDebugMode) print("delete successfully${response1.data}");
+
       // ignore: deprecated_member_use
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
@@ -79,7 +74,7 @@ class CartController extends GetxController {
       NetworkApiServices network = NetworkApiServices();
       final response1 = await network.getApi(StaticVariables.getUserCart);
 
-      List res = response1["data"];
+      List res = response1.data["data"];
       res.forEach((element) {
         cardlist.add(CartModel.fromMap(element));
       });
@@ -118,23 +113,17 @@ class CartController extends GetxController {
   Future<void> getreview(String id) async {
     try {
       reviewlist.clear();
-      final response1 =
-          await httpClient().get(StaticVariables.getReviewsId + id);
-      if (response1.statusCode == 200) {
-        List res = response1.data["data"];
-        res.forEach((element) {
-          reviewlist.add(ReviewModel.fromJson(element));
-        });
-        getRating();
-        update();
-        if (kDebugMode) print("reviewlist${reviewlist.length}");
-      } else {
-        Fluttertoast.showToast(
-          msg: 'User data Not Found',
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        );
-      }
+      NetworkApiServices network = NetworkApiServices();
+      final response1 = await network.getApi(StaticVariables.getReviewsId + id);
+
+      List res = response1.data["data"];
+      res.forEach((element) {
+        reviewlist.add(ReviewModel.fromJson(element));
+      });
+      getRating();
+      update();
+      if (kDebugMode) print("reviewlist${reviewlist.length}");
+
       // ignore: deprecated_member_use
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
@@ -154,24 +143,18 @@ class CartController extends GetxController {
         "quantity": 1,
         "couponId": coupon == 0 ? 0 : coupon
       };
-      final response1 =
-          await httpClient().post(StaticVariables.addToCart, data: data);
-      if (response1.statusCode == 200) {
-        if (kDebugMode) print("Add SuccessFully");
-        Fluttertoast.showToast(
-          msg: 'Add SuccessFully',
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        );
-        update();
-        getcart();
-      } else {
-        Fluttertoast.showToast(
-          msg: 'Error to Add Card',
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        );
-      }
+      NetworkApiServices network = NetworkApiServices();
+      final response1 = await network.postApi(StaticVariables.addToCart, data);
+
+      if (kDebugMode) print("Add SuccessFully${response1}");
+      Fluttertoast.showToast(
+        msg: 'Add SuccessFully',
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+      update();
+      getcart();
+
       // ignore: deprecated_member_use
     } on DioError catch (e) {
       print("Errrror${e.response}");

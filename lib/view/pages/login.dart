@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:jammer_mobile_app/controllers/login_controller.dart';
@@ -165,15 +166,15 @@ class _LoginState extends State<Login> {
                       const SizedBox(height: 50.0),
                       InkWell(
                         onTap: () {
-                          // if (controller.validateLogin()) {
-                          controller.login(context);
-                          // } else {
-                          //   Fluttertoast.showToast(
-                          //     msg: 'Please fix the errors before submitting',
-                          //     backgroundColor: Colors.red,
-                          //     textColor: Colors.white,
-                          //   );
-                          // }
+                          if (controller.validateLogin()) {
+                            controller.login(context);
+                          } else {
+                            Fluttertoast.showToast(
+                              msg: 'Please fix the errors before submitting',
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                            );
+                          }
                         },
                         child: SizedBox(
                           height: 45.0,

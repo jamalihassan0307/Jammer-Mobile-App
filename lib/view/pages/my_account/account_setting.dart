@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:jammer_mobile_app/data/const/static_variables.dart';
-import 'package:jammer_mobile_app/view/pages/login.dart';
+// import 'package:jammer_mobile_app/view/pages/login.dart';
 
 class AccountSetting extends StatefulWidget {
   const AccountSetting({super.key});

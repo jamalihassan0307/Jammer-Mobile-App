@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jammer_mobile_app/AppTheme/my_behaviour.dart';
+import 'package:jammer_mobile_app/data/const/static_variables.dart';
 import 'package:jammer_mobile_app/view/pages/spashscreen.dart';
 
 void main() {

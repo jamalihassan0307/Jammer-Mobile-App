@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jammer_mobile_app/data/const/static_variables.dart';
-import 'package:jammer_mobile_app/data/network/APIStore.dart';
+// import 'package:jammer_mobile_app/data/network/APIStore.dart';
+import 'package:jammer_mobile_app/data/network/network_api_services.dart';
 import 'package:jammer_mobile_app/models/user_model.dart';
 import 'package:jammer_mobile_app/view/pages/home.dart';
 import 'package:jammer_mobile_app/view/pages/login.dart';
@@ -43,35 +44,26 @@ class _SplashScreenState extends State<SplashScreen> {
       StaticVariables.userid = usedid;
       try {
         print("///////////////////login");
-        final response1 = await httpClient().get(StaticVariables.getUserById);
+        NetworkApiServices network = NetworkApiServices();
+        final response1 = await network.getApi(StaticVariables.getUserById);
+        Fluttertoast.showToast(
+          msg: "Login Successfully",
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+        );
 
-        if (response1.statusCode == 200) {
-          // final data = response1.data;
-          Fluttertoast.showToast(
-            msg: "Login Successfully",
-            backgroundColor: Colors.green,
-            textColor: Colors.white,
-          );
+        UserModel model = UserModel.fromMap(response1.data);
 
-          UserModel model = UserModel.fromMap(response1.data);
-
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          await prefs.setString('UserId', model.id);
-          StaticVariables.userid = model.id;
-          StaticVariables.model = model;
-          print("usermodel${model}");
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Home(),
-              ));
-        } else {
-          Fluttertoast.showToast(
-            msg: 'User data Not Found',
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-          );
-        }
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('UserId', model.id);
+        StaticVariables.userid = model.id;
+        StaticVariables.model = model;
+        print("usermodel${model}");
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Home(),
+            ));
       } on DioError catch (e) {
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => const Login()));

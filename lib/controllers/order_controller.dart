@@ -7,8 +7,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:jammer_mobile_app/controllers/cart_controller.dart';
 import 'package:jammer_mobile_app/data/const/static_variables.dart';
-import 'package:jammer_mobile_app/data/network/APIStore.dart';
-import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
+// import 'package:jammer_mobile_app/data/network/APIStore.dart';
+import 'package:jammer_mobile_app/data/network/network_api_services.dart';
+// import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
 import 'package:jammer_mobile_app/models/CartModel.dart';
 // import 'package:jammer_mobile_app/models/CartModel.dart';
 import 'package:jammer_mobile_app/models/get_order_model.dart';
@@ -32,22 +33,15 @@ class OrderController extends GetxController {
   Future<void> getOrder() async {
     try {
       orderList = [];
-      final response1 =
-          await httpClient().get(StaticVariables.getOrdersByUserId);
-      if (response1.statusCode == 200) {
-        List res = response1.data["data"];
-        res.forEach((element) {
-          orderList.add(GetOrderModel.fromJson(element));
-        });
-        // orderList.sort((a,b)=>a.items)
-        if (kDebugMode) print("orderListorderList${orderList}");
-      } else {
-        Fluttertoast.showToast(
-          msg: 'User data Not Found',
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        );
-      }
+      NetworkApiServices network = NetworkApiServices();
+      final response1 = await network.getApi(StaticVariables.getOrdersByUserId);
+      List res = response1.data["data"];
+      res.forEach((element) {
+        orderList.add(GetOrderModel.fromJson(element));
+      });
+      // orderList.sort((a,b)=>a.items)
+      if (kDebugMode) print("orderListorderList${orderList}");
+
       // ignore: deprecated_member_use
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
@@ -67,24 +61,17 @@ class OrderController extends GetxController {
               "couponId": null
             })
         .toList();
+    NetworkApiServices network = NetworkApiServices();
+    final response1 =
+        await network.postApi(StaticVariables.createOrder, {"items": items});
 
-    final orderResponse = await httpClient()
-        .post(StaticVariables.createOrder, data: {"items": items});
-
-    if (orderResponse.statusCode == 200) {
-      Fluttertoast.showToast(
-        msg: 'Order created successfully!',
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-      );
-      await clearCart();
-    } else {
-      Fluttertoast.showToast(
-        msg: 'Failed to create order',
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
-    }
+    if (kDebugMode) print("dOrder created successfully${response1.data}");
+    Fluttertoast.showToast(
+      msg: 'Order created successfully!',
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+    );
+    await clearCart();
   }
 
   Future<void> createOrder(List<CartModel> model, int type) async {
@@ -94,42 +81,35 @@ class OrderController extends GetxController {
     ];
 
     try {
-      final orderResponse = await httpClient().post(
+      NetworkApiServices network = NetworkApiServices();
+      final response1 = await network.postApi(
         StaticVariables.createOrder,
-        data: {"items": items},
+        {"items": items},
+      );
+      if (kDebugMode) print("Order created successfully${response1.data}");
+      Fluttertoast.showToast(
+        msg: 'Order created successfully!',
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
       );
 
-      if (orderResponse.statusCode == 200) {
-        Fluttertoast.showToast(
-          msg: 'Order created successfully!',
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
-        );
-
-        switch (type) {
-          case 0:
-            // Type 0: Simple order
-            break;
-          case 1:
-            // Type 1: Order from cart
-            await clearCart(); // Clear the cart
-            break;
-          case 2:
-            // Type 2: Order from wishlist
-            await clearWishList(); // Clear the wishlist
-            break;
-          default:
-            break;
-        }
-      } else {
-        // Handle order creation failure
-        Fluttertoast.showToast(
-          msg:
-              'Failed to create order: ${orderResponse.data["message"] ?? "Unknown error"}',
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        );
+      switch (type) {
+        case 0:
+          // Type 0: Simple order
+          break;
+        case 1:
+          // Type 1: Order from cart
+          await clearCart(); // Clear the cart
+          break;
+        case 2:
+          // Type 2: Order from wishlist
+          await clearWishList(); // Clear the wishlist
+          break;
+        default:
+          break;
       }
+
+      // Handle order creation failure
     } catch (e) {
       // Handle exceptions
       Fluttertoast.showToast(
@@ -143,22 +123,16 @@ class OrderController extends GetxController {
 
 Future<void> clearCart() async {
   try {
-    final response =
-        await httpClient().delete(StaticVariables.deleteAllUserCart);
-    if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-        msg: 'Cart cleared successfully!',
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-      );
-      await CartController.to.getcart();
-    } else {
-      Fluttertoast.showToast(
-        msg: 'Failed to clear cart',
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
-    }
+    NetworkApiServices network = NetworkApiServices();
+    final response1 =
+        await network.deleteApi(StaticVariables.deleteAllUserCart);
+    if (kDebugMode) print("Cart cleared successfully!y${response1.data}");
+    Fluttertoast.showToast(
+      msg: 'Cart cleared successfully!',
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+    );
+    await CartController.to.getcart();
   } on DioError catch (e) {
     print("Errrror${e.response.toString() + e.message.toString()}");
     Fluttertoast.showToast(
@@ -171,22 +145,16 @@ Future<void> clearCart() async {
 
 Future<void> clearWishList() async {
   try {
-    final response =
-        await httpClient().delete(StaticVariables.deleteAllUserWishList);
-    if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-        msg: 'Cart cleared successfully!',
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-      );
-      await CartController.to.getcart();
-    } else {
-      Fluttertoast.showToast(
-        msg: 'Failed to clear cart',
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
-    }
+    NetworkApiServices network = NetworkApiServices();
+    final response1 =
+        await network.deleteApi(StaticVariables.deleteAllUserWishList);
+    if (kDebugMode) print("delete successfully${response1.data}");
+    Fluttertoast.showToast(
+      msg: 'Cart cleared successfully!',
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+    );
+    await CartController.to.getcart();
   } on DioError catch (e) {
     print("Errrror${e.response.toString() + e.message.toString()}");
     Fluttertoast.showToast(

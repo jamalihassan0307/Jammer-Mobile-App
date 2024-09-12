@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:jammer_mobile_app/data/const/static_variables.dart';
-import 'package:jammer_mobile_app/data/network/APIStore.dart';
+// import 'package:jammer_mobile_app/data/network/APIStore.dart';
+import 'package:jammer_mobile_app/data/network/network_api_services.dart';
 import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
 import 'package:jammer_mobile_app/models/CartModel.dart';
 
@@ -37,17 +38,14 @@ class WishListController extends GetxController {
     try {
       if (kDebugMode) print("remove");
       print("REMOVEEEE ${id}");
-      final response1 = await httpClient()
-          .delete(StaticVariables.deleteWishListItem + id.toString());
-      if (response1.statusCode == 200) {
-        if (kDebugMode) print("delete successfully");
-      } else {
-        Fluttertoast.showToast(
-          msg: 'WishList Not Found',
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        );
-      }
+      NetworkApiServices network = NetworkApiServices();
+      final response1 = await network
+          .deleteApi(StaticVariables.deleteWishListItem + id.toString());
+      if (kDebugMode)
+        print("removeAPisWishList delete successfully${response1.data}");
+
+      if (kDebugMode) print("delete successfully");
+
       // ignore: deprecated_member_use
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
@@ -91,21 +89,15 @@ class WishListController extends GetxController {
   List<CartModel> wishList = [];
   Future<void> getWishList() async {
     try {
-      final response1 = await httpClient().get(StaticVariables.getUserWishList);
-      if (response1.statusCode == 200) {
-        wishList.clear();
-        List res = response1.data["data"];
-        res.forEach((element) {
-          wishList.add(CartModel.fromMap(element));
-        });
-        if (kDebugMode) print("wishListlist${wishList.length}");
-      } else {
-        Fluttertoast.showToast(
-          msg: 'User data Not Found',
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        );
-      }
+      NetworkApiServices network = NetworkApiServices();
+      final response1 = await network.getApi(StaticVariables.getUserWishList);
+      wishList.clear();
+      List res = response1.data["data"];
+      res.forEach((element) {
+        wishList.add(CartModel.fromMap(element));
+      });
+      if (kDebugMode) print("wishListlist${wishList.length}");
+
       getTotal();
       // ignore: deprecated_member_use
     } on DioError catch (e) {
@@ -124,21 +116,17 @@ class WishListController extends GetxController {
       Map<String, dynamic> data = {
         "productId": p.productId,
         "quantity": 1,
-        "couponId": coupon == 0 ? null : coupon
+        "couponId": coupon == 0 ? 0 : coupon
       };
+      NetworkApiServices network = NetworkApiServices();
       final response1 =
-          await httpClient().post(StaticVariables.addWishList, data: data);
-      if (response1.statusCode == 200) {
-        if (kDebugMode) print("Add SuccessFully");
-        update();
-        getWishList();
-      } else {
-        Fluttertoast.showToast(
-          msg: 'User data Not Found',
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        );
-      }
+          await network.postApi(StaticVariables.addWishList, data);
+
+      if (kDebugMode) print("AddWishList ${response1.data}");
+      if (kDebugMode) print("Add SuccessFully");
+      update();
+      getWishList();
+
       // ignore: deprecated_member_use
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");

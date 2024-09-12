@@ -1,4 +1,4 @@
-import 'dart:convert';
+// import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -29,7 +29,7 @@ class NetworkApiServices extends BaseApiServices {
   }
 
   @override
-  Future<dynamic> postApi(var data, String url) async {
+  Future<dynamic> postApi(String url, var data) async {
     if (kDebugMode) {
       print(url);
       print(data);
@@ -52,13 +52,33 @@ class NetworkApiServices extends BaseApiServices {
     return responseJson;
   }
 
+  @override
+  Future<dynamic> deleteApi(String url) async {
+    if (kDebugMode) {
+      print(url);
+    }
+
+    dynamic responseJson;
+    try {
+      final response =
+          await httpClient().delete(url).timeout(const Duration(seconds: 10));
+      responseJson = returnResponse(response);
+    } on SocketException {
+      throw InternetException('');
+    } on RequestTimeOut {
+      throw RequestTimeOut('');
+    }
+    print(responseJson);
+    return responseJson;
+  }
+
   dynamic returnResponse(dio.Response response) {
     switch (response.statusCode) {
       case 200:
-        dynamic responseJson = response.data;
+        dynamic responseJson = response;
         return responseJson;
       case 400:
-        dynamic responseJson = response.data;
+        dynamic responseJson = response;
         return responseJson;
 
       default:
