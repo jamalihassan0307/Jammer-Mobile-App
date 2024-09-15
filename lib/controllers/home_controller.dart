@@ -48,7 +48,7 @@ class HomeController extends GetxController {
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -74,7 +74,7 @@ class HomeController extends GetxController {
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -98,7 +98,7 @@ class HomeController extends GetxController {
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -124,7 +124,7 @@ class HomeController extends GetxController {
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -149,7 +149,7 @@ class HomeController extends GetxController {
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );

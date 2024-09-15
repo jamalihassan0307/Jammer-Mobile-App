@@ -184,12 +184,12 @@ class _HomeState extends State<Home> {
                     // Promotion 1 Start Here
                     InkWell(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const TopOffers(
-                                  title: 'Top Selling Android Mobile')),
-                        );
+                        //   Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const TopOffers(
+                        //             title: 'Top Selling Android Mobile')),
+                        //   );
                       },
                       child: const Image(
                         image: AssetImage('assets/promotion/promotion1.jpg'),

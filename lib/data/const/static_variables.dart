@@ -26,14 +26,14 @@ class StaticVariables {
   static String getUserCart = "Cart/GetUserCart";
   static String getCartById = "Cart/GetCartById/";
   static String deleteCartItem = "Cart/DeleteCartItem/";
-  static String updateCartItem = "Cart/UpdateCartItem/";
+  static String updateCartItem = "Cart/UpdateCartItem";
   static String deleteAllUserCart = "Cart/DeleteAllUserCart";
   ////////////////////WishList/////////////
   static String addWishList = "WishList/AddWishList";
   static String getUserWishList = "WishList/GetUserWishList";
   static String getWishListById = "WishList/GetWishListById/";
   static String deleteWishListItem = "WishList/DeleteWishListItem/";
-  static String updateWishListItem = "WishList/UpdateWishListItem/";
+  static String updateWishListItem = "WishList/UpdateWishListItem";
   static String deleteAllUserWishList = "WishList/DeleteAllUserWishList";
   ////////////////////Product/////////////
 
@@ -41,6 +41,7 @@ class StaticVariables {
   ////////////////////Review/////////////
 
   static String getReviewsId = "Review/GetReviews/";
+  static String addReviews = "Review/AddReview";
   ////////////////////Coupon/////////////
   static String getRandomCouponProducts = "Coupon/GetRandomCouponProducts";
   static String getCouponsWithProducts = "Coupon/GetCouponsWithProducts";
@@ -49,6 +50,7 @@ class StaticVariables {
   ////////////////////Oder/////////////
 
   static String createOrder = "Order/CreateOrder";
+  static String cencalOrder = "Order/CancelOrder/";
   static String getOrderById = "Order/GetOrderById/";
   static String updateOrderStatus = "Order/UpdateOrderStatus/";
   static String getOrdersByUserId = "Order/GetOrdersByUserId/";

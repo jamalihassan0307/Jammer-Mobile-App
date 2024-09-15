@@ -50,7 +50,7 @@ class WishListController extends GetxController {
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -62,8 +62,9 @@ class WishListController extends GetxController {
     double total = 0;
     wishListTotal = 0;
     wishList.forEach((element) {
-      total += double.tryParse(element.price) ?? 0;
+      total += double.parse(element.price) * element.quantity;
     });
+
     wishListTotal = double.parse(total.toStringAsFixed(2));
     ;
     numberofWishList = wishList.length;
@@ -103,7 +104,7 @@ class WishListController extends GetxController {
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -131,10 +132,75 @@ class WishListController extends GetxController {
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
+    }
+  }
+
+  Future<void> updateCartQuantity() async {
+    try {
+      for (var item in wishList) {
+        Map<String, dynamic> data = {
+          "quantity": item.quantity,
+          "cartid": item.id,
+        };
+        NetworkApiServices network = NetworkApiServices();
+        final response = await network.putApi(
+          StaticVariables.updateWishListItem,
+          data,
+        );
+
+        if (kDebugMode) print("Quantity Updated Successfully: $response");
+
+        // Fluttertoast.showToast(
+        //   msg: 'Quantity Updated Successfully',
+        //   backgroundColor: Colors.green,
+        //   textColor: Colors.white,
+        // );
+        getWishList();
+        update();
+      }
+      // ignore: deprecated_member_use
+    } on DioError catch (e) {
+      print("Error: ${e.message.toString()}");
+      Fluttertoast.showToast(
+        msg: e.message.toString(),
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+    }
+  }
+
+  void updateCartList(CartModel model, bool isIncrement) {
+    print("productId: ${model.productId}, isIncrement: $isIncrement");
+
+    int index =
+        wishList.indexWhere((element) => element.productId == model.productId);
+
+    if (index != -1) {
+      if (isIncrement) {
+        print("Before increment: ${wishList[index].quantity}");
+        wishList[index].quantity += 1;
+        print("After increment: ${wishList[index].quantity}");
+      } else {
+        print("Before decrement: ${wishList[index].quantity}");
+        wishList[index].quantity -= 1;
+        print("After decrement: ${wishList[index].quantity}");
+
+        if (wishList[index].quantity <= 0) {
+          wishList.removeAt(index);
+          print("Product removed from cart");
+        }
+      }
+      getTotal();
+
+      // cartTotal = cartTotal * wishList[index].quantity;
+      print("ProductcartTotal ${wishListTotal}");
+      update();
+    } else {
+      print("ProductcartTotal ${wishListTotal}");
     }
   }
 }

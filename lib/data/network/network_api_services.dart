@@ -53,6 +53,54 @@ class NetworkApiServices extends BaseApiServices {
   }
 
   @override
+  Future<dynamic> putApi(String url, var data) async {
+    if (kDebugMode) {
+      print(url);
+      print(data);
+    }
+
+    dynamic responseJson;
+    try {
+      final response = await httpClient()
+          .put(url, data: data)
+          .timeout(const Duration(seconds: 10));
+      responseJson = returnResponse(response);
+    } on SocketException {
+      throw InternetException('');
+    } on RequestTimeOut {
+      throw RequestTimeOut('');
+    }
+    if (kDebugMode) {
+      print(responseJson);
+    }
+    return responseJson;
+  }
+
+  @override
+  Future<dynamic> putApi1(
+    String url,
+  ) async {
+    if (kDebugMode) {
+      print(url);
+    }
+
+    dynamic responseJson;
+    try {
+      final response =
+          await httpClient().put(url).timeout(const Duration(seconds: 10));
+      responseJson = returnResponse(response);
+    } on SocketException {
+      throw InternetException('');
+    } on RequestTimeOut {
+      throw RequestTimeOut('');
+    }
+    if (kDebugMode) {
+      print(responseJson);
+    }
+    return responseJson;
+  }
+
+  @override
   Future<dynamic> deleteApi(String url) async {
     if (kDebugMode) {
       print(url);

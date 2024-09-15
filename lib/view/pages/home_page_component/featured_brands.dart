@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jammer_mobile_app/controllers/home_controller.dart';
 import 'package:jammer_mobile_app/models/get_category_model.dart';
+import 'package:jammer_mobile_app/view/pages/category/top_offers.dart';
 
 // My Own Imports
 // import 'package:jammer_mobile_app/view/pages/category/top_offers.dart';
@@ -31,11 +32,15 @@ class FeaturedBrandSlider extends StatelessWidget {
 
       return InkWell(
         onTap: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //       builder: (context) => TopOffers(title: '${item.name}')),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => TopOffers(
+                      couponid: item.id,
+                      title: '${item.name}',
+                      id: item.id.toString(),
+                    )),
+          );
         },
         child: Container(
           decoration: BoxDecoration(
@@ -53,7 +58,7 @@ class FeaturedBrandSlider extends StatelessWidget {
                 child: Image.network(
                   GetImage(item.image!),
                   height: 150,
-                  width: 150,
+                  width: 200,
                 ),
               ),
               Positioned(

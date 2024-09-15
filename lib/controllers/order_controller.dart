@@ -41,12 +41,16 @@ class OrderController extends GetxController {
       });
       // orderList.sort((a,b)=>a.items)
       if (kDebugMode) print("orderListorderList${orderList}");
-
+      orderList.sort((a, b) {
+        DateTime dateA = DateTime.parse(a.orderDate!);
+        DateTime dateB = DateTime.parse(a.orderDate!);
+        return dateB.compareTo(dateA);
+      });
       // ignore: deprecated_member_use
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -74,25 +78,53 @@ class OrderController extends GetxController {
     await clearCart();
   }
 
-  Future<void> createOrder(List<CartModel> model, int type) async {
+  Future<void> cancelOrder(int orderId) async {
+    NetworkApiServices network = NetworkApiServices();
+    final response1 =
+        await network.putApi1(StaticVariables.cencalOrder + orderId.toString());
+
+    if (kDebugMode) print("Order Cencal successfully!${response1.data}");
+    Fluttertoast.showToast(
+      msg: 'Order Cencal successfully!',
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+    );
+    getOrder();
+  }
+
+  Future<void> createOrder(List<CartModel> model, int type, String phoneNumber,
+      String city, String street, String postalCode, String region) async {
     List<Map<String, dynamic>> items = [
       for (CartModel data in model)
-        {"productId": data.productId, "quantity": 1, "couponId": data.couponId}
+        {
+          "productId": data.productId,
+          "quantity": data.quantity,
+          "couponId": data.couponId
+        }
     ];
 
     try {
       NetworkApiServices network = NetworkApiServices();
       final response1 = await network.postApi(
         StaticVariables.createOrder,
-        {"items": items},
+        {
+          "phoneNumber": phoneNumber,
+          "city": city,
+          "street": street,
+          "postalCode": postalCode,
+          "region": region,
+          "items": items,
+        },
       );
-      if (kDebugMode) print("Order created successfully${response1.data}");
+
+      if (kDebugMode) print("Order created successfully: ${response1.data}");
       Fluttertoast.showToast(
         msg: 'Order created successfully!',
         backgroundColor: Colors.green,
         textColor: Colors.white,
       );
 
+      // Handle specific order types
       switch (type) {
         case 0:
           // Type 0: Simple order
@@ -108,8 +140,7 @@ class OrderController extends GetxController {
         default:
           break;
       }
-
-      // Handle order creation failure
+      getOrder();
     } catch (e) {
       // Handle exceptions
       Fluttertoast.showToast(
@@ -135,7 +166,7 @@ class OrderController extends GetxController {
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -157,7 +188,7 @@ class OrderController extends GetxController {
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );

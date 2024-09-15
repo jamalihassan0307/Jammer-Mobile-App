@@ -10,10 +10,22 @@ import 'package:jammer_mobile_app/view/pages/home.dart';
 
 class PaymentPage extends StatefulWidget {
   final List<CartModel> productData;
-
+  final String phoneNumber;
+  final String city;
+  final String street;
+  final String postalCode;
+  final String region;
   final int type;
 
-  const PaymentPage({Key? key, required this.productData, required this.type});
+  const PaymentPage(
+      {Key? key,
+      required this.productData,
+      required this.type,
+      required this.phoneNumber,
+      required this.city,
+      required this.street,
+      required this.postalCode,
+      required this.region});
 
   @override
   _PaymentPageState createState() => _PaymentPageState();
@@ -179,8 +191,15 @@ class _PaymentPageState extends State<PaymentPage> {
                   borderRadius: BorderRadius.circular(30.0),
                   child: InkWell(
                     onTap: () {
-                      OrderController.to
-                          .createOrder(widget.productData, widget.type);
+                      OrderController.to.createOrder(
+                          widget.productData,
+                          widget.type,
+                          widget.phoneNumber,
+                          widget.city,
+                          widget.street,
+                          widget.postalCode,
+                          widget.region);
+
                       _showDialog();
                     },
                     child: Container(

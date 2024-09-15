@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, unused_element
+// ignore_for_file: library_private_types_in_public_api, unused_element, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -59,268 +59,296 @@ class _CartPageState extends State<CartPage> {
       );
     }
 
-    return GetBuilder<CartController>(builder: (obj) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('My Cart'),
-          titleSpacing: 0.0,
-          backgroundColor: Theme.of(context).primaryColor,
-        ),
-        bottomNavigationBar: Material(
-          elevation: 5.0,
-          child: Container(
-            color: Colors.white,
-            width: widthFull,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Container(
-                  width: ((widthFull) / 2),
-                  height: 50.0,
-                  alignment: Alignment.center,
-                  child: RichText(
-                    text: TextSpan(
-                      text: 'Total: ',
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15.0,
-                          color: Colors.black),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: ' ₹${obj.cartTotal}',
-                            style: const TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue)),
-                      ],
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    (obj.cartTotal == 0)
-                        ? showAlertDialog()
-                        : Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.rightToLeft,
-                                child: Delivery(
-                                  productData: obj.cardlist,
-                                  type: 1,
-                                )));
-                  },
-                  child: Container(
+    return WillPopScope(
+      onWillPop: () async {
+        CartController.to.updateCartQuantity();
+        return true;
+      },
+      child: GetBuilder<CartController>(builder: (obj) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('My Cart'),
+            titleSpacing: 0.0,
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
+          bottomNavigationBar: Material(
+            elevation: 5.0,
+            child: Container(
+              color: Colors.white,
+              width: widthFull,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Container(
                     width: ((widthFull) / 2),
                     height: 50.0,
-                    color: (obj.cartTotal == 0)
-                        ? Colors.grey
-                        : Theme.of(context).primaryColor,
                     alignment: Alignment.center,
-                    child: const Text(
-                      'Pay Now',
-                      style: TextStyle(color: Colors.white, fontSize: 15.0),
+                    child: RichText(
+                      text: TextSpan(
+                        text: 'Total: ',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15.0,
+                            color: Colors.black),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: 'RS ${obj.cartTotal}',
+                              style: const TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue)),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  InkWell(
+                    onTap: () {
+                      (obj.cartTotal == 0)
+                          ? showAlertDialog()
+                          : Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child: Delivery(
+                                    productData: obj.cardlist,
+                                    type: 1,
+                                  )));
+                    },
+                    child: Container(
+                      width: ((widthFull) / 2),
+                      height: 50.0,
+                      color: (obj.cartTotal == 0)
+                          ? Colors.grey
+                          : Theme.of(context).primaryColor,
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Pay Now',
+                        style: TextStyle(color: Colors.white, fontSize: 15.0),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        body: (obj.cardlist.length == 0)
-            ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    const Icon(
-                      FontAwesomeIcons.basketShopping,
-                      color: Colors.grey,
-                      size: 60.0,
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    const Text(
-                      'No Item in Cart',
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    TextButton(
-                      child: const Text(
-                        'Go To Home',
-                        style: TextStyle(color: Colors.white),
+          body: (obj.cardlist.length == 0)
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      const Icon(
+                        FontAwesomeIcons.basketShopping,
+                        color: Colors.grey,
+                        size: 60.0,
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const Home()),
-                        );
-                      },
-                    )
-                  ],
-                ),
-              )
-            : ListView.builder(
-                itemCount: obj.cardlist.length,
-                itemBuilder: (context, index) {
-                  CartModel item = obj.cardlist[index];
-                  return Slidable(
-                    key: ValueKey(index),
-                    endActionPane: ActionPane(
-                      motion: const ScrollMotion(),
-                      extentRatio: 0.16,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            obj.removecart(index, item.id);
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      const Text(
+                        'No Item in Cart',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      TextButton(
+                        child: const Text(
+                          'Go To Home',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Home()),
+                          );
+                        },
+                      )
+                    ],
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: obj.cardlist.length,
+                  itemBuilder: (context, index) {
+                    CartModel item = obj.cardlist[index];
+                    return Slidable(
+                      key: ValueKey(index),
+                      endActionPane: ActionPane(
+                        motion: const ScrollMotion(),
+                        extentRatio: 0.16,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              obj.removecart(index, item.id);
 
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text('Item Removed'),
-                            ));
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(
-                              vertical: 3.0,
-                            ),
-                            width: MediaQuery.of(context).size.width * 0.16,
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            alignment: Alignment.center,
-                            child: const Icon(
-                              Icons.delete,
-                              color: Colors.white,
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text('Item Removed'),
+                              ));
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                vertical: 3.0,
+                              ),
+                              width: MediaQuery.of(context).size.width * 0.16,
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              alignment: Alignment.center,
+                              child: const Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    child: SizedBox(
-                      height: (height / 5.0),
-                      child: Card(
-                          elevation: 3.0,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      width: 120.0,
-                                      height: double.infinity,
-                                      alignment: Alignment.center,
-                                      child: Image.network(
-                                          GetImage(item.productImages![0])),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(10.0),
-                                width: (width - 20.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                        ],
+                      ),
+                      child: SizedBox(
+                        height: (height / 5.0),
+                        child: Card(
+                            elevation: 3.0,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    Text(
-                                      '${item.productName}',
-                                      style: const TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
+                                    Expanded(
+                                      child: Container(
+                                        width: 120.0,
+                                        height: double.infinity,
+                                        alignment: Alignment.center,
+                                        child: Image.network(
+                                            GetImage(item.productImages![0])),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      height: 7.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        const Text(
-                                          'Price:',
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 15.0,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 10.0,
-                                        ),
-                                        Text(
-                                          '₹${item.price}',
-                                          style: const TextStyle(
-                                            color: Colors.blue,
-                                            fontSize: 15.0,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 7.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        // RichText(
-                                        //   text: TextSpan(
-                                        //     text: 'Size:  ',
-                                        //     style: const TextStyle(
-                                        //         fontSize: 15.0,
-                                        //         color: Colors.grey),
-                                        //     children: <TextSpan>[
-                                        //       TextSpan(
-                                        //           text: '  size',
-                                        //           style: const TextStyle(
-                                        //               fontSize: 15.0,
-                                        //               color: Colors.blue)),
-                                        //     ],
-                                        //   ),
-                                        // ),
-                                        const SizedBox(
-                                          width: 10.0,
-                                        ),
-                                        InkWell(
-                                          child: Container(
-                                            color: Colors.grey,
-                                            padding: const EdgeInsets.all(3.0),
-                                            child: const Text(
-                                              'Remove',
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ),
-                                          onTap: () {
-                                            obj.removecart(index, item.id);
-
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                                    content:
-                                                        Text("Item Removed")));
-                                          },
-                                        ),
-                                      ],
                                     ),
                                   ],
                                 ),
-                              )
-                            ],
-                          )),
-                    ),
-                  );
-                },
-              ),
-      );
-    });
+                                Container(
+                                  padding: const EdgeInsets.all(10.0),
+                                  width: (width - 20.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        '${item.productName}',
+                                        style: const TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 7.0,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          const Text(
+                                            'Price:',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10.0,
+                                          ),
+                                          Text(
+                                            'RS ${((double.tryParse(item.price) ?? 0) * item.quantity).toStringAsFixed(2)}',
+                                            style: const TextStyle(
+                                              color: Colors.blue,
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 7.0,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          // RichText(
+                                          //   text: TextSpan(
+                                          //     text: 'Size:  ',
+                                          //     style: const TextStyle(
+                                          //         fontSize: 15.0,
+                                          //         color: Colors.grey),
+                                          //     children: <TextSpan>[
+                                          //       TextSpan(
+                                          //           text: '  size',
+                                          //           style: const TextStyle(
+                                          //               fontSize: 15.0,
+                                          //               color: Colors.blue)),
+                                          //     ],
+                                          //   ),
+                                          // ),
+                                          const SizedBox(
+                                            width: 10.0,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: <Widget>[
+                                              const Text(
+                                                'Quantity:',
+                                                style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 10.0),
+                                              Row(
+                                                children: [
+                                                  IconButton(
+                                                    icon: Icon(Icons.remove),
+                                                    onPressed: () {
+                                                      if (item.quantity > 1) {
+                                                        obj.updateCartList(
+                                                            item, false);
+                                                      }
+                                                    },
+                                                  ),
+                                                  Text('${item.quantity}',
+                                                      style: const TextStyle(
+                                                          fontSize: 15.0)),
+                                                  IconButton(
+                                                    icon: Icon(Icons.add),
+                                                    onPressed: () {
+                                                      obj.updateCartList(
+                                                          item, true);
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            )),
+                      ),
+                    );
+                  },
+                ),
+        );
+      }),
+    );
   }
 }

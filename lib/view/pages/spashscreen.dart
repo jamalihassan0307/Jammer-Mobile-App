@@ -40,6 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
     String? usedid = sharedPreferences.getString("UserId");
     if (value != null) {
       print("TOKKEN ${value}");
+      print("usedid ${usedid}");
       StaticVariables.tokenid = value;
       StaticVariables.userid = usedid;
       try {
@@ -68,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => const Login()));
         Fluttertoast.showToast(
-          msg: e.response.toString(),
+          msg: e.message.toString(),
           backgroundColor: Colors.red,
           textColor: Colors.white,
         );

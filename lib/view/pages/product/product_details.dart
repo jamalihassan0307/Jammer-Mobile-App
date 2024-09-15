@@ -157,7 +157,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      '₹${widget.data.price}',
+                      'RS ${widget.data.price}',
                       style: const TextStyle(
                         fontSize: 18.0,
                       ),
@@ -166,7 +166,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       width: 8.0,
                     ),
                     Text(
-                      '₹${widget.data.oldPrice}',
+                      'RS ${widget.data.oldPrice}',
                       style: const TextStyle(
                           fontSize: 14.0,
                           decoration: TextDecoration.lineThrough,
@@ -176,7 +176,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       width: 8.0,
                     ),
                     Text(
-                      '₹${widget.data.offer}',
+                      'RS ${widget.data.offer}',
                       style: TextStyle(fontSize: 14.0, color: Colors.red[700]),
                     ),
                   ],

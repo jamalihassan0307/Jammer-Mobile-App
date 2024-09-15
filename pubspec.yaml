@@ -49,6 +49,9 @@ dependencies:
   shared_preferences: 
   image_picker: 
   path: 
+  flutter_rating_bar: 
+  country_pickers: 
+  intl: 
 
 dev_dependencies:
   flutter_test:

@@ -21,6 +21,7 @@ class CartController extends GetxController {
     update();
   }
 
+  double fullrating = 0;
   bool loading = false;
   updateloading(bool load) {
     loading = load;
@@ -47,7 +48,7 @@ class CartController extends GetxController {
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -59,7 +60,7 @@ class CartController extends GetxController {
     double total = 0;
     cartTotal = 0;
     cardlist.forEach((element) {
-      total += double.tryParse(element.price) ?? 0;
+      total += double.parse(element.price) * element.quantity;
     });
     cartTotal = cartTotal = double.parse(total.toStringAsFixed(2));
     ;
@@ -70,7 +71,7 @@ class CartController extends GetxController {
   List<CartModel> cardlist = [];
   Future<void> getcart() async {
     try {
-      cardlist = [];
+      cardlist.clear();
       NetworkApiServices network = NetworkApiServices();
       final response1 = await network.getApi(StaticVariables.getUserCart);
 
@@ -85,7 +86,7 @@ class CartController extends GetxController {
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -99,7 +100,7 @@ class CartController extends GetxController {
     total = 0.0;
     averageRating = 0.0;
     for (int i = 0; i < reviewlist.length; i++) {
-      double index = double.tryParse(reviewlist[i].points.toString()) ?? 0.0;
+      double index = reviewlist[i].points;
       averageRating = averageRating + index;
     }
     total = averageRating;
@@ -118,7 +119,7 @@ class CartController extends GetxController {
 
       List res = response1.data["data"];
       res.forEach((element) {
-        reviewlist.add(ReviewModel.fromJson(element));
+        reviewlist.add(ReviewModel.fromMap(element as Map<String, dynamic>));
       });
       getRating();
       update();
@@ -128,7 +129,7 @@ class CartController extends GetxController {
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -157,12 +158,118 @@ class CartController extends GetxController {
 
       // ignore: deprecated_member_use
     } on DioError catch (e) {
-      print("Errrror${e.response}");
+      print("ErrrrorAddcart${e.message.toString() + e.response.toString()}");
       Fluttertoast.showToast(
-        msg: e.response.toString(),
+        msg: e.message.toString() + e.response.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
+    }
+  }
+
+  Future<void> AddReview(int p, String sms) async {
+    try {
+      Map<String, dynamic> data = {
+        "productId": p,
+        "message": sms,
+        "points": fullrating
+      };
+      NetworkApiServices network = NetworkApiServices();
+      final response1 = await network.postApi(StaticVariables.addReviews, data);
+      int id = DateTime.now().microsecond;
+      if (kDebugMode) print("AddReview SuccessFully${response1}");
+      ReviewModel model = ReviewModel(
+          createdAt: "",
+          fullname: StaticVariables.model!.fullName,
+          id: id,
+          image: StaticVariables.model!.image,
+          message: sms,
+          points: fullrating,
+          productId: p,
+          userId: int.parse(StaticVariables.model!.id));
+      reviewlist.add(model);
+      getRating();
+      Fluttertoast.showToast(
+        msg: 'Add SuccessFully',
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+      update();
+      getcart();
+
+      // ignore: deprecated_member_use
+    } on DioError catch (e) {
+      print("ErrrrorAddcart${e.message.toString() + e.response.toString()}");
+      Fluttertoast.showToast(
+        msg: e.message.toString() + e.response.toString(),
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+    }
+  }
+
+  Future<void> updateCartQuantity() async {
+    try {
+      for (var item in cardlist) {
+        Map<String, dynamic> data = {
+          "quantity": item.quantity,
+          "cartid": item.id,
+        };
+        NetworkApiServices network = NetworkApiServices();
+        final response = await network.putApi(
+          StaticVariables.updateCartItem,
+          data,
+        );
+
+        if (kDebugMode) print("Quantity Updated Successfully: $response");
+
+        // Fluttertoast.showToast(
+        //   msg: 'Quantity Updated Successfully',
+        //   backgroundColor: Colors.green,
+        //   textColor: Colors.white,
+        // );
+        getcart();
+        update();
+      }
+      // ignore: deprecated_member_use
+    } on DioError catch (e) {
+      print("Error: ${e.message.toString()}");
+      Fluttertoast.showToast(
+        msg: e.message.toString(),
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+    }
+  }
+
+  void updateCartList(CartModel model, bool isIncrement) {
+    print("productId: ${model.productId}, isIncrement: $isIncrement");
+
+    int index =
+        cardlist.indexWhere((element) => element.productId == model.productId);
+
+    if (index != -1) {
+      if (isIncrement) {
+        print("Before increment: ${cardlist[index].quantity}");
+        cardlist[index].quantity += 1;
+        print("After increment: ${cardlist[index].quantity}");
+      } else {
+        print("Before decrement: ${cardlist[index].quantity}");
+        cardlist[index].quantity -= 1;
+        print("After decrement: ${cardlist[index].quantity}");
+
+        if (cardlist[index].quantity <= 0) {
+          cardlist.removeAt(index);
+          print("Product removed from cart");
+        }
+      }
+      getTotal();
+
+      // cartTotal = cartTotal * cardlist[index].quantity;
+      print("ProductcartTotal ${cartTotal}");
+      update();
+    } else {
+      print("ProductcartTotal ${cartTotal}");
     }
   }
 }

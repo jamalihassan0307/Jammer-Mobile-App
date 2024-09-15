@@ -35,7 +35,9 @@ class _AllRatingState extends State<AllRating> {
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Text(
-                    obj.averageRating.toString(),
+                    double.parse(obj.averageRating.toStringAsFixed(1)).isNaN
+                        ? "0.0"
+                        : obj.averageRating.toStringAsFixed(1).toString(),
                     style: const TextStyle(
                       fontSize: 18.0,
                     ),
@@ -69,7 +71,7 @@ class _AllRatingState extends State<AllRating> {
                       radius: 45,
                       backgroundImage: NetworkImage(
                         GetImage(
-                          item.image!,
+                          item.image,
                         ),
                       ),
                     ),
