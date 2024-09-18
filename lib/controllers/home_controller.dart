@@ -7,7 +7,9 @@ import 'package:jammer_mobile_app/data/const/static_variables.dart';
 // import 'package:jammer_mobile_app/data/network/APIStore.dart';
 import 'package:jammer_mobile_app/data/network/network_api_services.dart';
 import 'package:jammer_mobile_app/models/GetCouponsWithProducts%20.dart';
+import 'package:jammer_mobile_app/models/ProductsByCategory%20.dart';
 import 'package:jammer_mobile_app/models/RandamProduct.dart';
+import 'package:jammer_mobile_app/models/RandamProducts20.dart';
 import 'package:jammer_mobile_app/models/banner_model.dart';
 import 'package:jammer_mobile_app/models/get_category_model.dart';
 
@@ -53,6 +55,39 @@ class HomeController extends GetxController {
         textColor: Colors.white,
       );
     }
+  }
+
+  RandomProducts? bannerProduct;
+  Future<void> getBannerProduct(int q, int coupon) async {
+    updateloading(true);
+    bannerProduct = null;
+    try {
+      NetworkApiServices network = NetworkApiServices();
+      final response1 = await network.getApi(
+          StaticVariables.getProductByProductIdCouponId +
+              coupon.toString() +
+              "/" +
+              q.toString());
+      if (response1.data["data"] == null) {
+        bannerProduct = null;
+        return;
+      }
+
+      var res = response1.data["data"];
+      bannerProduct = RandomProducts.fromMap(res);
+      update();
+      if (kDebugMode) print("bannerProduct${bannerProduct}");
+
+      // ignore: deprecated_member_use
+    } on DioError catch (e) {
+      print("Errrror${e.response.toString() + e.message.toString()}");
+      Fluttertoast.showToast(
+        msg: e.message.toString(),
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+    }
+    updateloading(false);
   }
 
   List<GetCouponsWithProducts> couponproductlist = [];
@@ -105,7 +140,7 @@ class HomeController extends GetxController {
     }
   }
 
-  List<RandamProduct> randomCouponProductslist = [];
+  List<RandomProducts> randomCouponProductslist = [];
   Future<void> getRandomCouponProducts() async {
     try {
       NetworkApiServices network = NetworkApiServices();
@@ -114,7 +149,7 @@ class HomeController extends GetxController {
 
       List res = response1.data["data"];
       res.forEach((element) {
-        randomCouponProductslist.add(RandamProduct.fromMap(element));
+        randomCouponProductslist.add(RandomProducts.fromMap(element));
       });
 
       if (kDebugMode)
@@ -131,7 +166,7 @@ class HomeController extends GetxController {
     }
   }
 
-  List<RandamProduct> cartlist = [];
+  List<RandomProducts> cartlist = [];
   Future<void> getUserCart() async {
     try {
       NetworkApiServices network = NetworkApiServices();
@@ -139,7 +174,7 @@ class HomeController extends GetxController {
 
       List res = response1.data["data"];
       res.forEach((element) {
-        randomCouponProductslist.add(RandamProduct.fromMap(element));
+        randomCouponProductslist.add(RandomProducts.fromMap(element));
       });
 
       if (kDebugMode)

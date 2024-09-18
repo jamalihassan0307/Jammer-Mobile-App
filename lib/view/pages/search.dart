@@ -1,187 +1,151 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:jammer_mobile_app/controllers/search_controller.dart';
+import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
+import 'package:jammer_mobile_app/models/RandamProduct.dart';
+import 'package:jammer_mobile_app/models/RandamProducts20.dart';
 import 'package:jammer_mobile_app/view/pages/category/top_offers.dart';
+import 'package:jammer_mobile_app/view/pages/product/product.dart';
+import 'package:jammer_mobile_app/widget/loading.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
   @override
+  State<SearchPage> createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
+  @override
+  void initState() {
+    Get.put(SearchPController());
+    SearchPController.to.init();
+    super.initState();
+  }
+
+  var height, width;
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const TextField(
-          style: TextStyle(color: Colors.white),
-          decoration: InputDecoration(
-            hintText: 'Search for Products',
-            hintStyle: TextStyle(
-              fontSize: 14.0,
-              color: Colors.white,
-            ),
-            suffixIcon: Icon(Icons.search, color: Colors.white),
-            border: InputBorder.none,
-            labelStyle: TextStyle(color: Colors.white),
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+    InkWell getStructuredGridCell(RandomProducts20 offers) {
+      return InkWell(
+        child: Container(
+          margin: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.all(5.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: const [
+              BoxShadow(
+                blurRadius: 5.0,
+                color: Colors.grey,
+              ),
+            ],
+          ),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  height: double.infinity,
+                  margin: const EdgeInsets.all(6.0),
+                  child: offers.imagePath.length == 0
+                      ? Image(
+                          image: AssetImage("assets/best_deal/best_deal_1.jpg"),
+                          fit: BoxFit.fitHeight,
+                        )
+                      : Image.network(
+                          GetImage(offers.imagePath[0]),
+                          fit: BoxFit.fitHeight,
+                        ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.only(right: 6.0, left: 6.0),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      offers.name,
+                      style: const TextStyle(fontSize: 12.0),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      offers.description,
+                      style: const TextStyle(
+                          color: Color(0xFF67A86B), fontSize: 15.0),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
-        titleSpacing: 0.0,
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
-      body: ListView(
-        children: <Widget>[
-          const SizedBox(height: 10.0),
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        const TopOffers(title: 'Best Laptops')),
-              );
-            },
-            child: Image.asset('assets/slider/s5.jpg'),
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          Container(
-            color: Colors.white,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const Padding(
-                  padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 20.0),
-                  child: Text(
-                    'Popular on GoKart',
-                    style: TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                const Divider(),
-                ListTile(
-                  leading: Container(
-                    height: 56.0,
-                    width: 56.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(28.0),
-                      border: Border.all(width: 0.3, color: Colors.grey),
-                      image: const DecorationImage(
-                        image: AssetImage(
-                            "assets/best_of_fashion/best_of_fashion_1.jpg"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                  title: const Text(
-                    'Ladies Panty',
-                    style: TextStyle(
-                      fontFamily: 'Jost',
-                      letterSpacing: 0.7,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  subtitle: const Text(
-                    'Best Offers',
-                    style: TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const TopOffers(title: 'Ladies Panty')),
-                    );
+        onTap: () {
+          PassDataToProduct product = PassDataToProduct(
+              offers.name,
+              offers.id,
+              offers.imagePath,
+              offers.description,
+              "",
+              offers.price.toString(),
+              "");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ProductPage(
+                      productData: product,
+                      coupon: 0,
+                    )),
+          );
+        },
+      );
+    }
+
+    return GetBuilder<SearchPController>(builder: (obj) {
+      return obj.loading
+          ? ProgressLoading()
+          : Scaffold(
+              appBar: AppBar(
+                title: TextField(
+                  controller: obj.searchcontroller,
+                  onChanged: (v) {},
+                  onSubmitted: (v) {
+                    obj.serchProduct(v);
                   },
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    hintText: 'Search for Products',
+                    hintStyle: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.white,
+                    ),
+                    suffixIcon: Icon(Icons.search, color: Colors.white),
+                    border: InputBorder.none,
+                    labelStyle: TextStyle(color: Colors.white),
+                  ),
                 ),
-                const Divider(),
-                ListTile(
-                  leading: Container(
-                    height: 56.0,
-                    width: 56.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(28.0),
-                      border: Border.all(width: 0.3, color: Colors.grey),
-                      image: const DecorationImage(
-                        image: AssetImage(
-                            "assets/best_of_fashion/best_of_fashion_4.jpg"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                  title: const Text(
-                    'Ladies Lingerie',
-                    style: TextStyle(
-                      fontFamily: 'Jost',
-                      letterSpacing: 0.7,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  subtitle: const Text(
-                    'Best Offers',
-                    style: TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const TopOffers(title: 'Ladies Lingerie')),
-                    );
-                  },
-                ),
-                const Divider(),
-                ListTile(
-                  leading: Container(
-                    height: 56.0,
-                    width: 56.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(28.0),
-                      border: Border.all(width: 0.3, color: Colors.grey),
-                      image: const DecorationImage(
-                        image: AssetImage(
-                            "assets/womens_collection/womens_collection_4.jpg"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                  title: const Text(
-                    'Ladies Inner Wear',
-                    style: TextStyle(
-                      fontFamily: 'Jost',
-                      letterSpacing: 0.7,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  subtitle: const Text(
-                    'Best Offers',
-                    style: TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const TopOffers(title: 'Ladies Inner Wear')),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+                titleSpacing: 0.0,
+                backgroundColor: Theme.of(context).primaryColor,
+              ),
+              body: GridView.count(
+                shrinkWrap: true,
+                primary: false,
+                crossAxisSpacing: 0,
+                mainAxisSpacing: 0,
+                crossAxisCount: 2,
+                childAspectRatio: ((width) / 490),
+                children: List.generate(
+                    obj.searchlist.isEmpty
+                        ? obj.randomProducts20list.length
+                        : obj.searchlist.length, (index) {
+                  return getStructuredGridCell(obj.searchlist.isEmpty
+                      ? obj.randomProducts20list[index]
+                      : obj.searchlist[index]);
+                }),
+              ));
+    });
   }
 }

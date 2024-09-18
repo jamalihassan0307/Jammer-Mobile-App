@@ -8,6 +8,10 @@ import 'package:jammer_mobile_app/controllers/cart_controller.dart';
 import 'package:jammer_mobile_app/controllers/home_controller.dart';
 import 'package:jammer_mobile_app/controllers/order_controller.dart';
 import 'package:jammer_mobile_app/controllers/wishlist_controller.dart';
+import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
+import 'package:jammer_mobile_app/models/banner_model.dart';
+import 'package:jammer_mobile_app/view/pages/product/product.dart';
+import 'package:jammer_mobile_app/view/pages/search.dart';
 // import 'package:jammer_mobile_app/models/banner_model.dart';
 import 'package:jammer_mobile_app/widget/carousel_pro/lib/carousel_pro.dart';
 import 'package:badges/badges.dart' as badges;
@@ -77,8 +81,10 @@ class _HomeState extends State<Home> {
                     icon: const Icon(Icons.search),
                     color: Colors.white,
                     onPressed: () {
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) => const SearchPage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SearchPage()));
                     },
                   ),
                   IconButton(
@@ -145,6 +151,46 @@ class _HomeState extends State<Home> {
                       SizedBox(
                         height: 170.0,
                         child: Carousel(
+                          onImageTap: (v) {
+                            BannerModel model = obj.bannerList[v];
+                            if (model.link == 1) {
+                              obj
+                                  .getBannerProduct(
+                                      model.linkId!, model.couponId!)
+                                  .then((value) {
+                                if (obj.bannerProduct != null) {
+                                  PassDataToProduct product = PassDataToProduct(
+                                      obj.bannerProduct!.productName,
+                                      obj.bannerProduct!.productId,
+                                      obj.bannerProduct!.imagePaths,
+                                      obj.bannerProduct!.discountedPrice
+                                          .toString(),
+                                      obj.bannerProduct!.price.toString(),
+                                      obj.bannerProduct!.discountType == "FLAT"
+                                          ? "OFF ${obj.bannerProduct!.discount}"
+                                          : "OFF ${obj.bannerProduct!.discount} %",
+                                      "");
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProductPage(
+                                              productData: product,
+                                              coupon: model.couponId!)));
+                                } else {
+                                  print("product is nullllllllllll");
+                                }
+                              });
+                            } else if (model.link == 2) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => TopOffers(
+                                            couponid: model.couponId,
+                                            title: "Banner Products",
+                                            id: model.linkId.toString(),
+                                          )));
+                            }
+                          },
                           images: obj.bannerList
                               .map((e) => NetworkImage(GetImage(e.image!)))
                               .toList(),

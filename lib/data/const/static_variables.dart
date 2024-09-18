@@ -38,6 +38,10 @@ class StaticVariables {
   ////////////////////Product/////////////
 
   static String filterProductsByCategory = "Product/FilterProductsByCategory/";
+  static String searchProductsByName = "Product/SearchProductsByName?query=";
+  static String getProductById = "Product/GetProductById?productId=";
+  static String getProductsWithPaging =
+      "Product/GetProductsWithPaging?pageNumber=1&pageSize=20";
   ////////////////////Review/////////////
 
   static String getReviewsId = "Review/GetReviews/";
@@ -46,6 +50,8 @@ class StaticVariables {
   static String getRandomCouponProducts = "Coupon/GetRandomCouponProducts";
   static String getCouponsWithProducts = "Coupon/GetCouponsWithProducts";
   static String getProductsByCouponid = "Coupon/GetProductsByCoupon/";
+  static String getProductByProductIdCouponId =
+      "Coupon/GetProductByProductIdCouponId/";
   // static String getRandomCouponProducts = "Coupon/GetRandomCouponProducts";
   ////////////////////Oder/////////////
 

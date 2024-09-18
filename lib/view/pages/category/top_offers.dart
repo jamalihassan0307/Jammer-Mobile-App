@@ -207,7 +207,7 @@ class _OffersGridViewState extends State<OffersGridView> {
 }
 
 class TopOffersGridView extends StatefulWidget {
-  final List<RandamProduct>? offers;
+  final List<RandomProducts>? offers;
   final int couponid;
 
   const TopOffersGridView({Key? key, this.offers, required this.couponid})
@@ -218,7 +218,7 @@ class TopOffersGridView extends StatefulWidget {
 }
 
 class _TopOffersGridViewState extends State<TopOffersGridView> {
-  InkWell getStructuredGridCell(RandamProduct offers) {
+  InkWell getStructuredGridCell(RandomProducts offers) {
     return InkWell(
       child: Container(
         margin: const EdgeInsets.all(5.0),

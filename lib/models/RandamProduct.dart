@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-class RandamProduct {
+class RandomProducts {
   int productId;
   String productName;
   String description;
@@ -15,7 +15,7 @@ class RandamProduct {
   String expirationDate;
   double discountedPrice;
   List<String> imagePaths;
-  RandamProduct({
+  RandomProducts({
     required this.productId,
     required this.productName,
     required this.description,
@@ -29,7 +29,7 @@ class RandamProduct {
     required this.imagePaths,
   });
 
-  RandamProduct copyWith({
+  RandomProducts copyWith({
     int? productId,
     String? productName,
     String? description,
@@ -42,7 +42,7 @@ class RandamProduct {
     double? discountedPrice,
     List<String>? imagePaths,
   }) {
-    return RandamProduct(
+    return RandomProducts(
       productId: productId ?? this.productId,
       productName: productName ?? this.productName,
       description: description ?? this.description,
@@ -73,8 +73,8 @@ class RandamProduct {
     };
   }
 
-  factory RandamProduct.fromMap(Map<String, dynamic> map) {
-    return RandamProduct(
+  factory RandomProducts.fromMap(Map<String, dynamic> map) {
+    return RandomProducts(
       productId: map['productId'] as int,
       productName: map['productName'] as String,
       description: map['description'] as String,
@@ -91,16 +91,16 @@ class RandamProduct {
 
   String toJson() => json.encode(toMap());
 
-  factory RandamProduct.fromJson(String source) =>
-      RandamProduct.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory RandomProducts.fromJson(String source) =>
+      RandomProducts.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'RandamProduct(productId: $productId, productName: $productName, description: $description, price: $price, stockQuantity: $stockQuantity, couponid: $couponid, discount: $discount, discountType: $discountType, expirationDate: $expirationDate, discountedPrice: $discountedPrice, imagePaths: $imagePaths)';
+    return 'RandomProducts(productId: $productId, productName: $productName, description: $description, price: $price, stockQuantity: $stockQuantity, couponid: $couponid, discount: $discount, discountType: $discountType, expirationDate: $expirationDate, discountedPrice: $discountedPrice, imagePaths: $imagePaths)';
   }
 
   @override
-  bool operator ==(covariant RandamProduct other) {
+  bool operator ==(covariant RandomProducts other) {
     if (identical(this, other)) return true;
 
     return other.productId == productId &&

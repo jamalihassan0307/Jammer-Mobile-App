@@ -57,7 +57,7 @@ class _BestDealGridState extends State<BestDealGrid> {
             primary: false,
             padding: const EdgeInsets.all(0),
             itemBuilder: (BuildContext context, int index) {
-              RandamProduct model = obj.randomCouponProductslist[index];
+              RandomProducts model = obj.randomCouponProductslist[index];
               return InkWell(
                 child: Container(
                   margin: const EdgeInsets.all(5.0),
