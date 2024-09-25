@@ -238,6 +238,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.2.1"
+  flutter_staggered_grid_view:
+    dependency: "direct main"
+    description:
+      name: flutter_staggered_grid_view
+      sha256: "19e7abb550c96fbfeb546b23f3ff356ee7c59a019a651f8f102a4ba9b7349395"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -472,6 +480,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  remove_bg:
+    dependency: "direct main"
+    description:
+      name: remove_bg
+      sha256: d4bac0ffa82101436459efb6c59bbd6c79046ddf9fa1be2ef64a7576c96b982b
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   shared_preferences:
     dependency: "direct main"
     description:

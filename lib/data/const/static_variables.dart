@@ -26,7 +26,7 @@ class StaticVariables {
   static String getUserCart = "Cart/GetUserCart";
   static String getCartById = "Cart/GetCartById/";
   static String deleteCartItem = "Cart/DeleteCartItem/";
-  static String updateCartItem = "Cart/UpdateCartItem";
+  static String updateCartItem = "Cart/UpdateCartItems";
   static String deleteAllUserCart = "Cart/DeleteAllUserCart";
   ////////////////////WishList/////////////
   static String addWishList = "WishList/AddWishList";

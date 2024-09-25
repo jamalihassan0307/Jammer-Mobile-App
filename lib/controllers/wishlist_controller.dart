@@ -112,6 +112,14 @@ class WishListController extends GetxController {
   }
 
   Future<void> AddWishList(PassDataToProduct p, int coupon) async {
+    if (wishList.any((element) => element.productId == p.productId)) {
+      Fluttertoast.showToast(
+        msg: "Product Already Added",
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+      return;
+    }
     try {
       if (kDebugMode) print("addddd");
       Map<String, dynamic> data = {
@@ -139,29 +147,26 @@ class WishListController extends GetxController {
     }
   }
 
-  Future<void> updateCartQuantity() async {
+  Future<bool> updateCartQuantity(CartModel model, bool isIncrement) async {
     try {
-      for (var item in wishList) {
-        Map<String, dynamic> data = {
-          "quantity": item.quantity,
-          "cartid": item.id,
-        };
-        NetworkApiServices network = NetworkApiServices();
-        final response = await network.putApi(
-          StaticVariables.updateWishListItem,
-          data,
-        );
+      List<Map<String, dynamic>> items = [];
+      Map<String, dynamic> file = {
+        "quantity": isIncrement ? model.quantity + 1 : model.quantity - 1,
+        "cartid": model.id,
+      };
 
-        if (kDebugMode) print("Quantity Updated Successfully: $response");
+      items.add(file);
+      NetworkApiServices network = NetworkApiServices();
+      final response = await network.putApi(
+        StaticVariables.updateWishListItem,
+        {"items": items},
+      );
 
-        // Fluttertoast.showToast(
-        //   msg: 'Quantity Updated Successfully',
-        //   backgroundColor: Colors.green,
-        //   textColor: Colors.white,
-        // );
-        getWishList();
-        update();
-      }
+      if (kDebugMode) print("Quantity Updated Successfully: $response");
+
+      update();
+
+      return true;
       // ignore: deprecated_member_use
     } on DioError catch (e) {
       print("Error: ${e.message.toString()}");
@@ -170,37 +175,44 @@ class WishListController extends GetxController {
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
+
+      return false;
     }
   }
 
-  void updateCartList(CartModel model, bool isIncrement) {
-    print("productId: ${model.productId}, isIncrement: $isIncrement");
+  Future<void> updateCartList(CartModel model, bool isIncrement) async {
+    updateloading(true);
+    if (await updateCartQuantity(model, isIncrement)) {
+      print("productId: ${model.productId}, isIncrement: $isIncrement");
 
-    int index =
-        wishList.indexWhere((element) => element.productId == model.productId);
+      int index = wishList
+          .indexWhere((element) => element.productId == model.productId);
 
-    if (index != -1) {
-      if (isIncrement) {
-        print("Before increment: ${wishList[index].quantity}");
-        wishList[index].quantity += 1;
-        print("After increment: ${wishList[index].quantity}");
-      } else {
-        print("Before decrement: ${wishList[index].quantity}");
-        wishList[index].quantity -= 1;
-        print("After decrement: ${wishList[index].quantity}");
+      if (index != -1) {
+        if (isIncrement) {
+          print("Before increment: ${wishList[index].quantity}");
+          wishList[index].quantity = wishList[index].quantity + 1;
+          print("After increment: ${wishList[index].quantity}");
+        } else {
+          print("Before decrement: ${wishList[index].quantity}");
+          wishList[index].quantity = wishList[index].quantity - 1;
+          print("After decrement: ${wishList[index].quantity}");
 
-        if (wishList[index].quantity <= 0) {
-          wishList.removeAt(index);
-          print("Product removed from cart");
+          if (wishList[index].quantity <= 0) {
+            wishList.removeAt(index);
+
+            removeAPisWishList(wishList[index].id);
+            print("Product removed from cart");
+          }
         }
-      }
-      getTotal();
+        getTotal();
 
-      // cartTotal = cartTotal * wishList[index].quantity;
-      print("ProductcartTotal ${wishListTotal}");
-      update();
-    } else {
-      print("ProductcartTotal ${wishListTotal}");
+        // cartTotal = cartTotal * wishList[index].quantity;
+        print("ProductcartTotal ${wishListTotal}");
+        update();
+      } else {
+        print("ProductcartTotal ${wishListTotal}");
+      }
     }
   }
 }

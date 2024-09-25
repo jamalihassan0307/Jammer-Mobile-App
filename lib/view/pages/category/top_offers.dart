@@ -11,6 +11,7 @@ import 'package:jammer_mobile_app/controllers/home_controller.dart';
 import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
 import 'package:jammer_mobile_app/models/ProductsByCategory%20.dart';
 import 'package:jammer_mobile_app/models/RandamProduct.dart';
+import 'package:jammer_mobile_app/view/pages/home_page_component/best_deal.dart';
 import 'package:jammer_mobile_app/view/pages/product/product.dart';
 
 // My Own Imports
@@ -83,9 +84,9 @@ class _TopOffersState extends State<TopOffers> {
                         Container(
                           margin: const EdgeInsets.only(top: 10.0),
                           child: TopOffersGridView(
-                              offers:
-                                  HomeController.to.randomCouponProductslist,
-                              couponid: widget.couponid!),
+                            offers: HomeController.to.randomCouponProductslist,
+                            couponid: widget.couponid!,
+                          ),
                         ),
                       if (widget.id != "0")
                         Container(
@@ -113,7 +114,7 @@ class OffersGridView extends StatefulWidget {
 }
 
 class _OffersGridViewState extends State<OffersGridView> {
-  InkWell getStructuredGridCell(ProductsByCategory offers) {
+  InkWell getStructuredGridCell(ProductsByCategory offers, Color bg) {
     return InkWell(
       child: Container(
         margin: const EdgeInsets.all(5.0),
@@ -181,9 +182,7 @@ class _OffersGridViewState extends State<OffersGridView> {
           context,
           MaterialPageRoute(
               builder: (context) => ProductPage(
-                    productData: product,
-                    coupon: widget.couponid,
-                  )),
+                  productData: product, coupon: widget.couponid, bg: bg)),
         );
       },
     );
@@ -200,7 +199,8 @@ class _OffersGridViewState extends State<OffersGridView> {
       crossAxisCount: 2,
       childAspectRatio: ((width) / 490),
       children: List.generate(widget.offers!.length, (index) {
-        return getStructuredGridCell(widget.offers![index]);
+        Color bg = beautifulColors[index % beautifulColors.length];
+        return getStructuredGridCell(widget.offers![index], bg);
       }),
     );
   }
@@ -218,7 +218,7 @@ class TopOffersGridView extends StatefulWidget {
 }
 
 class _TopOffersGridViewState extends State<TopOffersGridView> {
-  InkWell getStructuredGridCell(RandomProducts offers) {
+  InkWell getStructuredGridCell(RandomProducts offers, Color bg) {
     return InkWell(
       child: Container(
         margin: const EdgeInsets.all(5.0),
@@ -295,9 +295,7 @@ class _TopOffersGridViewState extends State<TopOffersGridView> {
           context,
           MaterialPageRoute(
               builder: (context) => ProductPage(
-                    productData: product,
-                    coupon: widget.couponid,
-                  )),
+                  productData: product, coupon: widget.couponid, bg: bg)),
         );
       },
     );
@@ -314,7 +312,8 @@ class _TopOffersGridViewState extends State<TopOffersGridView> {
       crossAxisCount: 2,
       childAspectRatio: ((width) / 490),
       children: List.generate(widget.offers!.length, (index) {
-        return getStructuredGridCell(widget.offers![index]);
+        Color bg = beautifulColors[index % beautifulColors.length];
+        return getStructuredGridCell(widget.offers![index], bg);
       }),
     );
   }

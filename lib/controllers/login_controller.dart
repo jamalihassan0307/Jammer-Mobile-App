@@ -33,6 +33,12 @@ class LoginController extends GetxController {
     update(['viewPassword']);
   }
 
+  clearlogin() {
+    emailController.clear();
+    passwordController.clear();
+    update();
+  }
+
   // Handles the login process
   Future<void> login(context) async {
     final String email = emailController.text;
@@ -68,7 +74,7 @@ class LoginController extends GetxController {
           print("///////////////////login");
           NetworkApiServices network = NetworkApiServices();
           final response1 = await network.getApi(StaticVariables.getUserById);
-
+          clearlogin();
           // final data = response1.data;
           Fluttertoast.showToast(
             msg: "Login Successfully",
@@ -159,6 +165,16 @@ class LoginController extends GetxController {
     }
   }
 
+  clearsignup() {
+    emailc.clear();
+    passwordc.clear();
+    repassword.clear();
+    image = null;
+    imageurl = "";
+
+    update();
+  }
+
   Future<void> signup(context) async {
     final String email = emailc.text;
     final String password = passwordc.text;
@@ -205,6 +221,7 @@ class LoginController extends GetxController {
 
       print(response.data);
       if (response.statusCode == 200) {
+        clearsignup();
         // final data = response.data;
         // Fluttertoast.showToast(
         //   msg: data['message'],

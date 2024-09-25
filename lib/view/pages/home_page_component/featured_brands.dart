@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,62 +15,120 @@ import 'package:jammer_mobile_app/widget/loading.dart';
 class FeaturedBrandSlider extends StatelessWidget {
   FeaturedBrandSlider({super.key});
 
-  final List<List<Color>> gradientColors = [
-    [Color(0xFF2874F0), Color(0xFF6EC5E9)],
-    [Color(0xFF34A853), Color(0xFF2874F0)],
-    [Color(0xFFFED700), Color(0xFF2874F0)],
-    [Color(0xFF2874F0), Color(0xFFDA4453)],
-    [Color(0xFF42A5F5), Color(0xFF1E88E5)],
-    [Color(0xFF8E44AD), Color(0xFF2874F0)],
-    [Color(0xFFF57C00), Color(0xFF2874F0)],
-    [Color(0xFF2874F0), Color(0xFF2ECC71)],
+  final List<String> gradientColors = [
+    "assets/bg1.jpg",
+    "assets/bg2.jpg",
+    "assets/bg3.jpg",
+    "assets/bg4.jpg",
+    "assets/bg5.jpg",
+    "assets/bg6.jpg",
   ];
+  var height, width;
   @override
   Widget build(BuildContext context) {
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+
     InkWell getStructuredGridCell(GetCategoryModel featuredBrand, int index) {
       final item = featuredBrand;
       // Use gradient color based on the index
-      final colors = gradientColors[index % gradientColors.length];
+      String colors = gradientColors[index % gradientColors.length];
 
       return InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => TopOffers(
-                      couponid: item.id,
-                      title: '${item.name}',
-                      id: item.id.toString(),
-                    )),
-          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //       builder: (context) => TopOffers(
+          //             couponid: item.id,
+          //             title: '${item.name}',
+          //             id: item.id.toString(),
+          //           )),
+          // );
         },
         child: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: colors,
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-            borderRadius: BorderRadius.circular(10.0),
+            image: DecorationImage(image: AssetImage(colors), fit: BoxFit.fill),
+            borderRadius: BorderRadius.circular(40.0),
           ),
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Center(
-                child: Image.network(
-                  GetImage(item.image!),
-                  height: 150,
-                  width: 200,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Image.network(
+                    GetImage(item.image!),
+                    height: height * 0.23,
+                    width: 200,
+                  ),
                 ),
               ),
               Positioned(
-                bottom: 8.0,
-                child: Text(
-                  item.name,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
+                left: 8.0,
+                child: Container(
+                  // color: Colors.pink,
+                  width: width * 0.3,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: height * 0.05,
+                      ),
+                      Text(
+                        item.name.substring(0, 1).toUpperCase() +
+                            item.name.substring(1),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "Home  Products",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                      SizedBox(height: height * 0.02),
+                      OutlinedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TopOffers(
+                                      couponid: item.id,
+                                      title: '${item.name}',
+                                      id: item.id.toString(),
+                                    )),
+                          );
+                        },
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.black,
+                          side: BorderSide(color: Colors.transparent, width: 0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 10.0),
+                          shape: const RoundedRectangleBorder(),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(color: Colors.black, width: 1),
+                            ),
+                          ),
+                          child: Text(
+                            "Order Now",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),
@@ -91,17 +151,15 @@ class FeaturedBrandSlider extends StatelessWidget {
               padding: const EdgeInsets.all(12.0),
               alignment: Alignment.topLeft,
               child: const Text(
-                'Featured Brands',
-                style: TextStyle(
-                  fontSize: 14.0,
-                ),
+                'New Product Category',
+                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
               ),
             ),
             CarouselSlider(
               options: CarouselOptions(
                 height: 250.0,
                 enlargeCenterPage: true,
-                autoPlay: true,
+                // autoPlay: true,
                 autoPlayInterval: const Duration(seconds: 4),
                 autoPlayCurve: Curves.fastOutSlowIn,
                 autoPlayAnimationDuration: const Duration(milliseconds: 800),

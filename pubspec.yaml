@@ -47,11 +47,13 @@ dependencies:
   dio: 
   get:
   shared_preferences: 
+  flutter_staggered_grid_view: 
   image_picker: 
   path: 
   flutter_rating_bar: 
   country_pickers: 
   intl: 
+  remove_bg: 
 
 dev_dependencies:
   flutter_test:

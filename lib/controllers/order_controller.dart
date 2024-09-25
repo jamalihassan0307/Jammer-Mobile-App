@@ -58,24 +58,30 @@ class OrderController extends GetxController {
   }
 
   Future<void> createOrderFromCart() async {
-    List<Map<String, dynamic>> items = CartController.to.cardlist
-        .map((element) => {
-              "productId": element.productId,
-              "quantity": element.quantity,
-              "couponId": null
-            })
-        .toList();
-    NetworkApiServices network = NetworkApiServices();
-    final response1 =
-        await network.postApi(StaticVariables.createOrder, {"items": items});
+    try {
+      List<Map<String, dynamic>> items = CartController.to.cardlist
+          .map((element) => {
+                "productId": element.productId,
+                "quantity": element.quantity,
+                "couponId": null
+              })
+          .toList();
+      NetworkApiServices network = NetworkApiServices();
+      final response1 =
+          await network.postApi(StaticVariables.createOrder, {"items": items});
 
-    if (kDebugMode) print("dOrder created successfully${response1.data}");
-    Fluttertoast.showToast(
-      msg: 'Order created successfully!',
-      backgroundColor: Colors.green,
-      textColor: Colors.white,
-    );
-    await clearCart();
+      if (kDebugMode) print("dOrder created successfully${response1.data}");
+      Fluttertoast.showToast(
+        msg: 'Order created successfully!',
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+      );
+      await clearCart();
+    } catch (e) {
+      if (kDebugMode) {
+        print("errrrrrrrror of order  ${e}");
+      }
+    }
   }
 
   Future<void> cancelOrder(int orderId) async {

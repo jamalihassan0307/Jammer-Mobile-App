@@ -61,7 +61,6 @@ class _CartPageState extends State<CartPage> {
 
     return WillPopScope(
       onWillPop: () async {
-        CartController.to.updateCartQuantity();
         return true;
       },
       child: GetBuilder<CartController>(builder: (obj) {

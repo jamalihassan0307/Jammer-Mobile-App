@@ -7,9 +7,7 @@ import 'package:jammer_mobile_app/data/const/static_variables.dart';
 // import 'package:jammer_mobile_app/data/network/APIStore.dart';
 import 'package:jammer_mobile_app/data/network/network_api_services.dart';
 import 'package:jammer_mobile_app/models/GetCouponsWithProducts%20.dart';
-import 'package:jammer_mobile_app/models/ProductsByCategory%20.dart';
 import 'package:jammer_mobile_app/models/RandamProduct.dart';
-import 'package:jammer_mobile_app/models/RandamProducts20.dart';
 import 'package:jammer_mobile_app/models/banner_model.dart';
 import 'package:jammer_mobile_app/models/get_category_model.dart';
 
@@ -17,7 +15,7 @@ class HomeController extends GetxController {
   static HomeController get to => Get.find();
   ///////loading ///////
 
-  void init() {
+  init() {
     updateloading(true);
     getCategory();
     getRandomCouponProducts();
@@ -25,6 +23,7 @@ class HomeController extends GetxController {
     GetBanner();
     updateloading(false);
     update();
+    return null;
   }
 
   bool loading = false;

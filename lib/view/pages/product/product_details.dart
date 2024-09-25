@@ -9,7 +9,6 @@ import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
 
 // My Own Imports
 import 'package:jammer_mobile_app/view/pages/product/rating_row.dart';
-import 'package:jammer_mobile_app/view/pages/product/product_size.dart';
 // import 'package:jammer_mobile_app/view/pages/product/get_similar_products.dart';
 import 'package:jammer_mobile_app/widget/carousel_pro/lib/carousel_pro.dart';
 import 'package:jammer_mobile_app/widget/loading.dart';
@@ -17,8 +16,10 @@ import 'package:jammer_mobile_app/widget/loading.dart';
 class ProductDetails extends StatefulWidget {
   final PassDataToProduct data;
   final int coupon;
+  final Color bg;
 
-  const ProductDetails({Key? key, required this.data, required this.coupon})
+  const ProductDetails(
+      {Key? key, required this.data, required this.coupon, required this.bg})
       : super(key: key);
 
   @override
@@ -27,11 +28,18 @@ class ProductDetails extends StatefulWidget {
 
 class _ProductDetailsState extends State<ProductDetails> {
   @override
-  void initState() {
+  initState() {
     Get.put(CartController());
+
+    super.initState();
+    Future.delayed(Duration(milliseconds: 100), () {
+      getdata();
+    });
+  }
+
+  getdata() {
     WishListController.to.updatecolor(widget.data.productId);
     CartController.to.getreview(widget.data.productId.toString());
-    super.initState();
   }
 
   Widget build(BuildContext context) {
@@ -45,7 +53,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           children: <Widget>[
             Container(
               padding: const EdgeInsets.only(top: 8.0),
-              color: Colors.white,
+              color: widget.bg,
               child: Hero(
                 tag: '${widget.data.title}',
                 child: SizedBox(
@@ -192,95 +200,96 @@ class _ProductDetailsState extends State<ProductDetails> {
         ),
 
         // Product Size & Color Start Here
-        const ProductSize(),
+        // const ProductSize(),
         // Product Size & Color End Here
 
         // Product Details Start Here
-        Container(
-          padding: const EdgeInsets.all(10.0),
-          color: Colors.white,
-          child: const Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'Product Details',
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'Color',
-                          style: TextStyle(color: Colors.grey, fontSize: 16.0),
-                        ),
-                        SizedBox(
-                          height: 6.0,
-                        ),
-                        Text(
-                          'Length',
-                          style: TextStyle(color: Colors.grey, fontSize: 16.0),
-                        ),
-                        SizedBox(
-                          height: 6.0,
-                        ),
-                        Text(
-                          'Type',
-                          style: TextStyle(color: Colors.grey, fontSize: 16.0),
-                        ),
-                        SizedBox(
-                          height: 6.0,
-                        ),
-                        Text(
-                          'Sleeve',
-                          style: TextStyle(color: Colors.grey, fontSize: 16.0),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'Yellow',
-                          style: TextStyle(fontSize: 16.0),
-                        ),
-                        SizedBox(
-                          height: 6.0,
-                        ),
-                        Text(
-                          'Knee Length',
-                          style: TextStyle(fontSize: 16.0),
-                        ),
-                        SizedBox(
-                          height: 6.0,
-                        ),
-                        Text(
-                          'Bandage',
-                          style: TextStyle(fontSize: 16.0),
-                        ),
-                        SizedBox(
-                          height: 6.0,
-                        ),
-                        Text(
-                          'Cap Sleeve',
-                          style: TextStyle(fontSize: 16.0),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+        // Container(
+        //   padding: const EdgeInsets.all(10.0),
+        //   color: Colors.white,
+        //   child: const Column(
+        //     mainAxisAlignment: MainAxisAlignment.start,
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: <Widget>[
+        //       Text(
+        //         'Product Details',
+        //         style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+        //       ),
+        //       SizedBox(
+        //         height: 8.0,
+        //       ),
+        //       Row(
+        //         children: <Widget>[
+        //           Expanded(
+        //             child: Column(
+        //               crossAxisAlignment: CrossAxisAlignment.start,
+        //               children: <Widget>[
+        //                 Text(
+        //                   'Color',
+        //                   style: TextStyle(color: Colors.grey, fontSize: 16.0),
+        //                 ),
+        //                 SizedBox(
+        //                   height: 6.0,
+        //                 ),
+        //                 Text(
+        //                   'Length',
+        //                   style: TextStyle(color: Colors.grey, fontSize: 16.0),
+        //                 ),
+        //                 SizedBox(
+        //                   height: 6.0,
+        //                 ),
+        //                 Text(
+        //                   'Type',
+        //                   style: TextStyle(color: Colors.grey, fontSize: 16.0),
+        //                 ),
+        //                 SizedBox(
+        //                   height: 6.0,
+        //                 ),
+        //                 Text(
+        //                   'Sleeve',
+        //                   style: TextStyle(color: Colors.grey, fontSize: 16.0),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //           Expanded(
+        //             child: Column(
+        //               crossAxisAlignment: CrossAxisAlignment.start,
+        //               children: <Widget>[
+        //                 Text(
+        //                   'Yellow',
+        //                   style: TextStyle(fontSize: 16.0),
+        //                 ),
+        //                 SizedBox(
+        //                   height: 6.0,
+        //                 ),
+        //                 Text(
+        //                   'Knee Length',
+        //                   style: TextStyle(fontSize: 16.0),
+        //                 ),
+        //                 SizedBox(
+        //                   height: 6.0,
+        //                 ),
+        //                 Text(
+        //                   'Bandage',
+        //                   style: TextStyle(fontSize: 16.0),
+        //                 ),
+        //                 SizedBox(
+        //                   height: 6.0,
+        //                 ),
+        //                 Text(
+        //                   'Cap Sleeve',
+        //                   style: TextStyle(fontSize: 16.0),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ],
+        //   ),
+        // ),
+
         // Product Details Ends Here
 
         // Product Description Start Here
@@ -329,9 +338,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                   _productDescriptionModalBottomSheet(context, widget.data.dis);
                 },
               ),
-              const Divider(
-                height: 1.0,
-              ),
+              // const Divider(
+              //   height: 1.0,
+              // ),
             ],
           ),
         ),

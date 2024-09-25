@@ -29,7 +29,6 @@ class _WishlistPageState extends State<WishlistPage> {
 
     return WillPopScope(
       onWillPop: () async {
-        WishListController.to.updateCartQuantity();
         return true;
       },
       child: GetBuilder<WishListController>(builder: (obj) {

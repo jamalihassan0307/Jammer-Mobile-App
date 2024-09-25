@@ -80,7 +80,7 @@ class RandomProducts {
       description: map['description'] as String,
       price: map['price'] as double,
       stockQuantity: map['stockQuantity'] as int,
-      couponid: map['couponid'] != null ? map['couponid'] as int : null,
+      couponid: int.parse(map['couponId']),
       discount: map['discount'] as double,
       discountType: map['discountType'] as String,
       expirationDate: map['expirationDate'] as String,

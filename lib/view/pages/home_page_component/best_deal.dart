@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jammer_mobile_app/controllers/home_controller.dart';
+import 'package:jammer_mobile_app/controllers/wishlist_controller.dart';
 import 'package:jammer_mobile_app/data/const/static_variables.dart';
 import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
 import 'package:jammer_mobile_app/models/RandamProduct.dart';
 import 'package:jammer_mobile_app/view/pages/product/product.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+
+List<Color> beautifulColors = [
+  Color(0xFFFFC1CC), // Soft Pink
+  Color(0xFF87CEFA), // Light Sky Blue
+  Color(0xFF98FF98), // Mint Green
+  Color(0xFFE6E6FA), // Lavender
+  Color(0xFFFFDAB9), // Peach
+  Color(0xFFFFFDE0), // Pale Yellow
+  Color(0xFFF08080), // Light Coral
+  Color(0xFFB0E0E6), // Powder Blue
+  Color(0xFFE0BBE4), // Light Lavender
+  Color(0xFFFFFDD0), // Cream
+];
 
 class BestDealGrid extends StatefulWidget {
   BestDealGrid({super.key});
@@ -21,99 +36,145 @@ class _BestDealGridState extends State<BestDealGrid> {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
 
-    // InkWell getStructuredGridCell(bestDeal) {
-    //   final item = bestDeal;
-    //   return InkWell(
-    //     child: Image(
-    //       image: AssetImage(item['image']),
-    //       fit: BoxFit.fitHeight,
-    //     ),
-    //     onTap: () {
-    //       Navigator.push(
-    //         context,
-    //         MaterialPageRoute(
-    //             builder: (context) => TopOffers(title: '${item['title']}')),
-    //       );
-    //     },
-    //   );
-    // }
-
     return GetBuilder<HomeController>(builder: (obj) {
       return Container(
-          padding: const EdgeInsets.all(0.0),
-          alignment: Alignment.center,
-          width: width - 20.0,
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisSpacing: 0.0,
-              mainAxisSpacing: 0.0,
-              crossAxisCount: 2,
-              childAspectRatio: ((width) / 500),
-            ),
-            itemCount: obj.randomCouponProductslist.length >= 4
-                ? 4
-                : obj.randomCouponProductslist.length,
-            shrinkWrap: true,
-            primary: false,
-            padding: const EdgeInsets.all(0),
-            itemBuilder: (BuildContext context, int index) {
+        color: Colors.white,
+        padding: const EdgeInsets.all(0.0),
+        alignment: Alignment.center,
+        width: width - 20.0,
+        child: StaggeredGrid.count(
+          crossAxisCount: 2,
+          mainAxisSpacing: 2,
+          crossAxisSpacing: 2,
+          children: List.generate(
+            obj.randomCouponProductslist.length,
+            (index) {
+              Color bg = beautifulColors[index % beautifulColors.length];
               RandomProducts model = obj.randomCouponProductslist[index];
               return InkWell(
                 child: Container(
                   margin: const EdgeInsets.all(5.0),
                   padding: const EdgeInsets.all(5.0),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: const [
-                      BoxShadow(
-                        blurRadius: 5.0,
-                        color: Colors.grey,
-                      ),
-                    ],
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          height: double.infinity,
-                          margin: const EdgeInsets.all(6.0),
-                          child: model.imagePaths.length == 0
-                              ? Image(
-                                  image: AssetImage(
-                                      "assets/best_deal/best_deal_1.jpg"),
-                                  fit: BoxFit.fitHeight,
-                                )
-                              : Image.network(
-                                  StaticVariables.baseurl + model.imagePaths[0],
-                                  fit: BoxFit.fitHeight,
+                      Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                color: bg,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Center(
+                              child: Container(
+                                margin: const EdgeInsets.all(15.0),
+                                child: model.imagePaths.isEmpty
+                                    ? Image.asset(
+                                        "assets/best_deal/best_deal_1.jpg",
+                                        fit: BoxFit.contain,
+                                      )
+                                    : Image.network(
+                                        StaticVariables.baseurl +
+                                            model.imagePaths[0],
+                                        fit: BoxFit.contain,
+                                      ),
+                              ),
+                            ),
+                          ),
+                          GetBuilder<WishListController>(builder: (obj) {
+                            return InkWell(
+                              onTap: () {
+                                if (!obj.wishList.any((element) =>
+                                    element.productId == model.productId)) {
+                                  obj.color = Colors.red;
+                                  PassDataToProduct products =
+                                      PassDataToProduct(
+                                          model.productName,
+                                          model.productId,
+                                          [],
+                                          model.price.toString(),
+                                          model.price.toString(),
+                                          "d",
+                                          "d");
+                                  obj.AddWishList(products, model.couponid!);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text("Added to Wishlist")));
+                                } else {
+                                  obj.color = Colors.grey;
+                                  obj.removeWishList(obj.wishList
+                                      .where((element) =>
+                                          element.productId == model.productId)
+                                      .firstOrNull!
+                                      .id);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content:
+                                              Text("Remove from Wishlist")));
+                                }
+                              },
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CircleAvatar(
+                                    backgroundColor: obj.wishList.any(
+                                            (element) =>
+                                                element.productId ==
+                                                model.productId)
+                                        ? Colors.white.withOpacity(0.5)
+                                        : Colors.grey.shade800.withOpacity(0.5),
+                                    radius: 17,
+                                    child: Icon(
+                                      obj.wishList.any((element) =>
+                                              element.productId ==
+                                              model.productId)
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      color: obj.wishList.any((element) =>
+                                              element.productId ==
+                                              model.productId)
+                                          ? Colors.red
+                                          : Colors.white,
+                                    ),
+                                  ),
                                 ),
-                        ),
+                              ),
+                            );
+                          })
+                        ],
                       ),
                       Container(
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.only(right: 6.0, left: 6.0),
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.symmetric(horizontal: 6.0),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Text(
                               model.productName,
-                              style: const TextStyle(fontSize: 12.0),
+                              style: const TextStyle(
+                                  fontSize: 14.0, fontWeight: FontWeight.bold),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               textAlign: TextAlign.center,
                             ),
+                            SizedBox(height: height * 0.01),
                             model.discountType == "FLAT"
                                 ? RichText(
                                     text: TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: '${model.discountedPrice}RS  ',
+                                          text: 'RS ${model.discountedPrice}  ',
                                           style: const TextStyle(
-                                              color: Color(0xFF67A86B),
+                                              color: Colors.black,
                                               fontSize: 15.0),
                                         ),
                                         TextSpan(
-                                          text: '${model.price}RS',
+                                          text: 'RS ${model.price} ',
                                           style: const TextStyle(
                                             color: Colors.grey,
                                             fontSize: 13.0,
@@ -128,27 +189,20 @@ class _BestDealGridState extends State<BestDealGrid> {
                                     text: TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: '${model.discountedPrice} RS ',
+                                          text: ' RS ${model.discountedPrice}',
                                           style: const TextStyle(
-                                              color: Color(0xFF67A86B),
-                                              fontSize: 15.0),
+                                              color: Colors.black,
+                                              fontSize: 16.0),
                                         ),
                                         TextSpan(
-                                          text: '${model.discount}% OFF',
+                                          text: ' ${model.discount}% OFF',
                                           style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 15.0),
+                                              color: Colors.red,
+                                              fontSize: 13.0),
                                         ),
                                       ],
                                     ),
                                   ),
-                            Text(
-                              model.description,
-                              style: const TextStyle(fontSize: 12.0),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              textAlign: TextAlign.center,
-                            ),
                           ],
                         ),
                       ),
@@ -170,6 +224,7 @@ class _BestDealGridState extends State<BestDealGrid> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => ProductPage(
+                              bg: bg,
                               productData: product,
                               coupon: model.couponid ?? 0,
                             )),
@@ -177,7 +232,9 @@ class _BestDealGridState extends State<BestDealGrid> {
                 },
               );
             },
-          ));
+          ),
+        ),
+      );
     });
   }
 }

@@ -19,8 +19,13 @@ class ProductPage extends StatefulWidget {
 
   final int coupon;
 
+  final Color bg;
+
   const ProductPage(
-      {Key? key, required this.productData, required this.coupon});
+      {Key? key,
+      required this.productData,
+      required this.coupon,
+      required this.bg});
 
   @override
   _ProductPageState createState() => _ProductPageState();
@@ -36,46 +41,54 @@ class _ProductPageState extends State<ProductPage> {
     return GetBuilder<CartController>(builder: (obj) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(widget.productData.title),
-          titleSpacing: 0.0,
-          backgroundColor: Theme.of(context).primaryColor,
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(
-                Icons.favorite,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        child: const WishlistPage()));
-              },
-            ),
-            IconButton(
-              icon: badges.Badge(
-                badgeContent: Text('${obj.numberofcart.toString()}'),
-                badgeStyle: badges.BadgeStyle(
-                  badgeColor: Theme.of(context).primaryColorLight,
-                ),
-                child: const Icon(
-                  Icons.shopping_cart,
-                  color: Colors.white,
-                ),
-              ),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        child: const CartPage()));
-              },
-            ),
-          ],
+          // title: Text(widget.productData.title),
+          // titleSpacing: 0.0,
+          backgroundColor: widget.bg,
+          elevation: 0,
+
+          automaticallyImplyLeading: false,
+          primary: false,
+          // actions: <Widget>[
+          //   IconButton(
+          //     icon: const Icon(
+          //       Icons.favorite,
+          //       color: Colors.black,
+          //     ),
+          //     onPressed: () {
+          //       Navigator.push(
+          //           context,
+          //           PageTransition(
+          //               type: PageTransitionType.rightToLeft,
+          //               child: const WishlistPage()));
+          //     },
+          //   ),
+          //   IconButton(
+          //     icon: badges.Badge(
+          //       badgeContent: Text(
+          //         '${obj.numberofcart.toString()}',
+          //         style: TextStyle(color: Colors.white),
+          //       ),
+          //       badgeStyle: badges.BadgeStyle(
+          //         badgeColor: Colors.red.shade300,
+          //       ),
+          //       child: const Icon(
+          //         Icons.shopping_cart,
+          //         color: Colors.black,
+          //       ),
+          //     ),
+          //     onPressed: () {
+          //       Navigator.push(
+          //           context,
+          //           PageTransition(
+          //               type: PageTransitionType.rightToLeft,
+          //               child: const CartPage()));
+          //     },
+          //   ),
+          // ],
         ),
         backgroundColor: const Color(0xFFF1F3F6),
-        body: ProductDetails(data: widget.productData, coupon: widget.coupon),
+        body: ProductDetails(
+            data: widget.productData, coupon: widget.coupon, bg: widget.bg),
         bottomNavigationBar: Material(
           elevation: 5.0,
           child: Container(

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jammer_mobile_app/controllers/search_controller.dart';
 import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
-import 'package:jammer_mobile_app/models/RandamProduct.dart';
 import 'package:jammer_mobile_app/models/RandamProducts20.dart';
-import 'package:jammer_mobile_app/view/pages/category/top_offers.dart';
+import 'package:jammer_mobile_app/view/pages/home_page_component/best_deal.dart';
 import 'package:jammer_mobile_app/view/pages/product/product.dart';
 import 'package:jammer_mobile_app/widget/loading.dart';
 
@@ -28,7 +27,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
-    InkWell getStructuredGridCell(RandomProducts20 offers) {
+    InkWell getStructuredGridCell(RandomProducts20 offers, Color bg) {
       return InkWell(
         child: Container(
           margin: const EdgeInsets.all(5.0),
@@ -96,6 +95,7 @@ class _SearchPageState extends State<SearchPage> {
             context,
             MaterialPageRoute(
                 builder: (context) => ProductPage(
+                      bg: bg,
                       productData: product,
                       coupon: 0,
                     )),
@@ -141,9 +141,12 @@ class _SearchPageState extends State<SearchPage> {
                     obj.searchlist.isEmpty
                         ? obj.randomProducts20list.length
                         : obj.searchlist.length, (index) {
-                  return getStructuredGridCell(obj.searchlist.isEmpty
-                      ? obj.randomProducts20list[index]
-                      : obj.searchlist[index]);
+                  Color bg = beautifulColors[index % beautifulColors.length];
+                  return getStructuredGridCell(
+                      obj.searchlist.isEmpty
+                          ? obj.randomProducts20list[index]
+                          : obj.searchlist[index],
+                      bg);
                 }),
               ));
     });

@@ -147,7 +147,7 @@ class Products {
   String description;
   double price;
   int stockQuantity;
-  String couponCode;
+  String? couponId;
   double discount;
   String discountType;
   String expirationDate;
@@ -159,7 +159,7 @@ class Products {
     required this.description,
     required this.price,
     required this.stockQuantity,
-    required this.couponCode,
+    this.couponId,
     required this.discount,
     required this.discountType,
     required this.expirationDate,
@@ -173,7 +173,7 @@ class Products {
     String? description,
     double? price,
     int? stockQuantity,
-    String? couponCode,
+    String? couponId,
     double? discount,
     String? discountType,
     String? expirationDate,
@@ -186,7 +186,7 @@ class Products {
       description: description ?? this.description,
       price: price ?? this.price,
       stockQuantity: stockQuantity ?? this.stockQuantity,
-      couponCode: couponCode ?? this.couponCode,
+      couponId: couponId ?? this.couponId,
       discount: discount ?? this.discount,
       discountType: discountType ?? this.discountType,
       expirationDate: expirationDate ?? this.expirationDate,
@@ -202,7 +202,7 @@ class Products {
       'description': description,
       'price': price,
       'stockQuantity': stockQuantity,
-      'couponCode': couponCode,
+      'couponId': couponId,
       'discount': discount,
       'discountType': discountType,
       'expirationDate': expirationDate,
@@ -218,7 +218,7 @@ class Products {
       description: map['description'] as String,
       price: map['price'] as double,
       stockQuantity: map['stockQuantity'] as int,
-      couponCode: map['couponCode'] as String,
+      couponId: map['couponId'] != null ? map['couponId'] as String : null,
       discount: map['discount'] as double,
       discountType: map['discountType'] as String,
       expirationDate: map['expirationDate'] as String,
@@ -234,7 +234,7 @@ class Products {
 
   @override
   String toString() {
-    return 'Products(productId: $productId, productName: $productName, description: $description, price: $price, stockQuantity: $stockQuantity, couponCode: $couponCode, discount: $discount, discountType: $discountType, expirationDate: $expirationDate, discountedPrice: $discountedPrice, imagePaths: $imagePaths)';
+    return 'Products(productId: $productId, productName: $productName, description: $description, price: $price, stockQuantity: $stockQuantity, couponId: $couponId, discount: $discount, discountType: $discountType, expirationDate: $expirationDate, discountedPrice: $discountedPrice, imagePaths: $imagePaths)';
   }
 
   @override
@@ -246,7 +246,7 @@ class Products {
         other.description == description &&
         other.price == price &&
         other.stockQuantity == stockQuantity &&
-        other.couponCode == couponCode &&
+        other.couponId == couponId &&
         other.discount == discount &&
         other.discountType == discountType &&
         other.expirationDate == expirationDate &&
@@ -261,7 +261,7 @@ class Products {
         description.hashCode ^
         price.hashCode ^
         stockQuantity.hashCode ^
-        couponCode.hashCode ^
+        couponId.hashCode ^
         discount.hashCode ^
         discountType.hashCode ^
         expirationDate.hashCode ^

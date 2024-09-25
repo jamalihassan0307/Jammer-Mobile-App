@@ -9,7 +9,8 @@ import 'package:jammer_mobile_app/view/pages/category/top_offers.dart';
 
 // ignore: must_be_immutable
 class CategoryGrid extends StatelessWidget {
-  CategoryGrid({super.key});
+  final Color bg;
+  CategoryGrid({super.key, required this.bg});
 
   var height, width;
   @override

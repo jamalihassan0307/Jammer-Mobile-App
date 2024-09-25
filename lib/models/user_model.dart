@@ -5,14 +5,12 @@ class UserModel {
   String id;
   String fullName;
   String email;
-  int roleId;
   String password;
   String image;
   UserModel({
     required this.id,
     required this.fullName,
     required this.email,
-    required this.roleId,
     required this.password,
     required this.image,
   });
@@ -21,7 +19,6 @@ class UserModel {
     String? id,
     String? fullName,
     String? email,
-    int? roleId,
     String? password,
     String? image,
   }) {
@@ -29,7 +26,6 @@ class UserModel {
       id: id ?? this.id,
       fullName: fullName ?? this.fullName,
       email: email ?? this.email,
-      roleId: roleId ?? this.roleId,
       password: password ?? this.password,
       image: image ?? this.image,
     );
@@ -40,7 +36,6 @@ class UserModel {
       'id': id,
       'fullName': fullName,
       'email': email,
-      'roleId': roleId,
       'password': password,
       'image': image,
     };
@@ -51,7 +46,6 @@ class UserModel {
       id: map['id'] as String,
       fullName: map['fullName'] as String,
       email: map['email'] as String,
-      roleId: map['roleId'] as int,
       password: map['passwordHash'] as String,
       image: map['image'] as String,
     );
@@ -64,7 +58,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, fullName: $fullName, email: $email, roleId: $roleId, password: $password, image: $image)';
+    return 'UserModel(id: $id, fullName: $fullName, email: $email, password: $password, image: $image)';
   }
 
   @override
@@ -74,7 +68,6 @@ class UserModel {
     return other.id == id &&
         other.fullName == fullName &&
         other.email == email &&
-        other.roleId == roleId &&
         other.password == password &&
         other.image == image;
   }
@@ -84,7 +77,6 @@ class UserModel {
     return id.hashCode ^
         fullName.hashCode ^
         email.hashCode ^
-        roleId.hashCode ^
         password.hashCode ^
         image.hashCode;
   }
