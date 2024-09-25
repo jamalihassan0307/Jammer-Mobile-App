@@ -215,7 +215,7 @@ class _HomeState extends State<Home> {
                             ),
                           ),
 
-                        FeaturedBrandSlider(),
+                        TopCouponProducts(),
                         // Featured Brand Slider End Here
 
                         const SizedBox(

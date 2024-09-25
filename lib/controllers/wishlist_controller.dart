@@ -72,7 +72,7 @@ class WishListController extends GetxController {
   }
 
   bool favourite = false;
-  Color color = Colors.grey;
+  Color color = Colors.white;
   updatefavourite(bool load) {
     favourite = load;
     update();
@@ -82,7 +82,7 @@ class WishListController extends GetxController {
     if (wishList.any((element) => element.productId == id)) {
       color = Colors.red;
     } else {
-      color = Colors.grey;
+      color = Colors.white;
     }
     update();
   }

@@ -41,7 +41,7 @@ class _MyAccountState extends State<MyAccount> {
             child: Stack(
               children: <Widget>[
                 Image(
-                  image: const AssetImage('assets/user_profile/background.jpg'),
+                  image: const AssetImage('assets/bg5.jpg'),
                   width: width,
                   height: 220.0,
                   fit: BoxFit.cover,

@@ -277,45 +277,45 @@ class MainDrawer extends StatelessWidget {
             const Divider(
               color: Colors.grey,
             ),
-            ...HomeController.to.category.map(
-              (item) => InkWell(
-                child: Container(
-                  padding:
-                      const EdgeInsets.only(top: 7.0, bottom: 7.0, left: 15.0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.devices,
-                        color: Colors.grey[700],
-                        size: 20.0,
+            ...HomeController.to.category.take(5).map(
+                  (item) => InkWell(
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          top: 7.0, bottom: 7.0, left: 15.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.devices,
+                            color: Colors.grey[700],
+                            size: 20.0,
+                          ),
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          Text(
+                            item.name,
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 15.0,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                        width: 10.0,
-                      ),
-                      Text(
-                        item.name,
-                        style: TextStyle(
-                          color: Colors.grey[700],
-                          fontSize: 15.0,
-                        ),
-                      ),
-                    ],
+                    ),
+                    onTap: () {
+                      print("DATAATATATATA${item}");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TopOffers(
+                                  title: '${item.name}',
+                                  couponid: item.id,
+                                  id: item.id.toString(),
+                                )),
+                      );
+                    },
                   ),
                 ),
-                onTap: () {
-                  print("DATAATATATATA${item}");
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => TopOffers(
-                              title: '${item.name}',
-                              couponid: item.id,
-                              id: item.id.toString(),
-                            )),
-                  );
-                },
-              ),
-            ),
 
             // InkWell(
             //   child: Container(

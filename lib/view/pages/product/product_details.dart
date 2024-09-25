@@ -42,9 +42,12 @@ class _ProductDetailsState extends State<ProductDetails> {
     CartController.to.getreview(widget.data.productId.toString());
   }
 
+  var height, width;
+  @override
   Widget build(BuildContext context) {
-    print("asdafdfsf${widget.coupon}");
-    double height = MediaQuery.of(context).size.height;
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+
     return ListView(
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
@@ -60,15 +63,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                   height: (height / 2.0),
                   child: Carousel(
                     images: [
-                      ...widget.data.imagePath
-                          .map((item) => NetworkImage(GetImage(item))),
+                      ...widget.data.imagePath.map(
+                        (item) => NetworkImage(GetImage(item)),
+                      ),
                     ],
                     dotSize: 5.0,
                     dotSpacing: 15.0,
                     dotColor: Colors.grey,
                     indicatorBgPadding: 5.0,
                     dotBgColor: Colors.purple.withOpacity(0.0),
-                    boxFit: BoxFit.fitHeight,
+                    boxFit: BoxFit.fitWidth,
                     animationCurve: Curves.decelerate,
                     dotIncreasedColor: Colors.blue,
                     overlayShadow: true,
@@ -83,7 +87,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 top: 20.0,
                 right: 20.0,
                 child: FloatingActionButton(
-                  backgroundColor: Colors.white,
+                  backgroundColor: Colors.grey.shade400.withOpacity(0.5),
                   elevation: 3.0,
                   onPressed: () {
                     if (!obj.wishList.any((element) =>
@@ -199,103 +203,9 @@ class _ProductDetailsState extends State<ProductDetails> {
           ),
         ),
 
-        // Product Size & Color Start Here
-        // const ProductSize(),
-        // Product Size & Color End Here
-
-        // Product Details Start Here
-        // Container(
-        //   padding: const EdgeInsets.all(10.0),
-        //   color: Colors.white,
-        //   child: const Column(
-        //     mainAxisAlignment: MainAxisAlignment.start,
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: <Widget>[
-        //       Text(
-        //         'Product Details',
-        //         style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-        //       ),
-        //       SizedBox(
-        //         height: 8.0,
-        //       ),
-        //       Row(
-        //         children: <Widget>[
-        //           Expanded(
-        //             child: Column(
-        //               crossAxisAlignment: CrossAxisAlignment.start,
-        //               children: <Widget>[
-        //                 Text(
-        //                   'Color',
-        //                   style: TextStyle(color: Colors.grey, fontSize: 16.0),
-        //                 ),
-        //                 SizedBox(
-        //                   height: 6.0,
-        //                 ),
-        //                 Text(
-        //                   'Length',
-        //                   style: TextStyle(color: Colors.grey, fontSize: 16.0),
-        //                 ),
-        //                 SizedBox(
-        //                   height: 6.0,
-        //                 ),
-        //                 Text(
-        //                   'Type',
-        //                   style: TextStyle(color: Colors.grey, fontSize: 16.0),
-        //                 ),
-        //                 SizedBox(
-        //                   height: 6.0,
-        //                 ),
-        //                 Text(
-        //                   'Sleeve',
-        //                   style: TextStyle(color: Colors.grey, fontSize: 16.0),
-        //                 ),
-        //               ],
-        //             ),
-        //           ),
-        //           Expanded(
-        //             child: Column(
-        //               crossAxisAlignment: CrossAxisAlignment.start,
-        //               children: <Widget>[
-        //                 Text(
-        //                   'Yellow',
-        //                   style: TextStyle(fontSize: 16.0),
-        //                 ),
-        //                 SizedBox(
-        //                   height: 6.0,
-        //                 ),
-        //                 Text(
-        //                   'Knee Length',
-        //                   style: TextStyle(fontSize: 16.0),
-        //                 ),
-        //                 SizedBox(
-        //                   height: 6.0,
-        //                 ),
-        //                 Text(
-        //                   'Bandage',
-        //                   style: TextStyle(fontSize: 16.0),
-        //                 ),
-        //                 SizedBox(
-        //                   height: 6.0,
-        //                 ),
-        //                 Text(
-        //                   'Cap Sleeve',
-        //                   style: TextStyle(fontSize: 16.0),
-        //                 ),
-        //               ],
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //     ],
-        //   ),
-        // ),
-
-        // Product Details Ends Here
-
-        // Product Description Start Here
         Container(
           padding: const EdgeInsets.all(10.0),
-          margin: const EdgeInsets.only(top: 5.0),
+          // margin: const EdgeInsets.only(top: 5.0),
           color: Colors.white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -338,34 +248,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                   _productDescriptionModalBottomSheet(context, widget.data.dis);
                 },
               ),
+              SizedBox(height: height * 0.05),
               // const Divider(
               //   height: 1.0,
               // ),
             ],
           ),
         ),
-        // Product Description Ends Here
-
-        // Similar Product Starts Here
-        // Container(
-        //   padding: const EdgeInsets.all(10.0),
-        //   margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-        //   color: Colors.white,
-        //   child: const Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: <Widget>[
-        //       Text(
-        //         'Similar Products',
-        //         style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-        //       ),
-        //       SizedBox(
-        //         height: 8.0,
-        //       ),
-        //       GetSimilarProducts(),
-        //     ],
-        //   ),
-        // ),
-        // // Similar Product Ends Here
       ],
     );
   }

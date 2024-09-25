@@ -35,6 +35,7 @@ class HomeController extends GetxController {
   List<GetCategoryModel> category = [];
   Future<void> getCategory() async {
     try {
+      category.clear();
       NetworkApiServices network = NetworkApiServices();
       final response1 = await network.getApi(StaticVariables.getAllCategories);
 
@@ -92,6 +93,7 @@ class HomeController extends GetxController {
   List<GetCouponsWithProducts> couponproductlist = [];
   Future<void> GetCouponsWithProductsdata() async {
     try {
+      couponproductlist.clear();
       print("get data");
       NetworkApiServices network = NetworkApiServices();
       final response1 =
@@ -118,6 +120,7 @@ class HomeController extends GetxController {
   List<BannerModel> bannerList = [];
   Future<void> GetBanner() async {
     try {
+      bannerList.clear();
       print("get data");
       NetworkApiServices network = NetworkApiServices();
       final response1 = await network.getApi(StaticVariables.getAllBanners);
@@ -142,6 +145,7 @@ class HomeController extends GetxController {
   List<RandomProducts> randomCouponProductslist = [];
   Future<void> getRandomCouponProducts() async {
     try {
+      randomCouponProductslist.clear();
       NetworkApiServices network = NetworkApiServices();
       final response1 =
           await network.getApi(StaticVariables.getRandomCouponProducts);
@@ -168,6 +172,7 @@ class HomeController extends GetxController {
   List<RandomProducts> cartlist = [];
   Future<void> getUserCart() async {
     try {
+      cartlist.clear();
       NetworkApiServices network = NetworkApiServices();
       final response1 = await network.getApi(StaticVariables.getUserCart);
 

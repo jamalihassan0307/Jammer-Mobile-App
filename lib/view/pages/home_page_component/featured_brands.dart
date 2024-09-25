@@ -12,8 +12,8 @@ import 'package:jammer_mobile_app/view/pages/category/top_offers.dart';
 // import 'package:jammer_mobile_app/view/pages/home.dart';
 import 'package:jammer_mobile_app/widget/loading.dart';
 
-class FeaturedBrandSlider extends StatelessWidget {
-  FeaturedBrandSlider({super.key});
+class TopCouponProducts extends StatelessWidget {
+  TopCouponProducts({super.key});
 
   final List<String> gradientColors = [
     "assets/bg1.jpg",
@@ -49,7 +49,7 @@ class FeaturedBrandSlider extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             image: DecorationImage(image: AssetImage(colors), fit: BoxFit.fill),
-            borderRadius: BorderRadius.circular(40.0),
+            borderRadius: BorderRadius.circular(20.0),
           ),
           child: Stack(
             alignment: Alignment.center,

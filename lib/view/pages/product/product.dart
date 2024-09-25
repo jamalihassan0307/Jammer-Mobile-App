@@ -5,13 +5,13 @@ import 'package:badges/badges.dart' as badges;
 import 'package:get/get.dart';
 import 'package:jammer_mobile_app/controllers/cart_controller.dart';
 import 'package:jammer_mobile_app/models/CartModel.dart';
+import 'package:jammer_mobile_app/view/pages/cart.dart';
 
 // My Own Imports
 import 'package:jammer_mobile_app/view/pages/product/product_details.dart';
 import 'package:jammer_mobile_app/view/pages/order_payment/delivery_address.dart';
-import 'package:jammer_mobile_app/view/pages/cart.dart';
-import 'package:jammer_mobile_app/view/pages/wishlist.dart';
 import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
+import 'package:jammer_mobile_app/view/pages/wishlist.dart';
 import 'package:page_transition/page_transition.dart';
 
 class ProductPage extends StatefulWidget {
@@ -35,64 +35,82 @@ class _ProductPageState extends State<ProductPage> {
   bool favourite = false;
   int cartItem = 3;
 
+  var height, width;
   @override
   Widget build(BuildContext context) {
+    height = MediaQuery.of(context).size.height;
+
     double width = MediaQuery.of(context).size.width;
     return GetBuilder<CartController>(builder: (obj) {
       return Scaffold(
         appBar: AppBar(
-          // title: Text(widget.productData.title),
-          // titleSpacing: 0.0,
+          title: Text(
+            widget.productData.title,
+            style: TextStyle(color: Colors.black),
+          ),
+          titleSpacing: 0.0,
           backgroundColor: widget.bg,
           elevation: 0,
-
-          automaticallyImplyLeading: false,
-          primary: false,
-          // actions: <Widget>[
-          //   IconButton(
-          //     icon: const Icon(
-          //       Icons.favorite,
-          //       color: Colors.black,
-          //     ),
-          //     onPressed: () {
-          //       Navigator.push(
-          //           context,
-          //           PageTransition(
-          //               type: PageTransitionType.rightToLeft,
-          //               child: const WishlistPage()));
-          //     },
-          //   ),
-          //   IconButton(
-          //     icon: badges.Badge(
-          //       badgeContent: Text(
-          //         '${obj.numberofcart.toString()}',
-          //         style: TextStyle(color: Colors.white),
-          //       ),
-          //       badgeStyle: badges.BadgeStyle(
-          //         badgeColor: Colors.red.shade300,
-          //       ),
-          //       child: const Icon(
-          //         Icons.shopping_cart,
-          //         color: Colors.black,
-          //       ),
-          //     ),
-          //     onPressed: () {
-          //       Navigator.push(
-          //           context,
-          //           PageTransition(
-          //               type: PageTransitionType.rightToLeft,
-          //               child: const CartPage()));
-          //     },
-          //   ),
-          // ],
+          leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+          ),
+          // automaticallyImplyLeading: false,
+          // primary: false,
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.favorite,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: const WishlistPage()));
+              },
+            ),
+            IconButton(
+              icon: badges.Badge(
+                badgeContent: Text(
+                  '${obj.numberofcart.toString()}',
+                  style: TextStyle(color: Colors.white),
+                ),
+                badgeStyle: badges.BadgeStyle(
+                  badgeColor: Colors.red.shade300,
+                ),
+                child: const Icon(
+                  Icons.shopping_cart,
+                  color: Colors.black,
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: const CartPage()));
+              },
+            ),
+          ],
         ),
-        backgroundColor: const Color(0xFFF1F3F6),
-        body: ProductDetails(
-            data: widget.productData, coupon: widget.coupon, bg: widget.bg),
+        backgroundColor: widget.bg,
+        body: Container(
+          height: height,
+          width: width,
+          child: ProductDetails(
+              data: widget.productData, coupon: widget.coupon, bg: widget.bg),
+        ),
         bottomNavigationBar: Material(
           elevation: 5.0,
           child: Container(
-            color: Colors.white,
+            color: widget.bg,
             width: width,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -104,7 +122,7 @@ class _ProductPageState extends State<ProductPage> {
                   child: Container(
                     width: width / 2,
                     height: 50.0,
-                    color: Theme.of(context).primaryColorLight,
+                    color: Color(0xFFFFD700),
                     alignment: Alignment.center,
                     child: const Text(
                       'Add To Cart',

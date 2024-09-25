@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 // import 'dart:async' show Future, Timer;
 // import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:jammer_mobile_app/controllers/TopOffers_controller.dart';
 import 'package:jammer_mobile_app/controllers/home_controller.dart';
+import 'package:jammer_mobile_app/controllers/wishlist_controller.dart';
+import 'package:jammer_mobile_app/data/const/static_variables.dart';
 import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
 import 'package:jammer_mobile_app/models/ProductsByCategory%20.dart';
 import 'package:jammer_mobile_app/models/RandamProduct.dart';
@@ -72,7 +75,7 @@ class _TopOffersState extends State<TopOffers> {
                       Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Text(
-                          'Deals of the Day(${obj.couponproductlist.length} Results)',
+                          'Deals of the Day(${widget.couponid == "0" ? HomeController.to.randomCouponProductslist.length : obj.couponproductlist.length} Results)',
                           style: TextStyle(
                               fontSize: 16.0, fontWeight: FontWeight.bold),
                         ),
@@ -114,54 +117,131 @@ class OffersGridView extends StatefulWidget {
 }
 
 class _OffersGridViewState extends State<OffersGridView> {
-  InkWell getStructuredGridCell(ProductsByCategory offers, Color bg) {
+  InkWell getStructuredGridCell(
+      ProductsByCategory offers, Color bg, height, width) {
     return InkWell(
       child: Container(
         margin: const EdgeInsets.all(5.0),
         padding: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10.0),
-          boxShadow: const [
-            BoxShadow(
-              blurRadius: 5.0,
-              color: Colors.grey,
-            ),
-          ],
+          color: Colors.grey.shade300,
+          borderRadius: BorderRadius.circular(20.0),
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Expanded(
-              child: Container(
-                height: double.infinity,
-                margin: const EdgeInsets.all(6.0),
-                child: offers.imagePath.length == 0
-                    ? Image(
-                        image: AssetImage("assets/best_deal/best_deal_1.jpg"),
-                        fit: BoxFit.fitHeight,
-                      )
-                    : Image.network(
-                        GetImage(offers.imagePath[0]),
-                        fit: BoxFit.fitHeight,
+            Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: bg, borderRadius: BorderRadius.circular(20)),
+                  child: Center(
+                    child: Container(
+                      margin: const EdgeInsets.all(15.0),
+                      child: offers.imagePath.isEmpty
+                          ? Image.asset(
+                              "assets/best_deal/best_deal_1.jpg",
+                              fit: BoxFit.contain,
+                            )
+                          : Image.network(
+                              StaticVariables.baseurl + offers.imagePath[0],
+                              fit: BoxFit.contain,
+                            ),
+                    ),
+                  ),
+                ),
+                GetBuilder<WishListController>(builder: (obj) {
+                  return InkWell(
+                    onTap: () {
+                      if (!obj.wishList.any((element) =>
+                          element.productId.toString() ==
+                          offers.id.toString())) {
+                        obj.color = Colors.red;
+                        PassDataToProduct products = PassDataToProduct(
+                            offers.name,
+                            int.parse(offers.id),
+                            [],
+                            offers.price.toString(),
+                            offers.price.toString(),
+                            "d",
+                            "d");
+                        obj.AddWishList(products, 0);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Added to Wishlist")));
+                      } else {
+                        obj.color = Colors.grey;
+                        obj.removeWishList(obj.wishList
+                            .where((element) =>
+                                element.productId.toString() ==
+                                offers.id.toString())
+                            .firstOrNull!
+                            .id);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Remove from Wishlist")));
+                      }
+                    },
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircleAvatar(
+                          backgroundColor: obj.wishList.any((element) =>
+                                  element.productId.toString() ==
+                                  offers.id.toString())
+                              ? Colors.white.withOpacity(0.5)
+                              : Colors.grey.shade800.withOpacity(0.5),
+                          radius: 17,
+                          child: Icon(
+                            obj.wishList.any((element) =>
+                                    element.productId.toString() ==
+                                    offers.id.toString())
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            color: obj.wishList.any((element) =>
+                                    element.productId.toString() ==
+                                    offers.id.toString())
+                                ? Colors.red
+                                : Colors.white,
+                          ),
+                        ),
                       ),
-              ),
+                    ),
+                  );
+                })
+              ],
             ),
             Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(right: 6.0, left: 6.0),
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.symmetric(horizontal: 6.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Text(
                     offers.name,
-                    style: const TextStyle(fontSize: 12.0),
+                    style: const TextStyle(
+                        fontSize: 14.0, fontWeight: FontWeight.bold),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    offers.description,
+                    "RS ${offers.price.toString()}",
                     style: const TextStyle(
-                        color: Color(0xFF67A86B), fontSize: 15.0),
+                        fontSize: 14.0, fontWeight: FontWeight.bold),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    offers.description.toString(),
+                    style: const TextStyle(
+                      fontSize: 14.0,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
@@ -188,19 +268,19 @@ class _OffersGridViewState extends State<OffersGridView> {
     );
   }
 
+  var height, width;
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    return GridView.count(
-      shrinkWrap: true,
-      primary: false,
-      crossAxisSpacing: 0,
-      mainAxisSpacing: 0,
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+
+    return StaggeredGrid.count(
       crossAxisCount: 2,
-      childAspectRatio: ((width) / 490),
+      mainAxisSpacing: 2,
+      crossAxisSpacing: 2,
       children: List.generate(widget.offers!.length, (index) {
         Color bg = beautifulColors[index % beautifulColors.length];
-        return getStructuredGridCell(widget.offers![index], bg);
+        return getStructuredGridCell(widget.offers![index], bg, height, width);
       }),
     );
   }
@@ -218,62 +298,151 @@ class TopOffersGridView extends StatefulWidget {
 }
 
 class _TopOffersGridViewState extends State<TopOffersGridView> {
-  InkWell getStructuredGridCell(RandomProducts offers, Color bg) {
+  InkWell getStructuredGridCell(
+      RandomProducts offers, Color bg, height, width) {
     return InkWell(
       child: Container(
         margin: const EdgeInsets.all(5.0),
         padding: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10.0),
-          boxShadow: const [
-            BoxShadow(
-              blurRadius: 5.0,
-              color: Colors.grey,
-            ),
-          ],
+          color: Colors.grey.shade100,
+          borderRadius: BorderRadius.circular(20.0),
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Expanded(
-              child: Container(
-                height: double.infinity,
-                margin: const EdgeInsets.all(6.0),
-                child: offers.imagePaths.length == 0
-                    ? Image(
-                        image: AssetImage("assets/best_deal/best_deal_1.jpg"),
-                        fit: BoxFit.fitHeight,
-                      )
-                    : Image.network(
-                        GetImage(offers.imagePaths[0]),
-                        fit: BoxFit.fitHeight,
+            Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: bg, borderRadius: BorderRadius.circular(20)),
+                  child: Center(
+                    child: Container(
+                      margin: const EdgeInsets.all(15.0),
+                      child: offers.imagePaths.isEmpty
+                          ? Image.asset(
+                              "assets/best_deal/best_deal_1.jpg",
+                              fit: BoxFit.contain,
+                            )
+                          : Image.network(
+                              StaticVariables.baseurl + offers.imagePaths[0],
+                              fit: BoxFit.contain,
+                            ),
+                    ),
+                  ),
+                ),
+                GetBuilder<WishListController>(builder: (obj) {
+                  return InkWell(
+                    onTap: () {
+                      if (!obj.wishList.any((element) =>
+                          element.productId.toString() == offers.productId)) {
+                        obj.color = Colors.red;
+                        PassDataToProduct products = PassDataToProduct(
+                            offers.productName,
+                            offers.productId,
+                            [],
+                            offers.price.toString(),
+                            offers.price.toString(),
+                            "d",
+                            "d");
+                        obj.AddWishList(products, offers.couponid!);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Added to Wishlist")));
+                      } else {
+                        obj.color = Colors.grey;
+                        obj.removeWishList(obj.wishList
+                            .where((element) =>
+                                element.productId.toString() ==
+                                offers.productId)
+                            .firstOrNull!
+                            .id);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Remove from Wishlist")));
+                      }
+                    },
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircleAvatar(
+                          backgroundColor: obj.wishList.any((element) =>
+                                  element.productId.toString() ==
+                                  offers.productId)
+                              ? Colors.white.withOpacity(0.5)
+                              : Colors.grey.shade800.withOpacity(0.5),
+                          radius: 17,
+                          child: Icon(
+                            obj.wishList.any((element) =>
+                                    element.productId.toString() ==
+                                    offers.productId)
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            color: obj.wishList.any((element) =>
+                                    element.productId.toString() ==
+                                    offers.productId)
+                                ? Colors.red
+                                : Colors.white,
+                          ),
+                        ),
                       ),
-              ),
+                    ),
+                  );
+                })
+              ],
             ),
             Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(right: 6.0, left: 6.0),
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.symmetric(horizontal: 6.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Text(
                     offers.productName,
-                    style: const TextStyle(fontSize: 12.0),
+                    style: const TextStyle(
+                        fontSize: 14.0, fontWeight: FontWeight.bold),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     textAlign: TextAlign.center,
                   ),
-                  Text(
-                    offers.description,
-                    style: const TextStyle(
-                        color: Color(0xFF67A86B), fontSize: 15.0),
-                  ),
-                  Text(
-                    offers.discount.toString() + " OFF",
-                    style: const TextStyle(fontSize: 12.0),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                  ),
+                  SizedBox(height: height * 0.01),
+                  offers.discountType == "FLAT"
+                      ? RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'RS ${offers.discountedPrice}  ',
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 15.0),
+                              ),
+                              TextSpan(
+                                text: 'RS ${offers.price} ',
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 13.0,
+                                  decoration: TextDecoration.lineThrough,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: ' RS ${offers.discountedPrice}',
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 16.0),
+                              ),
+                              TextSpan(
+                                text: ' ${offers.discount}% OFF',
+                                style: const TextStyle(
+                                    color: Colors.red, fontSize: 13.0),
+                              ),
+                            ],
+                          ),
+                        ),
                 ],
               ),
             ),
@@ -295,25 +464,109 @@ class _TopOffersGridViewState extends State<TopOffersGridView> {
           context,
           MaterialPageRoute(
               builder: (context) => ProductPage(
-                  productData: product, coupon: widget.couponid, bg: bg)),
+                    bg: bg,
+                    productData: product,
+                    coupon: offers.couponid ?? 0,
+                  )),
         );
       },
     );
+
+    // InkWell(
+    //   child: Container(
+    //     margin: const EdgeInsets.all(5.0),
+    //     padding: const EdgeInsets.all(5.0),
+    //     decoration: BoxDecoration(
+    //       color: Colors.white,
+    //       borderRadius: BorderRadius.circular(10.0),
+    //       boxShadow: const [
+    //         BoxShadow(
+    //           blurRadius: 5.0,
+    //           color: Colors.grey,
+    //         ),
+    //       ],
+    //     ),
+    //     child: Column(
+    //       children: <Widget>[
+    //         Expanded(
+    //           child: Container(
+    //             height: double.infinity,
+    //             margin: const EdgeInsets.all(6.0),
+    //             child: offers.imagePaths.length == 0
+    //                 ? Image(
+    //                     image: AssetImage("assets/best_deal/best_deal_1.jpg"),
+    //                     fit: BoxFit.fitHeight,
+    //                   )
+    //                 : Image.network(
+    //                     GetImage(offers.imagePaths[0]),
+    //                     fit: BoxFit.fitHeight,
+    //                   ),
+    //           ),
+    //         ),
+    //         Container(
+    //           alignment: Alignment.center,
+    //           margin: const EdgeInsets.only(right: 6.0, left: 6.0),
+    //           child: Column(
+    //             children: <Widget>[
+    //               Text(
+    //                 offers.productName,
+    //                 style: const TextStyle(fontSize: 12.0),
+    //                 overflow: TextOverflow.ellipsis,
+    //                 maxLines: 1,
+    //                 textAlign: TextAlign.center,
+    //               ),
+    //               Text(
+    //                 offers.description,
+    //                 style: const TextStyle(
+    //                     color: Color(0xFF67A86B), fontSize: 15.0),
+    //               ),
+    //               Text(
+    //                 offers.discount.toString() + " OFF",
+    //                 style: const TextStyle(fontSize: 12.0),
+    //                 overflow: TextOverflow.ellipsis,
+    //                 maxLines: 2,
+    //                 textAlign: TextAlign.center,
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    //   onTap: () {
+    //     PassDataToProduct product = PassDataToProduct(
+    //         offers.productName,
+    //         offers.id.toString(),
+    //         offers.imagePaths,
+    //         offers.discountedPrice.toString(),
+    //         offers.price.toString(),
+    //         offers.description.toString(),
+    //         offers.discountType == "FLAT"
+    //             ? "OFF ${offers.discount}"
+    //             : "OFF ${offers.discount} %");
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //           builder: (context) => ProductPage(
+    //               productData: product, coupon: widget.couponid, bg: bg)),
+    //     );
+    //   },
+    // );
   }
 
+  var height, width;
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    return GridView.count(
-      shrinkWrap: true,
-      primary: false,
-      crossAxisSpacing: 0,
-      mainAxisSpacing: 0,
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+
+    return StaggeredGrid.count(
       crossAxisCount: 2,
-      childAspectRatio: ((width) / 490),
+      mainAxisSpacing: 2,
+      crossAxisSpacing: 2,
       children: List.generate(widget.offers!.length, (index) {
         Color bg = beautifulColors[index % beautifulColors.length];
-        return getStructuredGridCell(widget.offers![index], bg);
+        return getStructuredGridCell(widget.offers![index], bg, height, width);
       }),
     );
   }
