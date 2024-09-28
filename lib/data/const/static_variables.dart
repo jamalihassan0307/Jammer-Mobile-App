@@ -7,9 +7,9 @@ class StaticVariables {
   static UserModel? model;
   static String? userid;
   static String? tokenid;
-  static String baseurl = "http://192.168.1.100:3300";
+  static String baseurl = "http://192.168.1.200:3300";
 
-  static String url = "http://192.168.1.100:3300/api/";
+  static String url = "http://192.168.1.200:3300/api/";
   ///////////////////////////////urls/////////////////////
   static String login = "Users/Login";
   static String signup = "Users/Signup";
@@ -39,7 +39,8 @@ class StaticVariables {
 
   static String filterProductsByCategory = "Product/FilterProductsByCategory/";
   static String searchProductsByName = "Product/SearchProductsByName?query=";
-  static String getProductById = "Product/GetProductById?productId=";
+  static String GetProductByIdBanner =
+      "Product/GetProductByIdBanner?productId=";
   static String getProductsWithPaging =
       "Product/GetProductsWithPaging?pageNumber=1&pageSize=20";
   ////////////////////Review/////////////

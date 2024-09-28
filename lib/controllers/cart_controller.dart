@@ -28,6 +28,14 @@ class CartController extends GetxController {
     update();
   }
 
+  int quatity = 0;
+  updatequatity(int load) {
+    if (load >= 0) {
+      quatity = load;
+      update();
+    } else {}
+  }
+
   double cartTotal = 0;
   removecart(int index, int id) {
     cardlist.removeAt(index);
@@ -145,11 +153,19 @@ class CartController extends GetxController {
       );
       return;
     }
+    if (quatity <= 0) {
+      Fluttertoast.showToast(
+        msg: "Add the Cart Quantity",
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+      return;
+    }
     try {
       // print("lrgr;rwijiwow${coupon}");
       Map<String, dynamic> data = {
         "productId": p.productId,
-        "quantity": 1,
+        "quantity": quatity,
         "couponId": coupon == 0 ? 0 : coupon
       };
       NetworkApiServices network = NetworkApiServices();

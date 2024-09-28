@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:jammer_mobile_app/controllers/home_controller.dart';
 import 'package:jammer_mobile_app/models/get_category_model.dart';
 import 'package:jammer_mobile_app/view/pages/category/top_offers.dart';
+import 'package:jammer_mobile_app/view/pages/home_page_component/best_deal.dart';
 
 // My Own Imports
 // import 'package:jammer_mobile_app/view/pages/category/top_offers.dart';
@@ -32,7 +33,7 @@ class TopCouponProducts extends StatelessWidget {
     InkWell getStructuredGridCell(GetCategoryModel featuredBrand, int index) {
       final item = featuredBrand;
       // Use gradient color based on the index
-      String colors = gradientColors[index % gradientColors.length];
+      Color colors = beautifulColors[index % beautifulColors.length];
 
       return InkWell(
         onTap: () {
@@ -48,7 +49,8 @@ class TopCouponProducts extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage(colors), fit: BoxFit.fill),
+            color: colors,
+            // image: DecorationImage(image: AssetImage(colors), fit: BoxFit.fill),
             borderRadius: BorderRadius.circular(20.0),
           ),
           child: Stack(

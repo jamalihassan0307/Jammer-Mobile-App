@@ -28,6 +28,9 @@ class MyApp extends StatelessWidget {
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        // cardTheme: CardTheme(
+        //   color: Colors.white,
+        // ),
         primaryColor: const Color(0xFF2874F0),
         primaryColorLight: const Color(0xFFFDE400),
         textSelectionTheme: const TextSelectionThemeData(

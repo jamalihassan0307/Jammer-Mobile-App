@@ -44,12 +44,13 @@ class _ProductPageState extends State<ProductPage> {
     return GetBuilder<CartController>(builder: (obj) {
       return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
             widget.productData.title,
             style: TextStyle(color: Colors.black),
           ),
           titleSpacing: 0.0,
-          backgroundColor: widget.bg,
+          backgroundColor: Colors.white,
           elevation: 0,
           leading: InkWell(
             onTap: () {
@@ -100,7 +101,7 @@ class _ProductPageState extends State<ProductPage> {
             ),
           ],
         ),
-        backgroundColor: widget.bg,
+        backgroundColor: Colors.white,
         body: Container(
           height: height,
           width: width,
@@ -110,7 +111,7 @@ class _ProductPageState extends State<ProductPage> {
         bottomNavigationBar: Material(
           elevation: 5.0,
           child: Container(
-            color: widget.bg,
+            color: Colors.white,
             width: width,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

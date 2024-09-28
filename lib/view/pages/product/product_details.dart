@@ -54,41 +54,73 @@ class _ProductDetailsState extends State<ProductDetails> {
       children: <Widget>[
         Stack(
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(top: 8.0),
-              color: widget.bg,
-              child: Hero(
-                tag: '${widget.data.title}',
-                child: SizedBox(
-                  height: (height / 2.0),
-                  child: Carousel(
-                    images: [
-                      ...widget.data.imagePath.map(
-                        (item) => NetworkImage(GetImage(item)),
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                // color: Colors.white,
+                height: height * 0.51,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      left: -100,
+                      right: -100,
+                      top: -105,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Card(
+                          elevation: 2,
+                          child: CircleAvatar(
+                            radius: 280,
+                            backgroundColor: Colors.white,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(290),
+                          ),
+                        ),
                       ),
-                    ],
-                    dotSize: 5.0,
-                    dotSpacing: 15.0,
-                    dotColor: Colors.grey,
-                    indicatorBgPadding: 5.0,
-                    dotBgColor: Colors.purple.withOpacity(0.0),
-                    boxFit: BoxFit.fitWidth,
-                    animationCurve: Curves.decelerate,
-                    dotIncreasedColor: Colors.blue,
-                    overlayShadow: true,
-                    overlayShadowColors: Colors.white,
-                    overlayShadowSize: 0.7,
-                  ),
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: CircleAvatar(
+                        radius: 170,
+                        backgroundColor: widget.bg,
+                        child: Hero(
+                          tag: '${widget.data.title}',
+                          child: SizedBox(
+                            height: (height * 0.25),
+                            child: Carousel(
+                              images: [
+                                ...widget.data.imagePath.map(
+                                  (item) => NetworkImage(GetImage(item)),
+                                ),
+                              ],
+                              dotSize: 5.0,
+                              dotSpacing: 15.0,
+                              dotColor: Colors.grey,
+                              indicatorBgPadding: 0.0,
+                              dotBgColor: Colors.purple.withOpacity(0.0),
+                              boxFit: BoxFit.fitHeight,
+                              animationCurve: Curves.easeInQuad,
+                              dotIncreasedColor: Colors.blue,
+                              overlayShadow: true,
+                              overlayShadowColors: widget.bg,
+                              overlayShadowSize: 0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
             GetBuilder<WishListController>(builder: (obj) {
               return Positioned(
-                top: 20.0,
+                // top: 10.0,
                 right: 20.0,
                 child: FloatingActionButton(
-                  backgroundColor: Colors.grey.shade400.withOpacity(0.5),
-                  elevation: 3.0,
+                  backgroundColor: widget.bg.withOpacity(0.7),
+                  // elevation: 3.0,
                   onPressed: () {
                     if (!obj.wishList.any((element) =>
                         element.productId == widget.data.productId)) {
@@ -125,10 +157,83 @@ class _ProductDetailsState extends State<ProductDetails> {
             child: const SizedBox(
               height: 8.0,
             )),
-        const Divider(
-          height: 1.0,
+        Center(
+          child: GetBuilder<CartController>(builder: (obj) {
+            return Container(
+                height: height * 0.05,
+                width: width * 0.4,
+                // color: Colors.black,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      child: Center(
+                          child: Text(
+                        " ",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      )),
+                    ),
+                    Container(
+                      height: height * 0.05,
+                      width: width * 0.145,
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.horizontal(
+                              left: Radius.circular(30))),
+                      child: Center(
+                        child: InkWell(
+                          onTap: () {
+                            obj.updatequatity(obj.quatity - 1);
+                          },
+                          child: Text(
+                            "-",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: height * 0.05,
+                      width: width * 0.145,
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.horizontal(
+                              right: Radius.circular(30))),
+                      child: Center(
+                        child: InkWell(
+                          onTap: () {
+                            obj.updatequatity(obj.quatity + 1);
+                          },
+                          child: Text(
+                            "+",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: Center(
+                          child: Text(
+                        obj.quatity.toString(),
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      )),
+                    ),
+                  ],
+                ));
+          }),
         ),
-
         Container(
           color: Colors.white,
           padding: const EdgeInsets.all(10.0),
@@ -302,4 +407,26 @@ class _ProductDetailsState extends State<ProductDetails> {
         });
   }
   // Bottom Sheet for Product Description Ends Here
+}
+
+class BottomCircularClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    path.lineTo(0, 0);
+    path.lineTo(0, size.height * 0.5);
+
+    path.quadraticBezierTo(
+        size.width * 0.5, size.height, size.width, size.height * 0.5);
+    // path.quadraticBezierTo(size.width * 0.5, 0, 0, size.height * 0.5);
+
+    path.lineTo(size.width, size.height * 0.5);
+    path.lineTo(size.width, 0);
+    path.lineTo(0, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
