@@ -184,7 +184,7 @@ class CartController extends GetxController {
     } on DioError catch (e) {
       print("ErrrrorAddcart${e.message.toString() + e.response.toString()}");
       Fluttertoast.showToast(
-        msg: e.message.toString() + e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -225,7 +225,7 @@ class CartController extends GetxController {
     } on DioError catch (e) {
       print("ErrrrorAddcart${e.message.toString() + e.response.toString()}");
       Fluttertoast.showToast(
-        msg: e.message.toString() + e.response.toString(),
+        msg: e.message.toString(),
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );

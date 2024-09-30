@@ -56,7 +56,7 @@ class TopOfferController extends GetxController {
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.message.toString(),
+        msg: e.response!.data["message"] ?? "Something went wrong",
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );

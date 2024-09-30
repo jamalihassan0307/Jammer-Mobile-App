@@ -7,18 +7,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+
+// Controllers
 import 'package:jammer_mobile_app/controllers/TopOffers_controller.dart';
 import 'package:jammer_mobile_app/controllers/home_controller.dart';
 import 'package:jammer_mobile_app/controllers/wishlist_controller.dart';
+
+// Data and Functions
 import 'package:jammer_mobile_app/data/const/static_variables.dart';
 import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
+
+// Models
 import 'package:jammer_mobile_app/models/ProductsByCategory%20.dart';
 import 'package:jammer_mobile_app/models/RandamProduct.dart';
+
+// Views
 import 'package:jammer_mobile_app/view/pages/home_page_component/best_deal.dart';
 import 'package:jammer_mobile_app/view/pages/product/product.dart';
 
 // My Own Imports
-import 'package:jammer_mobile_app/widget/loading.dart';
+// import 'package:jammer_mobile_app/widget/loading.dart';
 
 class TopOffers extends StatefulWidget {
   final String? title;

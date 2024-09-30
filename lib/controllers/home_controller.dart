@@ -69,6 +69,11 @@ class HomeController extends GetxController {
               "/" +
               q.toString());
       if (response1.data["data"] == null) {
+        Fluttertoast.showToast(
+          msg: response1.data["message"],
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
         bannerProduct = null;
         return;
       }
@@ -82,7 +87,7 @@ class HomeController extends GetxController {
     } on DioError catch (e) {
       print("Errrror${e.response.toString() + e.message.toString()}");
       Fluttertoast.showToast(
-        msg: e.message.toString(),
+        msg: e.response!.data["message"],
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );

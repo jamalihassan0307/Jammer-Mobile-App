@@ -40,6 +40,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   getdata() {
     WishListController.to.updatecolor(widget.data.productId);
     CartController.to.getreview(widget.data.productId.toString());
+    CartController.to.updatequatity(0);
   }
 
   var height, width;
