@@ -9,20 +9,20 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 
 // Controllers
-import 'package:jammer_mobile_app/controllers/TopOffers_controller.dart';
-import 'package:jammer_mobile_app/controllers/home_controller.dart';
-import 'package:jammer_mobile_app/controllers/wishlist_controller.dart';
+import 'package:jammer_mobile_app/view_model/controllers/top_offer/TopOffers_controller.dart';
+import 'package:jammer_mobile_app/view_model/controllers/home/home_controller.dart';
+import 'package:jammer_mobile_app/view_model/controllers/wishlist/wishlist_controller.dart';
 
 // Data and Functions
-import 'package:jammer_mobile_app/data/const/static_variables.dart';
-import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
+import 'package:jammer_mobile_app/res/app_url/static_variables.dart';
+import 'package:jammer_mobile_app/res/components/functions/passDataToProduct.dart';
 
 // Models
-import 'package:jammer_mobile_app/models/ProductsByCategory%20.dart';
-import 'package:jammer_mobile_app/models/RandamProduct.dart';
+import 'package:jammer_mobile_app/models/Product/ProductsByCategory%20.dart';
+import 'package:jammer_mobile_app/models/Product/RandamProduct.dart';
 
 // Views
-import 'package:jammer_mobile_app/view/pages/home_page_component/best_deal.dart';
+import 'package:jammer_mobile_app/res/components/home_page_component/best_deal.dart';
 import 'package:jammer_mobile_app/view/pages/product/product.dart';
 
 // My Own Imports

@@ -3,15 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:jammer_mobile_app/controllers/cart_controller.dart';
-import 'package:jammer_mobile_app/controllers/wishlist_controller.dart';
-import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
+import 'package:jammer_mobile_app/view_model/controllers/cart/cart_controller.dart';
+import 'package:jammer_mobile_app/view_model/controllers/wishlist/wishlist_controller.dart';
+import 'package:jammer_mobile_app/res/components/functions/passDataToProduct.dart';
 
 // My Own Imports
 import 'package:jammer_mobile_app/view/pages/product/rating_row.dart';
 // import 'package:jammer_mobile_app/view/pages/product/get_similar_products.dart';
-import 'package:jammer_mobile_app/widget/carousel_pro/lib/carousel_pro.dart';
-import 'package:jammer_mobile_app/widget/loading.dart';
+import 'package:jammer_mobile_app/utils/carousel_pro/lib/carousel_pro.dart';
+import 'package:jammer_mobile_app/repository/loading.dart';
 
 class ProductDetails extends StatefulWidget {
   final PassDataToProduct data;

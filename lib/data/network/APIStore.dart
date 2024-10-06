@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:jammer_mobile_app/data/const/static_variables.dart';
+import 'package:jammer_mobile_app/res/app_url/static_variables.dart';
 
 Dio httpClient() {
   final options = BaseOptions(

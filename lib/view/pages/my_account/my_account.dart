@@ -2,16 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:jammer_mobile_app/data/const/static_variables.dart';
+import 'package:jammer_mobile_app/res/app_url/static_variables.dart';
 import 'package:jammer_mobile_app/view/pages/faq_and_about_app/about_app.dart';
 import 'package:jammer_mobile_app/view/pages/faq_and_about_app/faq.dart';
+import 'package:jammer_mobile_app/view/pages/my_account/Profile.dart';
 
 // My Own Imports
 // import 'package:jammer_mobile_app/view/pages/login.dart';
 import 'package:jammer_mobile_app/view/pages/my_account/account_setting.dart';
-import 'package:jammer_mobile_app/view/pages/my_orders.dart';
-import 'package:jammer_mobile_app/view/pages/notifications.dart';
-import 'package:jammer_mobile_app/widget/loading.dart';
+import 'package:jammer_mobile_app/view/pages/order/my_orders.dart';
+import 'package:jammer_mobile_app/view/pages/home/notifications.dart';
+import 'package:jammer_mobile_app/repository/loading.dart';
 import 'package:page_transition/page_transition.dart';
 
 class MyAccount extends StatefulWidget {
@@ -81,7 +82,13 @@ class _MyAccountState extends State<MyAccount> {
                             style:
                                 TextStyle(fontSize: 16.0, color: Colors.grey),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Profile(),
+                                ));
+                          },
                         ),
                       ),
                     ],

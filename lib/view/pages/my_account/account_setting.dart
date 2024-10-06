@@ -1,7 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:jammer_mobile_app/data/const/static_variables.dart';
+import 'package:jammer_mobile_app/res/app_url/static_variables.dart';
 // import 'package:jammer_mobile_app/view/pages/login.dart';
 
 class AccountSetting extends StatefulWidget {

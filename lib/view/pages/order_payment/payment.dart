@@ -1,16 +1,15 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:jammer_mobile_app/controllers/order_controller.dart';
+import 'package:jammer_mobile_app/view_model/controllers/order/order_controller.dart';
 // import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
-import 'package:jammer_mobile_app/models/CartModel.dart';
+import 'package:jammer_mobile_app/models/cart/CartModel.dart';
 
 // My Own Imports
-import 'package:jammer_mobile_app/view/pages/home.dart';
+import 'package:jammer_mobile_app/view/pages/home/home.dart';
 
 class PaymentPage extends StatefulWidget {
   final List<CartModel> productData;
-  final String phoneNumber;
   final String city;
   final String street;
   final String postalCode;
@@ -21,7 +20,6 @@ class PaymentPage extends StatefulWidget {
       {Key? key,
       required this.productData,
       required this.type,
-      required this.phoneNumber,
       required this.city,
       required this.street,
       required this.postalCode,
@@ -194,7 +192,6 @@ class _PaymentPageState extends State<PaymentPage> {
                       OrderController.to.createOrder(
                           widget.productData,
                           widget.type,
-                          widget.phoneNumber,
                           widget.city,
                           widget.street,
                           widget.postalCode,

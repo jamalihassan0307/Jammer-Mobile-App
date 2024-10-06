@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:jammer_mobile_app/controllers/cart_controller.dart';
+import 'package:jammer_mobile_app/view_model/controllers/cart/cart_controller.dart';
 
 // My Own Import
 import 'package:jammer_mobile_app/view/pages/product/all_rating.dart';

@@ -3,15 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:get/get.dart';
-import 'package:jammer_mobile_app/controllers/cart_controller.dart';
-import 'package:jammer_mobile_app/models/CartModel.dart';
-import 'package:jammer_mobile_app/view/pages/cart.dart';
+import 'package:jammer_mobile_app/view_model/controllers/cart/cart_controller.dart';
+import 'package:jammer_mobile_app/models/cart/CartModel.dart';
+import 'package:jammer_mobile_app/view/pages/cart/cart.dart';
 
 // My Own Imports
 import 'package:jammer_mobile_app/view/pages/product/product_details.dart';
 import 'package:jammer_mobile_app/view/pages/order_payment/delivery_address.dart';
-import 'package:jammer_mobile_app/functions/passDataToProduct.dart';
-import 'package:jammer_mobile_app/view/pages/wishlist.dart';
+import 'package:jammer_mobile_app/res/components/functions/passDataToProduct.dart';
+import 'package:jammer_mobile_app/view/pages/wishlist/wishlist.dart';
 import 'package:page_transition/page_transition.dart';
 
 class ProductPage extends StatefulWidget {
